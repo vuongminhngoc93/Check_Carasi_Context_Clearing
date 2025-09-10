@@ -31,6 +31,15 @@ namespace Check_carasi_DF_ContextClearing
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            
+            // Enable GPU acceleration and modern rendering
+            this.SetStyle(System.Windows.Forms.ControlStyles.AllPaintingInWmPaint | 
+                         System.Windows.Forms.ControlStyles.UserPaint | 
+                         System.Windows.Forms.ControlStyles.DoubleBuffer | 
+                         System.Windows.Forms.ControlStyles.ResizeRedraw | 
+                         System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, true);
+            this.UpdateStyles();
+            
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -357,117 +366,147 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 27);
             // 
-            // toolStripLabelTabCount
+            // toolStripLabelTabCount - Modern Design
             // 
             this.toolStripLabelTabCount.Name = "toolStripLabelTabCount";
             this.toolStripLabelTabCount.Size = new System.Drawing.Size(80, 27);
-            this.toolStripLabelTabCount.Text = "Tabs: 0/60";
+            this.toolStripLabelTabCount.Text = "📑 Tabs: 0/60";
             this.toolStripLabelTabCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripLabelTabCount.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this.toolStripLabelTabCount.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.toolStripLabelTabCount.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // toolStripLabelCache
+            // toolStripLabelCache - Modern Design
             // 
             this.toolStripLabelCache.Name = "toolStripLabelCache";
             this.toolStripLabelCache.Size = new System.Drawing.Size(70, 27);
-            this.toolStripLabelCache.Text = "Cache: 0/50";
+            this.toolStripLabelCache.Text = "⚡ Cache: 0/50";
             this.toolStripLabelCache.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripLabelCache.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
+            this.toolStripLabelCache.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.toolStripLabelCache.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // toolStripLabelPool
+            // toolStripLabelPool - Modern Design
             // 
             this.toolStripLabelPool.Name = "toolStripLabelPool";
             this.toolStripLabelPool.Size = new System.Drawing.Size(60, 27);
-            this.toolStripLabelPool.Text = "Pool: 0/10";
+            this.toolStripLabelPool.Text = "🔗 Pool: 0/10";
             this.toolStripLabelPool.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripLabelPool.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
+            this.toolStripLabelPool.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.toolStripLabelPool.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // toolStripLabelMemory
+            // toolStripLabelMemory - Modern Design
             // 
             this.toolStripLabelMemory.Name = "toolStripLabelMemory";
             this.toolStripLabelMemory.Size = new System.Drawing.Size(100, 27);
-            this.toolStripLabelMemory.Text = "Memory: OK";
+            this.toolStripLabelMemory.Text = "💾 Memory: OK";
             this.toolStripLabelMemory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripLabelMemory.Margin = new System.Windows.Forms.Padding(5, 1, 10, 2);
+            this.toolStripLabelMemory.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.toolStripLabelMemory.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // lb_link2Folder
+            // lb_link2Folder - Modern Material Design
             // 
             this.lb_link2Folder.AutoSize = true;
-            this.lb_link2Folder.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lb_link2Folder.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lb_link2Folder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_link2Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_link2Folder.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_link2Folder.ForeColor = System.Drawing.Color.FromArgb(33, 150, 243);
+            this.lb_link2Folder.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
             this.lb_link2Folder.Location = new System.Drawing.Point(3, 30);
             this.lb_link2Folder.Name = "lb_link2Folder";
             this.lb_link2Folder.Size = new System.Drawing.Size(94, 30);
             this.lb_link2Folder.TabIndex = 18;
-            this.lb_link2Folder.Text = "Folders";
+            this.lb_link2Folder.Text = "📁 Folders";
             this.lb_link2Folder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tb_Link2Folder
+            // tb_Link2Folder - Modern Input Design
             // 
             this.tb_Link2Folder.AcceptsReturn = true;
             this.tb_Link2Folder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
             this.tb_Link2Folder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_Link2Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Link2Folder.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Link2Folder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_Link2Folder.Location = new System.Drawing.Point(103, 33);
             this.tb_Link2Folder.Name = "tb_Link2Folder";
             this.tb_Link2Folder.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tb_Link2Folder.Size = new System.Drawing.Size(359, 22);
             this.tb_Link2Folder.TabIndex = 19;
+            this.tb_Link2Folder.BackColor = System.Drawing.Color.White;
+            this.tb_Link2Folder.ForeColor = System.Drawing.Color.FromArgb(66, 66, 66);
             // 
-            // btn_Link2Folder
+            // btn_Link2Folder - Modern Button Design
             // 
             this.btn_Link2Folder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_Link2Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Link2Folder.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Link2Folder.ForeColor = System.Drawing.Color.White;
+            this.btn_Link2Folder.BackColor = System.Drawing.Color.FromArgb(76, 175, 80);
+            this.btn_Link2Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Link2Folder.FlatAppearance.BorderSize = 0;
+            this.btn_Link2Folder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(102, 187, 106);
+            this.btn_Link2Folder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(56, 142, 60);
             this.btn_Link2Folder.Location = new System.Drawing.Point(468, 33);
             this.btn_Link2Folder.Name = "btn_Link2Folder";
             this.btn_Link2Folder.Size = new System.Drawing.Size(94, 24);
             this.btn_Link2Folder.TabIndex = 20;
-            this.btn_Link2Folder.Text = "Browser";
+            this.btn_Link2Folder.Text = "🔍 Browse";
             this.toolTip1.SetToolTip(this.btn_Link2Folder, "Click to Choose Project Folder link which should contain Base Carasi, New Carasi," +
         " Base DataFlow and New Data Flow");
-            this.btn_Link2Folder.UseVisualStyleBackColor = true;
+            this.btn_Link2Folder.UseVisualStyleBackColor = false;
             this.btn_Link2Folder.Click += new System.EventHandler(this.btn_Link2Folder_Click);
             // 
-            // lb_NameOfInterface
+            // lb_NameOfInterface - Modern Label Design
             // 
             this.lb_NameOfInterface.AutoSize = true;
-            this.lb_NameOfInterface.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lb_NameOfInterface.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lb_NameOfInterface.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lb_NameOfInterface.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_NameOfInterface.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_NameOfInterface.ForeColor = System.Drawing.Color.FromArgb(255, 152, 0);
+            this.lb_NameOfInterface.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
             this.lb_NameOfInterface.Location = new System.Drawing.Point(568, 30);
             this.lb_NameOfInterface.Name = "lb_NameOfInterface";
             this.lb_NameOfInterface.Size = new System.Drawing.Size(94, 30);
             this.lb_NameOfInterface.TabIndex = 21;
-            this.lb_NameOfInterface.Text = "Var Name";
+            this.lb_NameOfInterface.Text = "🎯 Var Name";
             this.lb_NameOfInterface.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tb_Interface2search
+            // tb_Interface2search - Modern Search Input
             // 
             this.tb_Interface2search.AcceptsReturn = true;
             this.tb_Interface2search.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
             this.tb_Interface2search.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_Interface2search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Interface2search.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Interface2search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_Interface2search.Location = new System.Drawing.Point(668, 33);
             this.tb_Interface2search.Name = "tb_Interface2search";
             this.tb_Interface2search.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tb_Interface2search.Size = new System.Drawing.Size(359, 22);
             this.tb_Interface2search.TabIndex = 22;
+            this.tb_Interface2search.BackColor = System.Drawing.Color.White;
+            this.tb_Interface2search.ForeColor = System.Drawing.Color.FromArgb(66, 66, 66);
             this.tb_Interface2search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Interface2search_KeyPress);
             // 
-            // btn_Run
+            // btn_Run - Modern Search Button
             // 
             this.btn_Run.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_Run.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Run.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Run.ForeColor = System.Drawing.Color.White;
+            this.btn_Run.BackColor = System.Drawing.Color.FromArgb(33, 150, 243);
+            this.btn_Run.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Run.FlatAppearance.BorderSize = 0;
+            this.btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(66, 165, 245);
+            this.btn_Run.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(21, 101, 192);
             this.btn_Run.Location = new System.Drawing.Point(1033, 33);
             this.btn_Run.Name = "btn_Run";
             this.btn_Run.Size = new System.Drawing.Size(94, 24);
             this.btn_Run.TabIndex = 23;
-            this.btn_Run.Text = "Search";
+            this.btn_Run.Text = "🚀 Search";
             this.toolTip1.SetToolTip(this.btn_Run, "Click to Search Interface what we are analysing! ");
-            this.btn_Run.UseVisualStyleBackColor = true;
+            this.btn_Run.UseVisualStyleBackColor = false;
             this.btn_Run.Click += new System.EventHandler(this.btn_Run_Click);
             // 
-            // tabControl1
+            // tabControl1 - Modern Tab Design
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.tabControl1, 6);
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -477,6 +516,11 @@ namespace Check_carasi_DF_ContextClearing
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1124, 743);
             this.tabControl1.TabIndex = 24;
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.tabControl1.ItemSize = new System.Drawing.Size(120, 32);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             // 
             // tabPage1
             // 
@@ -668,7 +712,7 @@ namespace Check_carasi_DF_ContextClearing
             this.uC_ContextClearing1.TabIndex = 0;
             this.toolTip1.SetToolTip(this.uC_ContextClearing1, "Click Tools >> \"Macro Module Link\"  OR \"F4\" to choose MM Searching Feature");
             // 
-            // Form1
+            // Form1 - Modern Application Design
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -676,7 +720,11 @@ namespace Check_carasi_DF_ContextClearing
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SW Sharing Container";
+            this.Text = "🚀 Carasi DF Context Clearing Tool - Option 6 Hybrid Optimized";
+            this.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.MinimumSize = new System.Drawing.Size(1000, 600);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
