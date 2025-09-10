@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -115,10 +116,83 @@ namespace Check_carasi_DF_ContextClearing
             return (dt.Rows.Count > 0);
         }
 
+        // BATCH OPTIMIZATION: Check multiple variables in single query
+        public Dictionary<string, bool> _IsExist_Carasi_Batch(List<string> variables)
+        {
+            var results = new Dictionary<string, bool>();
+            
+            if (variables == null || variables.Count == 0)
+                return results;
+
+            // Initialize all variables as false
+            foreach (string var in variables)
+            {
+                results[var] = false;
+            }
+
+            // Build WHERE IN clause for batch query
+            var quotedVars = variables.Select(v => "'" + v.Replace("'", "''") + "'");
+            string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
+            
+            DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
+            
+            // Mark found variables as true
+            foreach (DataRow row in dt.Rows)
+            {
+                string foundVar = row["SSTG label"].ToString();
+                if (results.ContainsKey(foundVar))
+                {
+                    results[foundVar] = true;
+                }
+            }
+            
+            return results;
+        }
+
         public bool _IsExist_Dataflow(string var)
         {
             DataTable dt = __excel.ReadTable("Mapping$", "[" + "F2" + "]='" + var + "'" + " OR " + "[" + "F17" + "]='" + var + "'");
             return (dt.Rows.Count > 0);
+        }
+
+        // BATCH OPTIMIZATION: Check multiple variables in Dataflow
+        public Dictionary<string, bool> _IsExist_Dataflow_Batch(List<string> variables)
+        {
+            var results = new Dictionary<string, bool>();
+            
+            if (variables == null || variables.Count == 0)
+                return results;
+
+            // Initialize all variables as false
+            foreach (string var in variables)
+            {
+                results[var] = false;
+            }
+
+            // Build WHERE clause for batch query (F2 OR F17 fields)
+            var conditions = new List<string>();
+            foreach (string var in variables)
+            {
+                string escapedVar = var.Replace("'", "''");
+                conditions.Add("([F2]='" + escapedVar + "' OR [F17]='" + escapedVar + "')");
+            }
+            string whereClause = string.Join(" OR ", conditions);
+            
+            DataTable dt = __excel.ReadTable("Mapping$", whereClause);
+            
+            // Mark found variables as true
+            foreach (DataRow row in dt.Rows)
+            {
+                string f2Value = row["F2"].ToString();
+                string f17Value = row["F17"].ToString();
+                
+                if (results.ContainsKey(f2Value))
+                    results[f2Value] = true;
+                if (results.ContainsKey(f17Value))
+                    results[f17Value] = true;
+            }
+            
+            return results;
         }
 
         private void dataflow_Parser(string var)

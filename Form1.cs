@@ -409,10 +409,24 @@ namespace Check_carasi_DF_ContextClearing
 
                     dt_listInterfaces.Columns.Add();
 
+                    // BATCH OPTIMIZATION: Collect all variables first
+                    var allVariables = new List<string>();
                     foreach (DataRow dr in dt_listInterfaces.Rows)
                     {
-                        bool isNew = _RevewNewCarasi._IsExist_Carasi(dr[0].ToString());
-                        bool isOld = _RevewOldCarasi._IsExist_Carasi(dr[0].ToString());
+                        allVariables.Add(dr[0].ToString());
+                    }
+
+                    // BATCH OPTIMIZATION: Single batch query for each parser instead of individual queries
+                    var newCarasiResults = _RevewNewCarasi._IsExist_Carasi_Batch(allVariables);
+                    var oldCarasiResults = _RevewOldCarasi._IsExist_Carasi_Batch(allVariables);
+
+                    // Apply results to datatable
+                    foreach (DataRow dr in dt_listInterfaces.Rows)
+                    {
+                        string variable = dr[0].ToString();
+                        bool isNew = newCarasiResults.ContainsKey(variable) && newCarasiResults[variable];
+                        bool isOld = oldCarasiResults.ContainsKey(variable) && oldCarasiResults[variable];
+                        
                         if (isNew && isOld)
                         {
                             dr[3] = "Old & New. Please Check";
