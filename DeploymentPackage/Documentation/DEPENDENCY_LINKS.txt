@@ -1,0 +1,81 @@
+DEPENDENCY INSTALLATION LINKS
+=============================
+
+REQUIRED DEPENDENCIES:
+---------------------
+
+1. Microsoft .NET Framework 4.7.2
+   Download Link: https://dotnet.microsoft.com/download/dotnet-framework/net472
+   File: NDP472-KB4054530-x86-x64-AllOS-ENU.exe
+   Size: ~59 MB
+   
+2. Microsoft Access Database Engine 2016 Redistributable (64-bit)
+   Download Link: https://www.microsoft.com/download/details.aspx?id=54920
+   File: AccessDatabaseEngine_X64.exe
+   Size: ~25 MB
+
+OPTIONAL DEPENDENCIES:
+---------------------
+
+3. Microsoft Visual C++ 2015-2022 Redistributable (x64) - Optional
+   Download Link: https://aka.ms/vs/17/release/vc_redist.x64.exe
+   File: VC_redist.x64.exe
+   Size: ~24 MB
+   Note: Only install if application fails to start
+
+SMART INSTALLATION APPROACH:
+----------------------------
+1. Run check_dependencies_smart.bat FIRST
+2. Only install components that are actually missing
+3. Most systems already have .NET Framework 4.0+
+4. Focus on installing Access Database Engine if needed
+
+INSTALLATION ORDER (only if missing):
+------------------------------------
+1. .NET Framework 4.0+ (if missing - rare on modern Windows)
+2. Access Database Engine (most commonly needed)
+3. Test application startup
+
+VERIFICATION COMMANDS:
+---------------------
+Check .NET Framework version:
+reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" /v Release
+
+Expected result: Release value should be 461808 or higher
+
+OFFICE COMPONENTS:
+-----------------
+Microsoft Office (Excel/Outlook) - Optional but recommended
+- Office 2016, 2019, 2021, or Microsoft 365
+- Required for advanced Excel processing features
+- Download from: https://www.office.com/
+
+TROUBLESHOOTING:
+---------------
+If application fails to start:
+1. Verify .NET Framework 4.7.2 installed
+2. Verify Access Database Engine installed  
+3. Check Windows Event Viewer for specific errors
+4. Try installing Visual C++ Redistributable as fallback
+5. Run application as Administrator (test only)
+6. Verify Excel files are not corrupted
+
+Common Error Solutions:
+- "Could not load file or assembly" = Missing .NET Framework
+- "OLEDB provider not found" = Missing Access Database Engine  
+- "MSVCP140.dll missing" = Install Visual C++ Redistributable
+
+OFFLINE INSTALLATION:
+--------------------
+For machines without internet access:
+1. Download all installers on connected machine
+2. Copy to USB drive or network share
+3. Install in order listed above
+4. Copy application files last
+
+AUTOMATIC INSTALLER SCRIPT:
+--------------------------
+See install_dependencies.bat for automated installation
+(Requires administrative privileges)
+
+For support, contact: [Your contact information]

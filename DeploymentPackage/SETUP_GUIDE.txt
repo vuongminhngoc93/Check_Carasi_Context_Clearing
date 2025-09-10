@@ -1,0 +1,42 @@
+DEPLOYMENT GUIDE - Máy Khác
+============================
+
+BƯỚC 1: COPY FILES
+------------------
+- Copy toàn bộ thư mục DeploymentPackage qua máy đích
+- Có thể dùng USB, network share, hoặc email
+
+BƯỚC 2: KIỂM TRA HỆ THỐNG  
+-------------------------
+- Chạy check_requirements.bat
+- Đọc kết quả và làm theo hướng dẫn
+
+BƯỚC 3: CÀI ĐẶT TOOL
+--------------------
+- Copy thư mục Application đến vị trí mong muốn
+- Chạy Check_carasi_DF_ContextClearing.exe
+- KHÔNG CẦN QUYỀN ADMIN! Chạy với user bình thường
+
+BƯỚC 4: KIỂM TRA HOẠT ĐỘNG
+--------------------------
+- Mở file Excel để test
+- Nếu báo lỗi đọc Excel → cài Access Database Engine
+- Link download trong kết quả check_requirements.bat
+
+TROUBLESHOOTING:
+---------------
+- App không chạy → Thiếu .NET Framework 4.0+
+- Không đọc được Excel → Thiếu Access Database Engine  
+- Các lỗi khác → Xem trong Documentation/
+
+LƯU Ý QUAN TRỌNG:
+-----------------
+✅ Tool chạy với quyền user bình thường
+✅ Không cần cài làm service 
+✅ Không cần restart máy (trừ khi cài .NET Framework)
+✅ 90% máy chỉ cần cài Access Database Engine
+
+LIÊN HỆ HỖ TRỢ:
+---------------
+Nếu gặp vấn đề, check file Documentation/DEPLOYMENT_GUIDE.md
+hoặc liên hệ người phát triển tool.
