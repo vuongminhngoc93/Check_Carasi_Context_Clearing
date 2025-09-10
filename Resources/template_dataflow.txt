@@ -1,0 +1,121 @@
+Status
+"Customer
+Variable Name"
+"Customer
+Variable description (in English)"
+Customer element ADD Type
+Dimension
+Primitivetype
+Unit
+Conversion formula
+Quantisation
+"Min. Physical
+Value"
+"Max. Physical
+Value"
+Offset
+"Initialization
+Value"
+Bit Position
+Array Index
+"Rte Direction
+or I / O"
+"Bosch ASW
+Element Name"
+Bosch ASW Element ADD Type
+RB Dimension
+RB Datatype
+RB Unit
+ RB Conversion formula
+RB Quantisation
+"RB Min. Physical
+Value"
+"RB Max. Physical
+Value"
+RB Offset
+RB Bit Position
+RB Array Index
+Mapping Initialization value
+Mapping type
+ADD Mapping type
+Mapping's Pseudo-code
+Factor
+Offset
+System constant condition
+In/Out
+Additional Process Info
+Task
+Process name
+Name
+Mapping Nr
+Status
+"Customer
+Variable Name"
+"Customer
+Variable description (in English)"
+Customer element ADD Type
+Dimension
+Primitivetype
+Unit
+Conversion formula
+Quantisation
+"Min. Physical
+Value"
+"Max. Physical
+Value"
+Offset
+"Initialisation
+Value"
+Bit Position
+Array Index
+"Rte Direction
+or I / O"
+"Bosch ASW
+Element Name"
+Bosch ASW Element ADD Type
+RB Dimension
+RB Datatype
+RB Unit
+ RB Conversion formula
+RB Quantisation
+"RB Min. Physical
+Value"
+"RB Max. Physical
+Value"
+RB Offset
+RB Bit Position
+RB Array Index
+Mapping Initialization value
+Mapping type
+ADD Mapping type
+Mapping's Pseudo-code
+Factor
+Offset
+System constant condition
+In/Out
+Additional Process Info
+Task
+Process name
+Name
+Mapping Nr
+Producer
+Consumers
+Concerned specifications
+Concerned specifications (previous delivery)
+Clearing-Responsible
+Review-Status
+Review-Responsible
+RR affected
+Dimension
+Primitivetype
+Unit
+Quantisation
+"Min. Physical
+Value"
+"Max. Physical
+Value"
+Offset
+"Initialisation
+Value"
+Initial mapping cost type
+Mapping cost type for this delivery
