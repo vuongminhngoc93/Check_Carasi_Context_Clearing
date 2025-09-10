@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -76,6 +77,23 @@ namespace Check_carasi_DF_ContextClearing
         Lib_OLEDB_Excel __excel;
         DataTable dt_template = new DataTable();
 
+        // CACHING: Static cache for query results with file modification tracking
+        private static readonly ConcurrentDictionary<string, CachedResult> QueryCache = 
+            new ConcurrentDictionary<string, CachedResult>();
+        private static readonly object CacheLock = new object();
+
+        // CACHING: Cache entry structure
+        private class CachedResult
+        {
+            public Dictionary<string, bool> Results { get; set; }
+            public DateTime FileLastModified { get; set; }
+            public DateTime CacheTime { get; set; }
+            public string FilePath { get; set; }
+        }
+
+        // CACHING: Cache configuration
+        private static readonly TimeSpan CacheTimeout = TimeSpan.FromMinutes(10); // 10 minute cache timeout
+
         public Excel_Parser( string FileLink, DataTable dt_template)
         {
             linkOfFile = FileLink;
@@ -124,26 +142,44 @@ namespace Check_carasi_DF_ContextClearing
             if (variables == null || variables.Count == 0)
                 return results;
 
+            // CACHING: Check cache first
+            string cacheKey = GenerateCacheKey("CARASI", variables);
+            var cachedResult = GetCachedResult(cacheKey);
+            if (cachedResult != null)
+            {
+                return cachedResult;
+            }
+
             // Initialize all variables as false
             foreach (string var in variables)
             {
                 results[var] = false;
             }
 
-            // Build WHERE IN clause for batch query
-            var quotedVars = variables.Select(v => "'" + v.Replace("'", "''") + "'");
-            string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
-            
-            DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
-            
-            // Mark found variables as true
-            foreach (DataRow row in dt.Rows)
+            try
             {
-                string foundVar = row["SSTG label"].ToString();
-                if (results.ContainsKey(foundVar))
+                // Build WHERE IN clause for batch query
+                var quotedVars = variables.Select(v => "'" + v.Replace("'", "''") + "'");
+                string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
+                
+                DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
+                
+                // Mark found variables as true
+                foreach (DataRow row in dt.Rows)
                 {
-                    results[foundVar] = true;
+                    string foundVar = row["SSTG label"].ToString();
+                    if (results.ContainsKey(foundVar))
+                    {
+                        results[foundVar] = true;
+                    }
                 }
+
+                // CACHING: Store result in cache
+                StoreCachedResult(cacheKey, results);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error in batch Carasi query: " + ex.Message, "Error");
             }
             
             return results;
@@ -163,33 +199,51 @@ namespace Check_carasi_DF_ContextClearing
             if (variables == null || variables.Count == 0)
                 return results;
 
+            // CACHING: Check cache first
+            string cacheKey = GenerateCacheKey("DATAFLOW", variables);
+            var cachedResult = GetCachedResult(cacheKey);
+            if (cachedResult != null)
+            {
+                return cachedResult;
+            }
+
             // Initialize all variables as false
             foreach (string var in variables)
             {
                 results[var] = false;
             }
 
-            // Build WHERE clause for batch query (F2 OR F17 fields)
-            var conditions = new List<string>();
-            foreach (string var in variables)
+            try
             {
-                string escapedVar = var.Replace("'", "''");
-                conditions.Add("([F2]='" + escapedVar + "' OR [F17]='" + escapedVar + "')");
-            }
-            string whereClause = string.Join(" OR ", conditions);
-            
-            DataTable dt = __excel.ReadTable("Mapping$", whereClause);
-            
-            // Mark found variables as true
-            foreach (DataRow row in dt.Rows)
-            {
-                string f2Value = row["F2"].ToString();
-                string f17Value = row["F17"].ToString();
+                // Build WHERE clause for batch query (F2 OR F17 fields)
+                var conditions = new List<string>();
+                foreach (string var in variables)
+                {
+                    string escapedVar = var.Replace("'", "''");
+                    conditions.Add("([F2]='" + escapedVar + "' OR [F17]='" + escapedVar + "')");
+                }
+                string whereClause = string.Join(" OR ", conditions);
                 
-                if (results.ContainsKey(f2Value))
-                    results[f2Value] = true;
-                if (results.ContainsKey(f17Value))
-                    results[f17Value] = true;
+                DataTable dt = __excel.ReadTable("Mapping$", whereClause);
+                
+                // Mark found variables as true
+                foreach (DataRow row in dt.Rows)
+                {
+                    string f2Value = row["F2"].ToString();
+                    string f17Value = row["F17"].ToString();
+                    
+                    if (results.ContainsKey(f2Value))
+                        results[f2Value] = true;
+                    if (results.ContainsKey(f17Value))
+                        results[f17Value] = true;
+                }
+
+                // CACHING: Store result in cache
+                StoreCachedResult(cacheKey, results);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error in batch Dataflow query: " + ex.Message, "Error");
             }
             
             return results;
@@ -256,5 +310,111 @@ namespace Check_carasi_DF_ContextClearing
         public DataTable Carasi_dictionary { get => carasi_dictionary; }
         public DataView Dictionary { get => dictionary; }
         public DataView Interfaces { get => interfaces; }
+
+        // CACHING: Helper methods
+        private string GenerateCacheKey(string queryType, List<string> variables)
+        {
+            var sortedVars = variables.OrderBy(v => v).ToList();
+            return $"{queryType}_{linkOfFile}_{string.Join("|", sortedVars)}";
+        }
+
+        private Dictionary<string, bool> GetCachedResult(string cacheKey)
+        {
+            if (QueryCache.TryGetValue(cacheKey, out CachedResult cached))
+            {
+                // Check if cache is still valid
+                bool isValid = IsValidCache(cached);
+                if (isValid)
+                {
+                    return new Dictionary<string, bool>(cached.Results);
+                }
+                else
+                {
+                    // Remove invalid cache entry
+                    QueryCache.TryRemove(cacheKey, out _);
+                }
+            }
+            return null;
+        }
+
+        private bool IsValidCache(CachedResult cached)
+        {
+            try
+            {
+                // Check cache timeout
+                if (DateTime.Now - cached.CacheTime > CacheTimeout)
+                    return false;
+
+                // Check if file has been modified
+                FileInfo fileInfo = new FileInfo(cached.FilePath);
+                if (!fileInfo.Exists || fileInfo.LastWriteTime > cached.FileLastModified)
+                    return false;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void StoreCachedResult(string cacheKey, Dictionary<string, bool> results)
+        {
+            try
+            {
+                FileInfo fileInfo = new FileInfo(linkOfFile);
+                var cachedResult = new CachedResult
+                {
+                    Results = new Dictionary<string, bool>(results),
+                    FileLastModified = fileInfo.LastWriteTime,
+                    CacheTime = DateTime.Now,
+                    FilePath = linkOfFile
+                };
+                
+                QueryCache.TryAdd(cacheKey, cachedResult);
+                
+                // Cleanup old cache entries periodically
+                CleanupOldCacheEntries();
+            }
+            catch
+            {
+                // Ignore cache storage errors
+            }
+        }
+
+        private static void CleanupOldCacheEntries()
+        {
+            // Only cleanup occasionally to avoid performance impact
+            if (QueryCache.Count > 100 && DateTime.Now.Millisecond < 10)
+            {
+                lock (CacheLock)
+                {
+                    var expiredKeys = QueryCache
+                        .Where(kvp => DateTime.Now - kvp.Value.CacheTime > CacheTimeout)
+                        .Select(kvp => kvp.Key)
+                        .ToList();
+
+                    foreach (string key in expiredKeys)
+                    {
+                        QueryCache.TryRemove(key, out _);
+                    }
+                }
+            }
+        }
+
+        // CACHING: Static method to clear all cached results
+        public static void ClearQueryCache()
+        {
+            lock (CacheLock)
+            {
+                QueryCache.Clear();
+            }
+        }
+
+        // CACHING: Get cache statistics for monitoring
+        public static int GetCacheSize()
+        {
+            return QueryCache.Count;
+        }
     }
 }
