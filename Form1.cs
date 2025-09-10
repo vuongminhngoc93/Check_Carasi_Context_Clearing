@@ -92,6 +92,63 @@ namespace Check_carasi_DF_ContextClearing
             
             // Apply modern fonts only (no heavy visual effects)
             ApplyModernFonts();
+            
+            // Add Performance menu
+            SetupPerformanceMenu();
+        }
+        
+        /// <summary>
+        /// Setup Performance monitoring menu
+        /// </summary>
+        private void SetupPerformanceMenu()
+        {
+            try
+            {
+                // Create Performance dropdown button
+                var perfDropDown = new ToolStripDropDownButton
+                {
+                    Text = "📊 Performance",
+                    ToolTipText = "Performance monitoring and analysis"
+                };
+                
+                // Show Performance Report menu item
+                var showReportItem = new ToolStripMenuItem
+                {
+                    Text = "📈 Show Performance Report",
+                    ToolTipText = "Display detailed performance analysis"
+                };
+                showReportItem.Click += ShowPerformanceReport_Click;
+                
+                // Open Log File menu item
+                var openLogItem = new ToolStripMenuItem
+                {
+                    Text = "📄 Open Log File",
+                    ToolTipText = "Open CSV log file for detailed analysis"
+                };
+                openLogItem.Click += OpenLogFile_Click;
+                
+                // Clear Metrics menu item
+                var clearMetricsItem = new ToolStripMenuItem
+                {
+                    Text = "🗑️ Clear Metrics",
+                    ToolTipText = "Reset all performance data"
+                };
+                clearMetricsItem.Click += ClearMetrics_Click;
+                
+                // Add items to dropdown
+                perfDropDown.DropDownItems.Add(showReportItem);
+                perfDropDown.DropDownItems.Add(openLogItem);
+                perfDropDown.DropDownItems.Add(new ToolStripSeparator());
+                perfDropDown.DropDownItems.Add(clearMetricsItem);
+                
+                // Add to toolbar
+                toolStrip1.Items.Add(new ToolStripSeparator());
+                toolStrip1.Items.Add(perfDropDown);
+            }
+            catch 
+            {
+                // Ignore menu setup errors
+            }
         }
         
         /// <summary>
@@ -192,6 +249,9 @@ namespace Check_carasi_DF_ContextClearing
 
         private void btn_Run_Click(object sender, EventArgs e)
         {
+            // START PERFORMANCE MEASUREMENT
+            PerformanceLogger.StartTimer("Search_Operation", $"Interface: {tb_Interface2search.Text}");
+            
             // RESOURCE PROTECTION: Check if we're approaching resource limits
             // (Skip this check if we're in a batch operation and already warned)
             if (tabControl1.TabPages.Count >= 58 && !isBatchOperation) // Warning before hitting limit
@@ -206,6 +266,7 @@ namespace Check_carasi_DF_ContextClearing
                 
                 if (result == DialogResult.No)
                 {
+                    PerformanceLogger.StopTimer("Search_Operation", "Cancelled by user due to resource warning");
                     return; // User chose to stop
                 }
             }
@@ -213,7 +274,9 @@ namespace Check_carasi_DF_ContextClearing
             // MEMORY CLEANUP: Force cleanup before heavy operations
             if (tabControl1.TabPages.Count > 50)
             {
+                PerformanceLogger.StartTimer("Memory_Cleanup");
                 CleanupResourcesIfNeeded();
+                PerformanceLogger.StopTimer("Memory_Cleanup");
             }
 
             toolStripProgressBar1.Value = 0;
@@ -234,7 +297,9 @@ namespace Check_carasi_DF_ContextClearing
                 {
                     if (tb_Interface2search.Text != "")
                     {
+                        PerformanceLogger.StartTimer("Internal_UC_Check");
                         internalUC.__checkVariable(tb_Interface2search.Text);
+                        PerformanceLogger.StopTimer("Internal_UC_Check");
                         toolStripProgressBar1.Value = 10;
                     }
                     else
@@ -248,6 +313,7 @@ namespace Check_carasi_DF_ContextClearing
 
             if (folder_verifying(link2Folder))
             {
+                PerformanceLogger.StartTimer("Excel_Parser_Creation");
                 UC_ContextClearing UC_doing = new UC_ContextClearing();
                 foreach (Control c in tabControl1.SelectedTab.Controls)
                 {
@@ -265,11 +331,14 @@ namespace Check_carasi_DF_ContextClearing
                         UC_doing.OldCarasi = new Excel_Parser(nameOfoldCarasi, dt_template);
                         UC_doing.NewDF = new Excel_Parser(nameOfnewDataflow, dt_template);
                         UC_doing.OldDF = new Excel_Parser(nameOfoldDataflow, dt_template);
+                        PerformanceLogger.StopTimer("Excel_Parser_Creation");
 
                         UC_doing.Link2Folder = link2Folder;
                         if (tb_Interface2search.Text != "")
                         {
+                            PerformanceLogger.StartTimer("Variable_Check", $"Searching: {tb_Interface2search.Text}");
                             UC_doing.__checkVariable(ref toolStripProgressBar1, tb_Interface2search.Text);
+                            PerformanceLogger.StopTimer("Variable_Check");
                             
                             // UPDATE STATUS: Refresh status after search to show cache/pool activity
                             UpdateTabMemoryStatus();
@@ -277,17 +346,21 @@ namespace Check_carasi_DF_ContextClearing
                             /* Check and update Macro Module searching Feature */
                             if(_mmCheck != null && _mmCheck.IsValidLink)
                             {
+                                PerformanceLogger.StartTimer("MM_Check");
                                 string[] result = new string[150];
                                 bool a = _mmCheck.IsExistInMM(tb_Interface2search.Text, ref result);
                                 UC_doing._setValueMM(a, result);
+                                PerformanceLogger.StopTimer("MM_Check");
                             }
 
                             /* Check and update A2L searching Feature */
                             if (_a2lCheck != null && _a2lCheck.IsValidLink)
                             {
+                                PerformanceLogger.StartTimer("A2L_Check");
                                 string[] result = new string[150];
                                 bool a = _a2lCheck.IsExistInA2L(tb_Interface2search.Text, ref result);
                                 UC_doing._setValueA2L(a, result);
+                                PerformanceLogger.StopTimer("A2L_Check");
                             }
 
                             tabControl1.SelectedTab.Text = tb_Interface2search.Text;
@@ -302,17 +375,26 @@ namespace Check_carasi_DF_ContextClearing
                         }
 
                         //Disposed all Excel Parser
+                        PerformanceLogger.StartTimer("Excel_Parser_Disposal");
                         UC_doing.NewCarasi.Dispose();
                         UC_doing.OldCarasi.Dispose();
                         UC_doing.NewDF.Dispose();
                         UC_doing.OldDF.Dispose();
+                        PerformanceLogger.StopTimer("Excel_Parser_Disposal");
                     }
                 }
             }
+            
+            // COMPLETE PERFORMANCE MEASUREMENT
+            long totalTime = PerformanceLogger.StopTimer("Search_Operation", $"Completed for: {tb_Interface2search.Text}");
+            
+            // Update title with performance info
+            this.Text = $"Context Clearing - Last search: {totalTime}ms";
         }
 
         private void btn_toolStrip_NewTab_Click(object sender, EventArgs e)
         {
+            PerformanceLogger.StartTimer("Create_New_Tab");
             try
             {
                 // TAB LIMIT: Prevent creating more than 60 tabs to avoid crash
@@ -321,6 +403,7 @@ namespace Check_carasi_DF_ContextClearing
                 {
                     MessageBox.Show($"Maximum {MAX_TABS} tabs reached. Please close some tabs before creating new ones.", 
                                    "Tab Limit Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    PerformanceLogger.StopTimer("Create_New_Tab", "Failed - Max tabs reached");
                     return;
                 }
 
@@ -348,9 +431,18 @@ namespace Check_carasi_DF_ContextClearing
                     // Update status after creating tab
                     UpdateTabMemoryStatus();
                 }
+                
+                long creationTime = PerformanceLogger.StopTimer("Create_New_Tab", $"Success - Total tabs: {tabControl1.TabPages.Count}");
+                
+                // Log if tab creation is getting slow
+                if (creationTime > 100)
+                {
+                    PerformanceLogger.LogDuration("Slow_Tab_Creation", creationTime, $"Tab creation took {creationTime}ms");
+                }
             }
             catch (System.Exception ex)
             {
+                PerformanceLogger.StopTimer("Create_New_Tab", $"Exception: {ex.Message}");
                 MessageBox.Show( "Reached Max GDI!" + '\n' + ex.Message);
             }
         }
@@ -776,11 +868,21 @@ namespace Check_carasi_DF_ContextClearing
         /// </summary>
         private void OnTabSelectionChanged(object sender, EventArgs e)
         {
+            PerformanceLogger.StartTimer("Tab_Switch");
+            
             // Optimize performance by only rendering visible tab
             OptimizeTabPerformance();
             
             // Update status when tab changes
             UpdateTabMemoryStatus();
+            
+            long switchTime = PerformanceLogger.StopTimer("Tab_Switch", $"Switched to tab: {tabControl1.SelectedTab?.Text}");
+            
+            // Log if tab switching is getting slow
+            if (switchTime > 50)
+            {
+                PerformanceLogger.LogDuration("Slow_Tab_Switch", switchTime, $"Tab switch took {switchTime}ms with {tabControl1.TabPages.Count} tabs");
+            }
         }
 
         // MEMORY CLEANUP: Clean up resources when reaching limits
@@ -996,6 +1098,127 @@ namespace Check_carasi_DF_ContextClearing
             catch 
             {
                 // Ignore font application errors for some controls
+            }
+        }
+
+        /// <summary>
+        /// Show Performance Report event handler
+        /// </summary>
+        private void ShowPerformanceReport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string report = PerformanceLogger.GetPerformanceSummary();
+                
+                // Create a form to display the report
+                Form reportForm = new Form
+                {
+                    Text = "🚀 Performance Analysis Report",
+                    Size = new Size(800, 600),
+                    StartPosition = FormStartPosition.CenterParent,
+                    MinimizeBox = false,
+                    MaximizeBox = true,
+                    Font = new Font("Segoe UI", 9F)
+                };
+                
+                RichTextBox reportTextBox = new RichTextBox
+                {
+                    Dock = DockStyle.Fill,
+                    ReadOnly = true,
+                    Text = report,
+                    Font = new Font("Consolas", 9F),
+                    BackColor = Color.FromArgb(248, 248, 248)
+                };
+                
+                Button saveButton = new Button
+                {
+                    Text = "💾 Save Report",
+                    Dock = DockStyle.Bottom,
+                    Height = 35,
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.FromArgb(33, 150, 243),
+                    ForeColor = Color.White
+                };
+                
+                saveButton.Click += (s, args) =>
+                {
+                    SaveFileDialog saveDialog = new SaveFileDialog
+                    {
+                        Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*",
+                        DefaultExt = "txt",
+                        FileName = $"Performance_Report_{DateTime.Now:yyyyMMdd_HHmmss}.txt"
+                    };
+                    
+                    if (saveDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllText(saveDialog.FileName, report);
+                        MessageBox.Show("Performance report saved successfully!", "Report Saved", 
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                };
+                
+                reportForm.Controls.Add(reportTextBox);
+                reportForm.Controls.Add(saveButton);
+                reportForm.ShowDialog(this);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error showing performance report: {ex.Message}", "Error", 
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        /// <summary>
+        /// Open Log File event handler
+        /// </summary>
+        private void OpenLogFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string logFilePath = PerformanceLogger.GetLogFilePath();
+                
+                if (File.Exists(logFilePath))
+                {
+                    // Try to open with default CSV application (Excel, etc.)
+                    System.Diagnostics.Process.Start(logFilePath);
+                }
+                else
+                {
+                    MessageBox.Show("Log file not found. No performance data has been recorded yet.", 
+                                  "Log File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error opening log file: {ex.Message}\n\nLog path: {PerformanceLogger.GetLogFilePath()}", 
+                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        /// <summary>
+        /// Clear Metrics event handler
+        /// </summary>
+        private void ClearMetrics_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "Are you sure you want to clear all performance metrics?\n\nThis action cannot be undone.",
+                    "Clear Performance Metrics",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                
+                if (result == DialogResult.Yes)
+                {
+                    PerformanceLogger.ClearMetrics();
+                    MessageBox.Show("Performance metrics cleared successfully!", "Metrics Cleared",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error clearing metrics: {ex.Message}", "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

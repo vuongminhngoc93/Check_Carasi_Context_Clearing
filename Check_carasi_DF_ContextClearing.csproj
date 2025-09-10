@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Library\A2L_Check.cs" />
     <Compile Include="Library\Excel_Parser.cs" />
+    <Compile Include="Library\PerformanceLogger.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
