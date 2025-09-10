@@ -226,6 +226,15 @@ namespace Check_carasi_DF_ContextClearing
         {
             try
             {
+                // TAB LIMIT: Prevent creating more than 60 tabs to avoid crash
+                const int MAX_TABS = 60;
+                if (tabControl1.TabPages.Count >= MAX_TABS)
+                {
+                    MessageBox.Show($"Maximum {MAX_TABS} tabs reached. Please close some tabs before creating new ones.", 
+                                   "Tab Limit Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 if (tabControl1.TabPages.Count > 0)
                 {
                     TabPage newTab = new TabPage("TabPage" + (tabControl1.TabPages.Count + 1).ToString());
@@ -234,6 +243,9 @@ namespace Check_carasi_DF_ContextClearing
                     newTab.Controls.Add(newUC);
                     tabControl1.TabPages.Add(newTab);
                     tabControl1.SelectedTab = newTab;
+                    
+                    // Update status after creating tab
+                    UpdateTabMemoryStatus();
                 }
                 else
                 {
@@ -243,6 +255,9 @@ namespace Check_carasi_DF_ContextClearing
                     newTab.Controls.Add(newUC);
                     tabControl1.TabPages.Add(newTab);
                     tabControl1.SelectedTab = newTab;
+                    
+                    // Update status after creating tab
+                    UpdateTabMemoryStatus();
                 }
             }
             catch (System.Exception ex)
@@ -266,6 +281,9 @@ namespace Check_carasi_DF_ContextClearing
                         }
                     }
                     tabControl1.TabPages.Remove(tabControl1.SelectedTab);
+                    
+                    // MEMORY CLEANUP: Clean resources after closing tabs
+                    CleanupResourcesIfNeeded();
                 }
             }
             else
@@ -481,7 +499,7 @@ namespace Check_carasi_DF_ContextClearing
             string _DD_Deadline = "09.03.2022";
 
             OutlookApp outlookApp = new OutlookApp();
-            MailItem mailItem = outlookApp.CreateItem(OlItemType.olMailItem);
+            var mailItem = outlookApp.CreateItem(0); // OlItemType.olMailItem = 0
 
             mailItem.Subject = "[STLA][eVCU] " + _PrjName + "- DD request for Adapter development";
             mailItem.CC = " VUONG MINH NGOC (MS/EJV63-PS) <NGOC.VUONGMINH@vn.bosch.com>; Huynh Trong Hieu (MS/EJV63-PS) <Hieu.HuynhTrong@vn.bosch.com>; " +
@@ -499,7 +517,7 @@ namespace Check_carasi_DF_ContextClearing
                 "<b><span style = 'background:yellow;mso-highlight:yellow'> Please ignore if its not relevant to you !</span></b> </body></html>" +
                 "<p> Trân trọng / Best regards, </p>";
             //Set a high priority to the message
-            mailItem.Importance = OlImportance.olImportanceHigh;
+            mailItem.Importance = 2; // OlImportance.olImportanceHigh = 2
             mailItem.Display(true);
         }
 
@@ -586,6 +604,56 @@ namespace Check_carasi_DF_ContextClearing
             }
         }
 
+        // MEMORY CLEANUP: Clean up resources when reaching limits
+        private void CleanupResourcesIfNeeded()
+        {
+            if (tabControl1.TabPages.Count > 50)
+            {
+                try
+                {
+                    // Force garbage collection
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                    
+                    // Clear query cache to free memory
+                    Excel_Parser.ClearQueryCache();
+                    
+                    // Clear connection pool
+                    Lib_OLEDB_Excel.CleanupConnectionPool();
+                }
+                catch { /* Ignore cleanup errors */ }
+            }
+        }
+
+        // STATUS UPDATE: Update tab and memory status
+        private void UpdateTabMemoryStatus()
+        {
+            try
+            {
+                int tabCount = tabControl1.TabPages.Count;
+                int cacheSize = Excel_Parser.GetCacheSize();
+                int poolSize = Lib_OLEDB_Excel.GetPoolSize();
+                
+                string status = $"v{VersionLabel} | Tabs: {tabCount}/60 | Cache: {cacheSize}/50 | Pool: {poolSize}/10";
+                lb_version.Text = status;
+                
+                // Warning if approaching limits
+                if (tabCount > 55)
+                {
+                    lb_version.ForeColor = System.Drawing.Color.Red;
+                }
+                else if (tabCount > 45)
+                {
+                    lb_version.ForeColor = System.Drawing.Color.Orange;
+                }
+                else
+                {
+                    lb_version.ForeColor = System.Drawing.Color.Black;
+                }
+            }
+            catch { /* Ignore status update errors */ }
+        }
 
     }
 }
