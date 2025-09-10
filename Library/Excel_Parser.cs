@@ -93,6 +93,7 @@ namespace Check_carasi_DF_ContextClearing
 
         // CACHING: Cache configuration
         private static readonly TimeSpan CacheTimeout = TimeSpan.FromMinutes(10); // 10 minute cache timeout
+        private const int MAX_CACHE_SIZE = 50; // Limit cache size to prevent memory overflow
 
         public Excel_Parser( string FileLink, DataTable dt_template)
         {
@@ -162,6 +163,13 @@ namespace Check_carasi_DF_ContextClearing
                 var quotedVars = variables.Select(v => "'" + v.Replace("'", "''") + "'");
                 string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
                 
+                // Limit query size to prevent OLEDB overflow
+                if (whereClause.Length > 8000) // SQL query length limit
+                {
+                    // Split into smaller batches
+                    return ProcessLargeBatch_Carasi(variables);
+                }
+                
                 DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
                 
                 // Mark found variables as true
@@ -179,7 +187,9 @@ namespace Check_carasi_DF_ContextClearing
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error in batch Carasi query: " + ex.Message, "Error");
+                // Fallback to individual queries if batch fails
+                System.Diagnostics.Debug.WriteLine("Batch query failed, falling back to individual queries: " + ex.Message);
+                return ProcessIndividualQueries_Carasi(variables);
             }
             
             return results;
@@ -384,8 +394,27 @@ namespace Check_carasi_DF_ContextClearing
 
         private static void CleanupOldCacheEntries()
         {
-            // Only cleanup occasionally to avoid performance impact
-            if (QueryCache.Count > 100 && DateTime.Now.Millisecond < 10)
+            // Aggressive cleanup when approaching limits
+            if (QueryCache.Count >= MAX_CACHE_SIZE)
+            {
+                lock (CacheLock)
+                {
+                    // Remove half of the oldest entries
+                    var entriesToRemove = QueryCache.Count / 2;
+                    var oldestKeys = QueryCache
+                        .OrderBy(kvp => kvp.Value.CacheTime)
+                        .Take(entriesToRemove)
+                        .Select(kvp => kvp.Key)
+                        .ToList();
+
+                    foreach (string key in oldestKeys)
+                    {
+                        QueryCache.TryRemove(key, out _);
+                    }
+                }
+            }
+            // Regular cleanup occasionally to avoid performance impact
+            else if (QueryCache.Count > 20 && DateTime.Now.Millisecond < 10)
             {
                 lock (CacheLock)
                 {
@@ -415,6 +444,75 @@ namespace Check_carasi_DF_ContextClearing
         public static int GetCacheSize()
         {
             return QueryCache.Count;
+        }
+
+        // FALLBACK: Process large batches by splitting
+        private Dictionary<string, bool> ProcessLargeBatch_Carasi(List<string> variables)
+        {
+            var results = new Dictionary<string, bool>();
+            
+            // Initialize all as false
+            foreach (string var in variables)
+            {
+                results[var] = false;
+            }
+
+            // Split into chunks of 20 variables
+            const int CHUNK_SIZE = 20;
+            for (int i = 0; i < variables.Count; i += CHUNK_SIZE)
+            {
+                var chunk = variables.Skip(i).Take(CHUNK_SIZE).ToList();
+                try
+                {
+                    var quotedVars = chunk.Select(v => "'" + v.Replace("'", "''") + "'");
+                    string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
+                    
+                    DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
+                    
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        string foundVar = row["SSTG label"].ToString();
+                        if (results.ContainsKey(foundVar))
+                        {
+                            results[foundVar] = true;
+                        }
+                    }
+                }
+                catch
+                {
+                    // If chunk fails, try individual queries for this chunk
+                    foreach (string var in chunk)
+                    {
+                        try
+                        {
+                            results[var] = _IsExist_Carasi(var);
+                        }
+                        catch { /* Leave as false */ }
+                    }
+                }
+            }
+            
+            return results;
+        }
+
+        // FALLBACK: Individual queries as last resort
+        private Dictionary<string, bool> ProcessIndividualQueries_Carasi(List<string> variables)
+        {
+            var results = new Dictionary<string, bool>();
+            
+            foreach (string var in variables)
+            {
+                try
+                {
+                    results[var] = _IsExist_Carasi(var);
+                }
+                catch
+                {
+                    results[var] = false;
+                }
+            }
+            
+            return results;
         }
     }
 }

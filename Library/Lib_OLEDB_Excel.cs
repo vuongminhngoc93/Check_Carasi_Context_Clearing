@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace Check_carasi_DF_ContextClearing
 {
@@ -15,10 +16,13 @@ namespace Check_carasi_DF_ContextClearing
         Version: 1.0.0
         Description: transfer data from Excel to OLEDB*/
 
-        // CONNECTION POOLING: Static pool to reuse connections
+        // CONNECTION POOLING: Static pool to reuse connections with size limit
         private static readonly ConcurrentDictionary<string, OleDbConnection> ConnectionPool = 
             new ConcurrentDictionary<string, OleDbConnection>();
         private static readonly object PoolLock = new object();
+        
+        // CONNECTION POOLING: Pool configuration
+        private const int MAX_POOL_SIZE = 10; // Limit pool size to prevent overflow
 
         private string excelObject = "Provider=Microsoft.{0}.OLEDB.{1};Data Source={2}; Extended Properties =\"Excel {3};HDR=YES\"";
         private string filepath = string.Empty;
@@ -166,6 +170,23 @@ namespace Check_carasi_DF_ContextClearing
                     (pooledConnection.State == ConnectionState.Open || pooledConnection.State == ConnectionState.Closed))
                 {
                     return pooledConnection;
+                }
+
+                // Check pool size limit before creating new connection
+                if (ConnectionPool.Count >= MAX_POOL_SIZE)
+                {
+                    // Remove oldest connection to make room
+                    var oldestKey = ConnectionPool.Keys.FirstOrDefault();
+                    if (!string.IsNullOrEmpty(oldestKey) && ConnectionPool.TryRemove(oldestKey, out var oldConnection))
+                    {
+                        try
+                        {
+                            if (oldConnection?.State == ConnectionState.Open)
+                                oldConnection.Close();
+                            oldConnection?.Dispose();
+                        }
+                        catch { /* Ignore cleanup errors */ }
+                    }
                 }
 
                 // Create new connection with fallback logic
