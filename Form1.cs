@@ -67,97 +67,41 @@ namespace Check_carasi_DF_ContextClearing
             // Initialize status display
             UpdateTabMemoryStatus();
             
-            // Setup modern tab rendering
-            SetupModernTabRendering();
-            
-            // Apply modern visual effects
-            ApplyModernVisualEffects();
-            
-            // Setup modern button hover effects
-            SetupButtonHoverEffects();
-            
-            // Apply modern visual effects and shadows
-            ApplyModernVisualEffects();
+            // Setup lightweight modern styling (no heavy custom drawing)
+            SetupLightweightModernStyling();
         }
         
         /// <summary>
-        /// Setup modern tab rendering with gradient effects and smooth animations
+        /// Lightweight modern styling for better performance
         /// </summary>
-        private void SetupModernTabRendering()
+        private void SetupLightweightModernStyling()
         {
-            // Enable custom drawing for tabs
-            tabControl1.DrawItem += TabControl1_DrawItem;
+            // Use built-in Windows styling instead of custom drawing for performance
+            tabControl1.Appearance = TabAppearance.Normal;
+            tabControl1.SizeMode = TabSizeMode.Normal;
             
-            // Setup tab selection optimization
+            // Setup tab selection optimization (keep this for performance)
             tabControl1.SelectedIndexChanged += OnTabSelectionChanged;
             
-            // Setup modern toolbar styling
+            // Setup modern toolbar styling (lightweight)
             toolStrip1.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
-            toolStrip1.Renderer = new ModernToolStripRenderer();
+            toolStrip1.RenderMode = ToolStripRenderMode.Professional;
             
-            // Setup modern progress bar styling
-            SetupModernProgressBar();
-            
-            // Setup button hover effects
+            // Setup button hover effects (lightweight)
             SetupButtonHoverEffects();
+            
+            // Apply modern fonts only (no heavy visual effects)
+            ApplyModernFonts();
         }
         
         /// <summary>
-        /// Custom tab drawing with modern Material Design style
+        /// REMOVED: Custom tab drawing was causing performance issues
+        /// Using built-in Windows tab styling for better speed
         /// </summary>
-        private void TabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        private void TabControl1_DrawItem_DISABLED(object sender, DrawItemEventArgs e)
         {
-            TabControl tabControl = sender as TabControl;
-            TabPage tabPage = tabControl.TabPages[e.Index];
-            Rectangle tabRect = tabControl.GetTabRect(e.Index);
-            
-            bool isSelected = (e.Index == tabControl.SelectedIndex);
-            
-            // Define colors for Material Design tabs
-            System.Drawing.Color backColor = isSelected ? 
-                System.Drawing.Color.FromArgb(33, 150, 243) : 
-                System.Drawing.Color.FromArgb(245, 245, 245);
-            System.Drawing.Color textColor = isSelected ? 
-                System.Drawing.Color.White : 
-                System.Drawing.Color.FromArgb(66, 66, 66);
-            
-            // Create gradient brush for selected tab
-            if (isSelected)
-            {
-                using (var brush = new LinearGradientBrush(
-                    tabRect, 
-                    System.Drawing.Color.FromArgb(33, 150, 243),
-                    System.Drawing.Color.FromArgb(21, 101, 192),
-                    LinearGradientMode.Vertical))
-                {
-                    e.Graphics.FillRectangle(brush, tabRect);
-                }
-            }
-            else
-            {
-                using (var brush = new System.Drawing.SolidBrush(backColor))
-                {
-                    e.Graphics.FillRectangle(brush, tabRect);
-                }
-            }
-            
-            // Draw tab text with modern font
-            using (var brush = new System.Drawing.SolidBrush(textColor))
-            using (var font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular))
-            {
-                var textRect = new Rectangle(tabRect.X + 8, tabRect.Y + 8, 
-                                           tabRect.Width - 16, tabRect.Height - 16);
-                e.Graphics.DrawString(tabPage.Text, font, brush, textRect);
-            }
-            
-            // Draw subtle border for unselected tabs
-            if (!isSelected)
-            {
-                using (var pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, 200, 200)))
-                {
-                    e.Graphics.DrawRectangle(pen, tabRect);
-                }
-            }
+            // This method is disabled for performance optimization
+            // The application now uses native Windows tab rendering
         }
 
         public string VersionLabel
@@ -1002,23 +946,18 @@ namespace Check_carasi_DF_ContextClearing
         }
 
         /// <summary>
-        /// Apply modern visual effects and shadows
+        /// Apply lightweight modern visual effects (optimized for performance)
         /// </summary>
-        private void ApplyModernVisualEffects()
+        private void ApplyLightweightVisualEffects()
         {
-            // Add subtle shadow effect to main form
+            // Keep essential styling only
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             
-            // Modern window styling
-            this.SetStyle(ControlStyles.UserPaint, true);
+            // REMOVED: Heavy custom painting for performance
+            // Only keep essential double buffering
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.DoubleBuffer, true);
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            
-            // Apply consistent fonts across the application
-            ApplyModernFonts();
         }
         
         /// <summary>

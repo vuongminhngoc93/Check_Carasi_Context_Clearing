@@ -516,11 +516,11 @@ namespace Check_carasi_DF_ContextClearing
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1124, 743);
             this.tabControl1.TabIndex = 24;
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            // PERFORMANCE OPTIMIZED: Use normal tab rendering instead of custom drawing
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Normal;
             this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
-            this.tabControl1.ItemSize = new System.Drawing.Size(120, 32);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Normal;
+            // REMOVED: DrawMode = OwnerDrawFixed (was causing performance issues)
             // 
             // tabPage1
             // 
