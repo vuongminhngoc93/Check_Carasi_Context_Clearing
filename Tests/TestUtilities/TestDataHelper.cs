@@ -13,6 +13,17 @@ namespace Check_carasi_DF_ContextClearing.Tests
         public static string TestDataDirectory => Path.Combine(Path.GetTempPath(), "CarasiDFTestData");
 
         /// <summary>
+        /// Gets the test data directory path where test files are located
+        /// </summary>
+        /// <returns>Path to the test data directory</returns>
+        public static string GetTestDataDirectory()
+        {
+            // Get the directory where the test executable is running
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            return Path.Combine(baseDir, "TestData");
+        }
+
+        /// <summary>
         /// Creates a test directory with all necessary test files
         /// </summary>
         /// <returns>Path to the created test directory</returns>

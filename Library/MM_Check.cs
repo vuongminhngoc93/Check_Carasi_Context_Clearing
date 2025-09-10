@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Check_carasi_DF_ContextClearing
 {
-    class MM_Check
+    public class MM_Check
     {
         private string link_Of_MM = string.Empty;
         private string link_Of_ARXML = string.Empty;
@@ -52,28 +52,45 @@ namespace Check_carasi_DF_ContextClearing
 
         private void isValid()
         {
-            var a = GetDirectories(link_Of_MM, "arxml");
-            if (a.Count > 0)
+            // Reset validation state
+            isValidLink = false;
+            
+            // Check if link_Of_MM is valid path
+            if (string.IsNullOrEmpty(link_Of_MM) || !Directory.Exists(link_Of_MM))
             {
-                
-                string[] files = Directory.GetFiles(a[0].ToString(), "*.arxml");
+                return; // Early exit if path is invalid
+            }
 
-                foreach (string file in files)
+            try
+            {
+                var a = GetDirectories(link_Of_MM, "arxml");
+                if (a.Count > 0)
                 {
-                    if (file.EndsWith("_Extern.arxml"))
+                    
+                    string[] files = Directory.GetFiles(a[0].ToString(), "*.arxml");
+
+                    foreach (string file in files)
                     {
-                        isValidLink = true;
-                        link_Of_ARXML = file;
-                        break;
+                        if (file.EndsWith("_Extern.arxml"))
+                        {
+                            isValidLink = true;
+                            link_Of_ARXML = file;
+                            break;
+                        }
+                        else { }
+                            //MessageBox.Show("There is an 'arxml' folder inside! But no Extern Arxml file!");
                     }
-                    else { }
-                        //MessageBox.Show("There is an 'arxml' folder inside! But no Extern Arxml file!");
+                }
+                else
+                {
+                    isValidLink = false;
+                    //MessageBox.Show("There is an 'arxml' folder inside! But no Extern Arxml file!");
                 }
             }
-            else
+            catch (Exception)
             {
+                // Handle any file system exceptions gracefully
                 isValidLink = false;
-                MessageBox.Show("There is an 'arxml' folder inside! But no Extern Arxml file!");
             }
         }
 
@@ -109,8 +126,7 @@ namespace Check_carasi_DF_ContextClearing
             bool _isContain = false;
             int index = 0;
 
-            FileStream inFile = new FileStream(link_Of_ARXML, FileMode.Open, FileAccess.Read);
-
+            using (FileStream inFile = new FileStream(link_Of_ARXML, FileMode.Open, FileAccess.Read))
             using (var sr = new StreamReader(inFile))
             {
                 while (!sr.EndOfStream)
@@ -133,8 +149,7 @@ namespace Check_carasi_DF_ContextClearing
             bool _isContain = false;
             int index = 0;
 
-            FileStream inFile = new FileStream(link_Of_ARXML, FileMode.Open, FileAccess.Read);
-
+            using (FileStream inFile = new FileStream(link_Of_ARXML, FileMode.Open, FileAccess.Read))
             using (var sr = new StreamReader(inFile))
             {
                 while (!sr.EndOfStream)

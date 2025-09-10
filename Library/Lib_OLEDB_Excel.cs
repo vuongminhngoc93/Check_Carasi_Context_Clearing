@@ -8,7 +8,7 @@ using System;
 
 namespace Check_carasi_DF_ContextClearing
 {
-    class Lib_OLEDB_Excel
+    class Lib_OLEDB_Excel : IDisposable
     {
         /*Author: Vuong Minh Ngoc (MS/EJV)
         Version: 1.0.0
@@ -82,6 +82,7 @@ namespace Check_carasi_DF_ContextClearing
                 connectionStringChange(this, new EventArgs());
             }
         }
+
         //ConnectionString
         public string ConnectionString
         {
@@ -93,16 +94,16 @@ namespace Check_carasi_DF_ContextClearing
                     FileInfo fi = new FileInfo(this.filepath);
                     if (fi.Extension.Equals(".xls"))
                     {
-                        // For Excel Below 2007 Format
+                        // For Excel Below 2007 Format - Use ACE provider for compatibility
                         return string.Format(this.excelObject,
-                                   "Jet", "4.0", this.filepath, "8.0");
+                                   "ACE", "12.0", this.filepath, "8.0");
                     }
                     //xlsx is new format // tmp is temp file which using for only template Excel file which embeded in Resource
                     else if (fi.Extension.Equals(".xlsx")|| fi.Extension.Equals(".tmp"))
                     {
-                        // For Excel 2007 File  Format
+                        // For Excel 2007 File Format
                         return string.Format(this.excelObject,
-                                   "Ace", "12.0", this.filepath, "12.0");
+                                   "ACE", "12.0", this.filepath, "12.0");
                     }
                     else
                         return string.Empty;
@@ -120,13 +121,60 @@ namespace Check_carasi_DF_ContextClearing
             {
                 if (con == null)
                 {
-                    OleDbConnection _con = new OleDbConnection
-                    {
-                        ConnectionString = this.ConnectionString
-                    };
-                    this.con = _con;
+                    // Try to create connection with fallback logic
+                    con = CreateConnectionWithFallback();
                 }
                 return this.con;
+            }
+        }
+
+        private OleDbConnection CreateConnectionWithFallback()
+        {
+            string connectionString = this.ConnectionString;
+            
+            try
+            {
+                var connection = new OleDbConnection(connectionString);
+                // Test the connection
+                connection.Open();
+                connection.Close();
+                return connection;
+            }
+            catch (Exception ex) when (ex.Message.Contains("provider") || ex.Message.Contains("registered"))
+            {
+                // If ACE provider fails, try with alternative settings
+                FileInfo fi = new FileInfo(this.filepath);
+                string fallbackConnectionString;
+                
+                if (fi.Extension.Equals(".xls"))
+                {
+                    // Try ACE provider with different Excel version
+                    fallbackConnectionString = string.Format(this.excelObject,
+                                       "ACE", "16.0", this.filepath, "8.0");
+                }
+                else
+                {
+                    // Try ACE provider 16.0 for xlsx
+                    fallbackConnectionString = string.Format(this.excelObject,
+                                       "ACE", "16.0", this.filepath, "12.0");
+                }
+                
+                try
+                {
+                    var fallbackConnection = new OleDbConnection(fallbackConnectionString);
+                    // Test the fallback connection
+                    fallbackConnection.Open();
+                    fallbackConnection.Close();
+                    return fallbackConnection;
+                }
+                catch
+                {
+                    // If all fails, throw original exception with helpful message
+                    throw new Exception($"OLEDB Provider Error: Unable to connect to Excel file '{this.filepath}'. " +
+                                      $"Original error: {ex.Message}. " +
+                                      $"Please ensure Microsoft Access Database Engine is installed. " +
+                                      $"Download from: https://www.microsoft.com/en-us/download/details.aspx?id=54920");
+                }
             }
         }
 

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Check_carasi_DF_ContextClearing
 {
-    class A2L_Check
+    public class A2L_Check
     {
         private string link_Of_A2L = string.Empty;
         private bool isValidLink = true;
@@ -24,17 +24,68 @@ namespace Check_carasi_DF_ContextClearing
         
         private void A2L_setup ()
         {
-
+            // Validate A2L file path
+            if (string.IsNullOrEmpty(link_Of_A2L))
+            {
+                isValidLink = false;
+                return;
+            }
+            
+            // Check if file exists and has correct extension
+            if (File.Exists(link_Of_A2L) && Path.GetExtension(link_Of_A2L).ToLower() == ".a2l")
+            {
+                isValidLink = true;
+            }
+            else
+            {
+                isValidLink = false;
+            }
         }
 
         public bool IsExistInA2L(string keyword, ref string[] result)
         {
             bool _isContain = false;
-            int index = 0;
-
-
-
-            return _isContain;
+            
+            // Validate inputs
+            if (string.IsNullOrEmpty(keyword))
+            {
+                result = new string[0];
+                return false;
+            }
+            
+            if (string.IsNullOrEmpty(link_Of_A2L) || !File.Exists(link_Of_A2L))
+            {
+                result = new string[0];
+                isValidLink = false;
+                return false;
+            }
+            
+            try
+            {
+                // Read A2L file and search for keyword
+                string[] lines = File.ReadAllLines(link_Of_A2L);
+                List<string> matchedLines = new List<string>();
+                
+                foreach (string line in lines)
+                {
+                    if (line.Contains(keyword))
+                    {
+                        matchedLines.Add(line.Trim());
+                        _isContain = true;
+                    }
+                }
+                
+                result = matchedLines.ToArray();
+                isValidLink = true;
+                return _isContain;
+            }
+            catch (Exception)
+            {
+                // Handle file reading errors
+                result = new string[0];
+                isValidLink = false;
+                return false;
+            }
         }
     }
 }
