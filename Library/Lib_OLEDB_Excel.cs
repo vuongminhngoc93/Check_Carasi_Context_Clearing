@@ -5,6 +5,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
+using System.Collections.Concurrent;
 
 namespace Check_carasi_DF_ContextClearing
 {
@@ -13,6 +14,11 @@ namespace Check_carasi_DF_ContextClearing
         /*Author: Vuong Minh Ngoc (MS/EJV)
         Version: 1.0.0
         Description: transfer data from Excel to OLEDB*/
+
+        // CONNECTION POOLING: Static pool to reuse connections
+        private static readonly ConcurrentDictionary<string, OleDbConnection> ConnectionPool = 
+            new ConcurrentDictionary<string, OleDbConnection>();
+        private static readonly object PoolLock = new object();
 
         private string excelObject = "Provider=Microsoft.{0}.OLEDB.{1};Data Source={2}; Extended Properties =\"Excel {3};HDR=YES\"";
         private string filepath = string.Empty;
@@ -121,10 +127,54 @@ namespace Check_carasi_DF_ContextClearing
             {
                 if (con == null)
                 {
-                    // Try to create connection with fallback logic
-                    con = CreateConnectionWithFallback();
+                    // CONNECTION POOLING: Try to get from pool first
+                    string connectionKey = this.ConnectionString;
+                    con = GetPooledConnection(connectionKey);
                 }
                 return this.con;
+            }
+        }
+
+        // CONNECTION POOLING: Get or create pooled connection
+        private OleDbConnection GetPooledConnection(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+                return null;
+
+            // Try to get existing connection from pool
+            if (ConnectionPool.TryGetValue(connectionString, out OleDbConnection pooledConnection))
+            {
+                // Validate connection is still usable
+                if (pooledConnection != null && 
+                    (pooledConnection.State == ConnectionState.Open || pooledConnection.State == ConnectionState.Closed))
+                {
+                    return pooledConnection;
+                }
+                else
+                {
+                    // Remove invalid connection from pool
+                    ConnectionPool.TryRemove(connectionString, out _);
+                }
+            }
+
+            // Create new connection if not in pool or invalid
+            lock (PoolLock)
+            {
+                // Double-check after lock
+                if (ConnectionPool.TryGetValue(connectionString, out pooledConnection) && 
+                    pooledConnection != null && 
+                    (pooledConnection.State == ConnectionState.Open || pooledConnection.State == ConnectionState.Closed))
+                {
+                    return pooledConnection;
+                }
+
+                // Create new connection with fallback logic
+                var newConnection = CreateConnectionWithFallback();
+                if (newConnection != null)
+                {
+                    ConnectionPool.TryAdd(connectionString, newConnection);
+                }
+                return newConnection;
             }
         }
 
@@ -370,12 +420,47 @@ namespace Check_carasi_DF_ContextClearing
 
         public void Dispose()
         {
-            if (this.Connection != null && this.Connection.State == ConnectionState.Open)
-                this.Connection.Close();
-            if (this.Connection != null)
-                this.Connection.Dispose();
-
+            // CONNECTION POOLING: Don't dispose pooled connections, just close if needed
+            if (this.con != null && this.con.State == ConnectionState.Open)
+            {
+                try
+                {
+                    this.con.Close();
+                }
+                catch { /* Ignore close errors */ }
+            }
+            
+            // Don't dispose the pooled connection, just clear reference
+            this.con = null;
             this.filepath = string.Empty;
+        }
+
+        // CONNECTION POOLING: Static method to cleanup all pooled connections
+        public static void CleanupConnectionPool()
+        {
+            lock (PoolLock)
+            {
+                foreach (var kvp in ConnectionPool)
+                {
+                    try
+                    {
+                        if (kvp.Value != null)
+                        {
+                            if (kvp.Value.State == ConnectionState.Open)
+                                kvp.Value.Close();
+                            kvp.Value.Dispose();
+                        }
+                    }
+                    catch { /* Ignore cleanup errors */ }
+                }
+                ConnectionPool.Clear();
+            }
+        }
+
+        // CONNECTION POOLING: Get pool statistics for monitoring
+        public static int GetPoolSize()
+        {
+            return ConnectionPool.Count;
         }
     }
 }
