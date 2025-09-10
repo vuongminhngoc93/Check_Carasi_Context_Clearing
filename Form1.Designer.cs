@@ -58,6 +58,10 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripLabelTabCount = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelCache = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelPool = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelMemory = new System.Windows.Forms.ToolStripLabel();
             this.lb_link2Folder = new System.Windows.Forms.Label();
             this.tb_Link2Folder = new System.Windows.Forms.TextBox();
             this.btn_Link2Folder = new System.Windows.Forms.Button();
@@ -127,7 +131,7 @@ namespace Check_carasi_DF_ContextClearing
             // 
             // toolStrip1
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.toolStrip1, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.toolStrip1, 4);
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
@@ -137,10 +141,14 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripDropDownButton3,
             this.toolStripSeparator5,
             this.toolStripDropDownButton4,
-            this.toolStripProgressBar1});
+            this.toolStripProgressBar1,
+            this.toolStripLabelTabCount,
+            this.toolStripLabelCache,
+            this.toolStripLabelPool,
+            this.toolStripLabelMemory});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(465, 30);
+            this.toolStrip1.Size = new System.Drawing.Size(830, 30);
             this.toolStrip1.TabIndex = 18;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -348,6 +356,38 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 27);
+            // 
+            // toolStripLabelTabCount
+            // 
+            this.toolStripLabelTabCount.Name = "toolStripLabelTabCount";
+            this.toolStripLabelTabCount.Size = new System.Drawing.Size(80, 27);
+            this.toolStripLabelTabCount.Text = "Tabs: 0/60";
+            this.toolStripLabelTabCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripLabelTabCount.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            // 
+            // toolStripLabelCache
+            // 
+            this.toolStripLabelCache.Name = "toolStripLabelCache";
+            this.toolStripLabelCache.Size = new System.Drawing.Size(70, 27);
+            this.toolStripLabelCache.Text = "Cache: 0/50";
+            this.toolStripLabelCache.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripLabelCache.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
+            // 
+            // toolStripLabelPool
+            // 
+            this.toolStripLabelPool.Name = "toolStripLabelPool";
+            this.toolStripLabelPool.Size = new System.Drawing.Size(60, 27);
+            this.toolStripLabelPool.Text = "Pool: 0/10";
+            this.toolStripLabelPool.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripLabelPool.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
+            // 
+            // toolStripLabelMemory
+            // 
+            this.toolStripLabelMemory.Name = "toolStripLabelMemory";
+            this.toolStripLabelMemory.Size = new System.Drawing.Size(100, 27);
+            this.toolStripLabelMemory.Text = "Memory: OK";
+            this.toolStripLabelMemory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripLabelMemory.Margin = new System.Windows.Forms.Padding(5, 1, 10, 2);
             // 
             // lb_link2Folder
             // 
@@ -701,6 +741,10 @@ namespace Check_carasi_DF_ContextClearing
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelTabCount;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelCache;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelPool;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelMemory;
         private System.Windows.Forms.ToolStripMenuItem estimationCheckToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchListInterfacesToolStripMenuItem;

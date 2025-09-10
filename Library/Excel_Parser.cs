@@ -275,8 +275,14 @@ namespace Check_carasi_DF_ContextClearing
 
         private void carasi_Parser(string var)
         {
+            // OPTIMIZATION: Use main excel instance (which uses pooled connections)
             carasi_Interfaces = __excel.ReadTable("Interfaces$", "[" + "SSTG label" + "]='" + var + "'");
             carasi_dictionary = __excel.ReadTable("Dictionary$", "[" + "SSTG label" + "]='" + var + "'");
+
+            // CACHE: Store single result for future reference
+            string cacheKey = $"{linkOfFile}|Interfaces$|single|{var}";
+            var singleResult = new Dictionary<string, bool> { { var, carasi_Interfaces.Rows.Count > 0 } };
+            StoreCachedResult(cacheKey, singleResult);
 
             dictionary = carasi_dictionary.DefaultView;
             interfaces = carasi_Interfaces.DefaultView;

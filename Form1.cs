@@ -45,6 +45,9 @@ namespace Check_carasi_DF_ContextClearing
 
         DataTable dt_template = new DataTable();
         string tempPath = string.Empty;
+        
+        // Flag to track batch operations to avoid double warnings
+        private bool isBatchOperation = false;
 
         UC_dataflow internalUC;
         Form DF_viewer = new Form();
@@ -58,6 +61,9 @@ namespace Check_carasi_DF_ContextClearing
             InitializeComponent();
             lb_version.Text = VersionLabel;
             buildHeader();
+            
+            // Initialize status display
+            UpdateTabMemoryStatus();
         }
 
         public string VersionLabel
@@ -148,6 +154,30 @@ namespace Check_carasi_DF_ContextClearing
 
         private void btn_Run_Click(object sender, EventArgs e)
         {
+            // RESOURCE PROTECTION: Check if we're approaching resource limits
+            // (Skip this check if we're in a batch operation and already warned)
+            if (tabControl1.TabPages.Count >= 58 && !isBatchOperation) // Warning before hitting limit
+            {
+                DialogResult result = MessageBox.Show(
+                    $"You have {tabControl1.TabPages.Count} tabs open. Continuing may cause performance issues or crashes.\n\n" +
+                    "Recommended: Close some tabs first.\n\n" +
+                    "Do you want to continue anyway?",
+                    "Resource Warning", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Warning);
+                
+                if (result == DialogResult.No)
+                {
+                    return; // User chose to stop
+                }
+            }
+
+            // MEMORY CLEANUP: Force cleanup before heavy operations
+            if (tabControl1.TabPages.Count > 50)
+            {
+                CleanupResourcesIfNeeded();
+            }
+
             toolStripProgressBar1.Value = 0;
             if (link2Folder == "")
             {
@@ -182,6 +212,13 @@ namespace Check_carasi_DF_ContextClearing
                     if (c.GetType().Name == "UC_ContextClearing")
                     {
                         UC_doing = (UC_ContextClearing)c;
+                        
+                        // RESOURCE MONITORING: Check before creating multiple Excel_Parser instances
+                        if (tabControl1.TabPages.Count >= 58)
+                        {
+                            this.Text = $"Context Clearing - HIGH RESOURCE USAGE ({tabControl1.TabPages.Count} tabs)";
+                        }
+                        
                         UC_doing.NewCarasi = new Excel_Parser(nameOfnewCarasi, dt_template);
                         UC_doing.OldCarasi = new Excel_Parser(nameOfoldCarasi, dt_template);
                         UC_doing.NewDF = new Excel_Parser(nameOfnewDataflow, dt_template);
@@ -191,6 +228,10 @@ namespace Check_carasi_DF_ContextClearing
                         if (tb_Interface2search.Text != "")
                         {
                             UC_doing.__checkVariable(ref toolStripProgressBar1, tb_Interface2search.Text);
+                            
+                            // UPDATE STATUS: Refresh status after search to show cache/pool activity
+                            UpdateTabMemoryStatus();
+                            
                             /* Check and update Macro Module searching Feature */
                             if(_mmCheck != null && _mmCheck.IsValidLink)
                             {
@@ -284,6 +325,9 @@ namespace Check_carasi_DF_ContextClearing
                     
                     // MEMORY CLEANUP: Clean resources after closing tabs
                     CleanupResourcesIfNeeded();
+                    
+                    // UPDATE STATUS: Refresh status display after tab removal
+                    UpdateTabMemoryStatus();
                 }
             }
             else
@@ -595,13 +639,56 @@ namespace Check_carasi_DF_ContextClearing
         {
             var a = Newlist.Text;
             string[] listOfInterfaces = Newlist.Text.Split('\n');
+            
+            // SET BATCH FLAG: Indicate we're in batch operation
+            isBatchOperation = true;
 
             for (int i = 0; i < listOfInterfaces.Length - 1; i++)
             {
+                // RESOURCE PROTECTION: Check tab limits BEFORE creating new tab
+                const int MAX_TABS = 60;
+                if (tabControl1.TabPages.Count >= MAX_TABS)
+                {
+                    MessageBox.Show($"Maximum {MAX_TABS} tabs reached during batch search.\n" +
+                                   $"Processed {i} interfaces out of {listOfInterfaces.Length - 1}.\n" +
+                                   "Please close some tabs and try again.", 
+                                   "Tab Limit Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    break; // Stop the batch processing
+                }
+
+                // Additional warning before approaching limit
+                if (tabControl1.TabPages.Count >= 58)
+                {
+                    DialogResult result = MessageBox.Show(
+                        $"You have {tabControl1.TabPages.Count} tabs open. Continuing batch search may cause issues.\n\n" +
+                        $"Processed {i} interfaces out of {listOfInterfaces.Length - 1}.\n\n" +
+                        "Do you want to continue the batch search?",
+                        "Resource Warning", 
+                        MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Warning);
+                    
+                    if (result == DialogResult.No)
+                    {
+                        break; // Stop the batch processing
+                    }
+                }
+
                 btn_toolStrip_NewTab.PerformClick();
-                tb_Interface2search.Text = listOfInterfaces[i];
+                tb_Interface2search.Text = listOfInterfaces[i].Trim(); // Trim whitespace
                 btn_Run.PerformClick();
+                
+                // UPDATE STATUS: Refresh status after each search to show cache/pool changes
+                UpdateTabMemoryStatus();
+                
+                // Brief pause to see the updates
+                System.Windows.Forms.Application.DoEvents();
             }
+            
+            // RESET BATCH FLAG: Batch operation completed
+            isBatchOperation = false;
+            
+            // FINAL STATUS UPDATE: Ensure final status is displayed
+            UpdateTabMemoryStatus();
         }
 
         // MEMORY CLEANUP: Clean up resources when reaching limits
@@ -635,22 +722,53 @@ namespace Check_carasi_DF_ContextClearing
                 int cacheSize = Excel_Parser.GetCacheSize();
                 int poolSize = Lib_OLEDB_Excel.GetPoolSize();
                 
-                string status = $"v{VersionLabel} | Tabs: {tabCount}/60 | Cache: {cacheSize}/50 | Pool: {poolSize}/10";
-                lb_version.Text = status;
+                // Update ToolStrip status labels in menubar
+                toolStripLabelTabCount.Text = $"Tabs: {tabCount}/60";
+                toolStripLabelCache.Text = $"Cache: {cacheSize}/50";
+                toolStripLabelPool.Text = $"Pool: {poolSize}/10";
                 
-                // Warning if approaching limits
+                // Update memory status with color coding
                 if (tabCount > 55)
                 {
-                    lb_version.ForeColor = System.Drawing.Color.Red;
+                    toolStripLabelTabCount.ForeColor = System.Drawing.Color.Red;
+                    toolStripLabelMemory.Text = "Memory: HIGH";
+                    toolStripLabelMemory.ForeColor = System.Drawing.Color.Red;
                 }
                 else if (tabCount > 45)
                 {
-                    lb_version.ForeColor = System.Drawing.Color.Orange;
+                    toolStripLabelTabCount.ForeColor = System.Drawing.Color.Orange;
+                    toolStripLabelMemory.Text = "Memory: WARN";
+                    toolStripLabelMemory.ForeColor = System.Drawing.Color.Orange;
                 }
                 else
                 {
-                    lb_version.ForeColor = System.Drawing.Color.Black;
+                    toolStripLabelTabCount.ForeColor = System.Drawing.Color.Black;
+                    toolStripLabelMemory.Text = "Memory: OK";
+                    toolStripLabelMemory.ForeColor = System.Drawing.Color.Green;
                 }
+                
+                // Color coding for cache and pool warnings
+                if (cacheSize > 40)
+                {
+                    toolStripLabelCache.ForeColor = System.Drawing.Color.Orange;
+                }
+                else
+                {
+                    toolStripLabelCache.ForeColor = System.Drawing.Color.Black;
+                }
+                
+                if (poolSize > 8)
+                {
+                    toolStripLabelPool.ForeColor = System.Drawing.Color.Orange;
+                }
+                else
+                {
+                    toolStripLabelPool.ForeColor = System.Drawing.Color.Black;
+                }
+                
+                // Keep simple version info in version label (no color changes)
+                lb_version.Text = VersionLabel;
+                lb_version.ForeColor = System.Drawing.Color.Black; // Always keep version label black
             }
             catch { /* Ignore status update errors */ }
         }
