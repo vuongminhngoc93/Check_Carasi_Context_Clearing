@@ -11,7 +11,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>\\bosch.com\dfsRB\DfsVN\LOC\Hc\RBVH\20_EEU\01_Internal\90_Trainings\06_Automation_Tools\VUN81HC\STLA_SwShAdapter\</PublishUrl>
     <Install>true</Install>
@@ -26,7 +26,7 @@
     <ProductName>PSA SW Sharing Adapter Container</ProductName>
     <PublisherName>Vuong Minh Ngoc</PublisherName>
     <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <ApplicationVersion>2025.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -91,7 +91,10 @@
   <ItemGroup>
     <Compile Include="Library\A2L_Check.cs" />
     <Compile Include="Library\Excel_Parser.cs" />
+    <Compile Include="Library\ExcelParserManager.cs" />
     <Compile Include="Library\PerformanceLogger.cs" />
+    <Compile Include="Library\PropertyDifferenceHighlighter.cs" />
+    <Compile Include="Library\VariableSearchCoordinator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

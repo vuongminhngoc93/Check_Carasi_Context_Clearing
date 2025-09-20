@@ -155,7 +155,6 @@ namespace Check_carasi_DF_ContextClearing
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(663, 316);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lb_NameOfFile
@@ -724,7 +723,6 @@ namespace Check_carasi_DF_ContextClearing
             this.dataGridView_DF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_DF.Location = new System.Drawing.Point(103, 40);
             this.dataGridView_DF.Name = "dataGridView_DF";
-            this.dataGridView_DF.Size = new System.Drawing.Size(557, 57);
             this.dataGridView_DF.TabIndex = 53;
             this.dataGridView_DF.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_DF_CellClick);
             // 

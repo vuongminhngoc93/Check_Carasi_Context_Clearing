@@ -1,0 +1,56 @@
+ASAP2_VERSION 1 60
+PROJECT TestProject "Test A2L File for Unit Testing"
+BEGIN_PROJECT
+    
+    MODULE TestModule "Test Module for Carasi DF Context Clearing Tool"
+    BEGIN_MODULE
+        
+        MEASUREMENT TestInterface_001 "Engine temperature sensor value"
+        UINT16 0x1000 1 0 65535
+        ECU_ADDRESS 0x1000
+        
+        MEASUREMENT TestInterface_002 "Battery voltage measurement"
+        UINT16 0x1002 1 0 65535
+        ECU_ADDRESS 0x1002
+        
+        MEASUREMENT TestInterface_003 "Motor speed feedback"
+        UINT16 0x1004 1 0 65535
+        ECU_ADDRESS 0x1004
+        
+        MEASUREMENT TestInterface_004 "Brake pedal position"
+        UINT8 0x1006 1 0 255
+        ECU_ADDRESS 0x1006
+        
+        MEASUREMENT TestInterface_005 "Steering wheel angle"
+        SINT16 0x1008 1 -32768 32767
+        ECU_ADDRESS 0x1008
+        
+        MEASUREMENT TestInterface_006 "HVAC blower speed command"
+        UINT8 0x100A 1 0 255
+        ECU_ADDRESS 0x100A
+        
+        MEASUREMENT TestInterface_007 "Door lock status indication"
+        UINT8 0x100C 1 0 1
+        ECU_ADDRESS 0x100C
+        
+        MEASUREMENT TestInterface_008 "Charging current request"
+        UINT16 0x100E 1 0 65535
+        ECU_ADDRESS 0x100E
+        
+        MEASUREMENT TestInterface_009 "Inverter temperature warning"
+        SINT8 0x1010 1 -128 127
+        ECU_ADDRESS 0x1010
+        
+        MEASUREMENT TestInterface_010 "Suspension damping coefficient"
+        UINT8 0x1012 1 0 255
+        ECU_ADDRESS 0x1012
+        
+        CHARACTERISTIC TestInterface_Cal_001 "Engine temperature calibration"
+        VALUE 0x2000 _DUMMY_DEPOSIT_ 1 0 100
+        
+        CHARACTERISTIC TestInterface_Cal_002 "Battery voltage calibration"
+        VALUE 0x2002 _DUMMY_DEPOSIT_ 1 0 16
+        
+    END_MODULE
+    
+END_PROJECT

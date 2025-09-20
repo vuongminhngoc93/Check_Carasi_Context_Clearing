@@ -67,14 +67,60 @@ namespace Check_carasi_DF_ContextClearing
         public void setValue_UC(string lb_NameOfFile, DataView dt)
         {
             dataGridView_DF.AutoGenerateColumns = true;
-            dataGridView_DF.DataSource = dt;
+            
+            // FIX: Create a COPY of DataView to avoid reference issues when Excel_Parser clears data
+            if (dt != null)
+            {
+                // Create a new DataTable from the DataView to break the reference
+                DataTable copyTable = dt.ToTable();
+                dataGridView_DF.DataSource = copyTable;
+                System.Diagnostics.Debug.WriteLine($"DATAVIEW FIX: Created independent copy for {lb_NameOfFile} with {copyTable.Rows.Count} rows");
+            }
+            else
+            {
+                dataGridView_DF.DataSource = null;
+            }
+            
+            this.lb_NameOfFile.Text = lb_NameOfFile;
+            
+            // AUTO-SELECT: Basic first cell selection
+            if (dt != null && dt.Count > 0)
+            {
+                try
+                {
+                    // Direct selection without BeginInvoke to avoid conflicts
+                    if (dataGridView_DF.Rows.Count > 0)
+                    {
+                        dataGridView_DF.CurrentCell = dataGridView_DF.Rows[0].Cells[0];
+                        dataGridView_DF.ClearSelection();
+                        dataGridView_DF.Rows[0].Selected = true;
+                        dataGridView_DF_CellClick(dataGridView_DF, new DataGridViewCellEventArgs(0, 0));
+                        System.Diagnostics.Debug.WriteLine($"AUTO-SELECT: Selected first cell in {lb_NameOfFile}");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"AUTO-SELECT ERROR: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// AUTO-SELECT: Public method to select first cell and trigger cell click event
+        /// This will show first row data in textboxes below the DataGridView
+        /// </summary>
+        public void SelectFirstCell()
+        {
             if (dataGridView_DF.Rows.Count > 0)
             {
+                // Select first cell
                 dataGridView_DF.CurrentCell = dataGridView_DF.Rows[0].Cells[0];
+                dataGridView_DF.ClearSelection();
+                dataGridView_DF.Rows[0].Selected = true;
+                
+                // Trigger cell click event to populate textboxes
+                dataGridView_DF_CellClick(dataGridView_DF, new DataGridViewCellEventArgs(0, 0));
             }
-            dataGridView_DF_CellClick(dataGridView_DF, new DataGridViewCellEventArgs(dataGridView_DF.CurrentCell.ColumnIndex, dataGridView_DF.CurrentCell.RowIndex));
-
-            this.lb_NameOfFile.Text = lb_NameOfFile;
         }
 
         private void dataGridView_DF_CellClick(object sender, DataGridViewCellEventArgs e)

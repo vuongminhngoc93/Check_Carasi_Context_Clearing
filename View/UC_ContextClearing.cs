@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Threading;
 
 namespace Check_carasi_DF_ContextClearing
 {
@@ -34,6 +36,169 @@ namespace Check_carasi_DF_ContextClearing
         internal Excel_Parser NewDF { get => newDF; set => newDF = value; }
         internal Excel_Parser OldDF { get => oldDF; set => oldDF = value; }
 
+        // Control properties for PropertyDifferenceHighlighter
+        public UC_Carasi OldCarasiControl => UC_OldCarasi;
+        public UC_Carasi NewCarasiControl => UC_Newcarasi;
+        public UC_dataflow OldDataflowControl => UC_OldDF;
+        public UC_dataflow NewDataflowControl => UC_NewDF;
+
+        // Properties for performance optimization features
+        public bool IsHighlightingEnabled { get; set; } = true;
+
+        // Performance optimization methods
+        public async Task WarmupCacheAsync(List<string> variables)
+        {
+            try 
+            {
+                // PERFORMANCE: Pre-warm ExcelParserManager cache with file paths
+                if (!string.IsNullOrEmpty(nameOfnewCarasi) && File.Exists(nameOfnewCarasi))
+                {
+                    var parser = ExcelParserManager.GetParser(nameOfnewCarasi, null);
+                    System.Diagnostics.Debug.WriteLine($"WARMUP: Cached NewCarasi parser for {variables?.Count ?? 0} variables");
+                }
+                
+                if (!string.IsNullOrEmpty(nameOfoldCarasi) && File.Exists(nameOfoldCarasi))
+                {
+                    var parser = ExcelParserManager.GetParser(nameOfoldCarasi, null);
+                    System.Diagnostics.Debug.WriteLine($"WARMUP: Cached OldCarasi parser for {variables?.Count ?? 0} variables");
+                }
+                
+                if (!string.IsNullOrEmpty(nameOfnewDataflow) && File.Exists(nameOfnewDataflow))
+                {
+                    var parser = ExcelParserManager.GetParser(nameOfnewDataflow, null);
+                    System.Diagnostics.Debug.WriteLine($"WARMUP: Cached NewDataflow parser for {variables?.Count ?? 0} variables");
+                }
+                
+                if (!string.IsNullOrEmpty(nameOfoldDataflow) && File.Exists(nameOfoldDataflow))
+                {
+                    var parser = ExcelParserManager.GetParser(nameOfoldDataflow, null);
+                    System.Diagnostics.Debug.WriteLine($"WARMUP: Cached OldDataflow parser for {variables?.Count ?? 0} variables");
+                }
+                
+                await Task.Delay(10); // Small delay to prevent blocking
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"WARMUP WARNING: {ex.Message}");
+            }
+        }
+
+        public void ResetBatchSearchResources()
+        {
+            // PERFORMANCE: Clear caches but keep ExcelParserManager intact
+            System.Diagnostics.Debug.WriteLine("PERFORMANCE: Resetting batch search resources");
+            
+            // Let ExcelParserManager handle its own cleanup
+            System.GC.Collect(); // Suggest garbage collection for memory optimization
+        }
+
+        /// <summary>
+        /// PERFORMANCE: Batch search multiple variables using ExcelParserManager
+        /// Returns comprehensive results for all variables across all files
+        /// </summary>
+        public async Task<Dictionary<string, object>> BatchSearchVariablesAsync(
+            List<string> variables, 
+            IProgress<int> progress = null)
+        {
+            var results = new Dictionary<string, object>();
+            
+            if (variables == null || !variables.Any())
+                return results;
+                
+            try
+            {
+                // PERFORMANCE: Use ExcelParserManager for optimal caching
+                progress?.Report(10);
+                
+                var tasks = new List<Task>();
+                var semaphore = new SemaphoreSlim(Environment.ProcessorCount, Environment.ProcessorCount);
+                
+                for (int i = 0; i < variables.Count; i++)
+                {
+                    var variable = variables[i];
+                    var index = i;
+                    
+                    tasks.Add(Task.Run(async () =>
+                    {
+                        await semaphore.WaitAsync();
+                        try
+                        {
+                            // Search in all files using cached parsers
+                            var searchResult = await SearchVariableAcrossFilesAsync(variable);
+                            results[variable] = searchResult;
+                            
+                            // Update progress
+                            var progressPercent = (int)((index + 1) / (double)variables.Count * 90) + 10;
+                            progress?.Report(progressPercent);
+                        }
+                        finally
+                        {
+                            semaphore.Release();
+                        }
+                    }));
+                }
+                
+                await Task.WhenAll(tasks);
+                progress?.Report(100);
+                
+                System.Diagnostics.Debug.WriteLine($"PERFORMANCE: Batch searched {variables.Count} variables");
+                return results;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"BATCH SEARCH ERROR: {ex.Message}");
+                return results;
+            }
+        }
+
+        /// <summary>
+        /// PERFORMANCE: Search single variable across all files using cached parsers
+        /// </summary>
+        private async Task<object> SearchVariableAcrossFilesAsync(string variable)
+        {
+            await Task.Delay(1); // Make async for consistency
+            
+            var result = new
+            {
+                Variable = variable,
+                NewCarasi = SearchInFile(variable, nameOfnewCarasi),
+                OldCarasi = SearchInFile(variable, nameOfoldCarasi),
+                NewDataflow = SearchInFile(variable, nameOfnewDataflow),
+                OldDataflow = SearchInFile(variable, nameOfoldDataflow),
+                SearchTime = DateTime.Now
+            };
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// PERFORMANCE: Search in single file using ExcelParserManager
+        /// </summary>
+        private object SearchInFile(string variable, string filePath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                    return null;
+                    
+                // PERFORMANCE: Use cached parser from ExcelParserManager
+                var parser = ExcelParserManager.GetParser(filePath, null);
+                parser.search_Variable(variable);
+                
+                return new
+                {
+                    Found = parser.Interfaces?.Count > 0 || parser.Dictionary?.Count > 0,
+                    InterfaceCount = parser.Interfaces?.Count ?? 0,
+                    DictionaryCount = parser.Dictionary?.Count ?? 0
+                };
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SEARCH ERROR in {filePath}: {ex.Message}");
+                return null;
+            }
+        }
+
         private Excel_Parser newCarasi;
         private Excel_Parser oldCarasi;
         private Excel_Parser newDF;
@@ -42,6 +207,48 @@ namespace Check_carasi_DF_ContextClearing
         public UC_ContextClearing()
         {
             InitializeComponent();
+            
+            // LAYOUT FIX: Set proper panel proportions on initialization
+            SetupPanelLayout();
+        }
+        
+        /// <summary>
+        /// LAYOUT: Configure 4-panel layout with proper proportions
+        /// Top/Bottom: 35%/65%, Left/Right: 50%/50%
+        /// </summary>
+        private void SetupPanelLayout()
+        {
+            // Wait for control to be fully loaded
+            this.Load += (sender, e) => ApplyLayoutProportions();
+            this.Resize += (sender, e) => ApplyLayoutProportions();
+        }
+        
+        private void ApplyLayoutProportions()
+        {
+            if (this.Width > 0 && this.Height > 0)
+            {
+                // Calculate proportions based on actual control size
+                int totalHeight = this.Height - 60; // Account for top info panel
+                int totalWidth = this.Width - 20; // Account for margins
+                
+                // 35% top, 65% bottom
+                int topHeight = (int)(totalHeight * 0.35);
+                
+                // 50% left, 50% right
+                int leftWidth = (int)(totalWidth * 0.50);
+                
+                // Apply to split containers
+                if (splitContainer1.Height > 0)
+                    splitContainer1.SplitterDistance = topHeight;
+                    
+                if (splitContainer2.Width > 0)
+                    splitContainer2.SplitterDistance = leftWidth;
+                    
+                if (splitContainer3.Width > 0)
+                    splitContainer3.SplitterDistance = leftWidth;
+                    
+                System.Diagnostics.Debug.WriteLine($"LAYOUT: Applied proportions - Top: {topHeight}px, Left: {leftWidth}px");
+            }
         }
 
         private StringBuilder build_string(string[] array)
@@ -91,6 +298,13 @@ namespace Check_carasi_DF_ContextClearing
         private bool folder_verifying(string link)
         {
             bool isValid = false;
+            
+            // Reset validation flags
+            isValidnewCarasi = false;
+            isValidoldCarasi = false;
+            isValidnewDataflow = false;
+            isValidoldDataflow = false;
+            
             if(System.IO.Directory.Exists(link))
             {
                 string[] files = System.IO.Directory.GetFiles(link);
@@ -117,15 +331,9 @@ namespace Check_carasi_DF_ContextClearing
                         isValidoldDataflow = true;
                     }
                 }
-            }
-           
-            if (isValidnewCarasi && isValidnewDataflow && isValidoldCarasi && isValidoldDataflow)
-                isValid = true;
-            else if (isValid == false)
-                MessageBox.Show("Link is not exist!!", "Warning!");
-            else
-            {
-                MessageBox.Show("Please check again content of Folder! Should have 4 files NewCarasi, OldCarasi, NewDF, OldDF !!", "Warning!");
+                
+                // Return true if we have all required files
+                isValid = isValidnewCarasi && isValidnewDataflow && isValidoldCarasi && isValidoldDataflow;
             }
 
             return isValid;
@@ -146,6 +354,21 @@ namespace Check_carasi_DF_ContextClearing
 
                 Cursor.Current = Cursors.WaitCursor;
                 toolStripProgressBar.Value = 0 + offset;
+                
+                // CLEAR PREVIOUS HIGHLIGHTING: Reset colors before new search
+                if (IsHighlightingEnabled)
+                {
+                    try
+                    {
+                        PropertyDifferenceHighlighter.ClearAllHighlighting(this);
+                        System.Diagnostics.Debug.WriteLine("HIGHLIGHTING: Cleared previous color highlighting");
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"CLEAR HIGHLIGHTING ERROR: {ex.Message}");
+                    }
+                }
+                
                 //Verify String Name
                 if (folder_verifying(link2Folder))
                 {
@@ -175,6 +398,20 @@ namespace Check_carasi_DF_ContextClearing
                         Doing_serching(oldDF, "Old", new_variable, nameOfoldDataflow);
                         toolStripProgressBar.Value = 90 + offset;
                         //-------------------------------DATAFLOW---------------------------------------------//
+                        
+                        // HIGHLIGHT DIFFERENCES: Apply color comparison after all searches complete
+                        if (IsHighlightingEnabled)
+                        {
+                            try
+                            {
+                                PropertyDifferenceHighlighter.HighlightAllPropertyDifferences(this, false);
+                                System.Diagnostics.Debug.WriteLine($"HIGHLIGHTING: Applied color comparison for variable '{new_variable}'");
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"HIGHLIGHTING ERROR: {ex.Message}");
+                            }
+                        }
                     }
                 }
                 toolStripProgressBar.Value = 100;
@@ -192,11 +429,15 @@ namespace Check_carasi_DF_ContextClearing
             {
                 var a = _Parser.Dataview_df_Properties;
                 UC_NewDF.setValue_UC(_Parser.Lb_NameOfFile, a);
+                // AUTO-SELECT: setValue_UC now automatically selects first cell and shows row data
+                System.Diagnostics.Debug.WriteLine($"DATAFLOW: NewDF loaded with auto-select for variable '{new_variable}'");
             }
             else
             {
                 var a1 = _Parser.Dataview_df_Properties;
                 UC_OldDF.setValue_UC(_Parser.Lb_NameOfFile, a1);
+                // AUTO-SELECT: setValue_UC now automatically selects first cell and shows row data
+                System.Diagnostics.Debug.WriteLine($"DATAFLOW: OldDF loaded with auto-select for variable '{new_variable}'");
             }
         }
 

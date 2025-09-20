@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading;
 
 namespace Check_carasi_DF_ContextClearing
 {
@@ -16,13 +17,24 @@ namespace Check_carasi_DF_ContextClearing
         Version: 1.0.0
         Description: transfer data from Excel to OLEDB*/
 
-        // CONNECTION POOLING: Static pool to reuse connections with size limit
+        // CONNECTION POOLING: Enhanced pool with size limit and auto cleanup
         private static readonly ConcurrentDictionary<string, OleDbConnection> ConnectionPool = 
             new ConcurrentDictionary<string, OleDbConnection>();
+        private static readonly ConcurrentDictionary<string, DateTime> LastUsedTime = 
+            new ConcurrentDictionary<string, DateTime>();
         private static readonly object PoolLock = new object();
+        private static System.Threading.Timer CleanupTimer;
         
         // CONNECTION POOLING: Pool configuration
         private const int MAX_POOL_SIZE = 10; // Limit pool size to prevent overflow
+        private static readonly TimeSpan IDLE_TIMEOUT = TimeSpan.FromMinutes(5); // Close idle connections
+        
+        // CONNECTION POOLING: Initialize cleanup timer
+        static Lib_OLEDB_Excel()
+        {
+            CleanupTimer = new System.Threading.Timer(CleanupIdleConnections, null, 
+                TimeSpan.FromMinutes(2), TimeSpan.FromMinutes(2));
+        }
 
         private string excelObject = "Provider=Microsoft.{0}.OLEDB.{1};Data Source={2}; Extended Properties =\"Excel {3};HDR=YES\"";
         private string filepath = string.Empty;
@@ -253,6 +265,15 @@ namespace Check_carasi_DF_ContextClearing
         public DataTable GetSchema()
         {
             DataTable dtSchema = null;
+            
+            // CRITICAL FIX: Validate connection before use
+            if (!EnsureConnectionValid())
+            {
+                string errorDetails = $"Failed to establish a valid database connection to file: {this.filepath}";
+                System.Diagnostics.Debug.WriteLine($"GetSchema Error: {errorDetails}");
+                throw new InvalidOperationException(errorDetails);
+            }
+            
             if (this.Connection.State != ConnectionState.Open) 
                 this.Connection.Open();
             dtSchema = this.Connection.GetOleDbSchemaTable(
@@ -270,6 +291,13 @@ namespace Check_carasi_DF_ContextClearing
         {
             try
             {
+                // CRITICAL FIX: Validate and recover connection before use
+                if (!EnsureConnectionValid())
+                {
+                    string errorDetails = $"Failed to establish a valid database connection to file: {this.filepath}. Check if file exists and is accessible.";
+                    System.Diagnostics.Debug.WriteLine($"ReadTable Error: {errorDetails}");
+                    throw new InvalidOperationException(errorDetails);
+                }
 
                 if (this.Connection.State != ConnectionState.Open)
                 {
@@ -309,6 +337,57 @@ namespace Check_carasi_DF_ContextClearing
             {
                 MessageBox.Show(ex.Message);
                 //MessageBox.Show("Table Cannot be read");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// CRITICAL FIX: Direct table read WITHOUT connection validation to prevent connection loops
+        /// Use this ONLY when connection has already been validated
+        /// </summary>
+        public DataTable ReadTableDirect(string tableName, string criteria)
+        {
+            try
+            {
+                // ASSUMPTION: Connection is already validated by caller
+                if (this.Connection.State != ConnectionState.Open)
+                {
+                    this.Connection.Open();
+                    onReadProgress(10);
+                }
+
+                string cmdText = "Select * from [{0}]";
+                if (!string.IsNullOrEmpty(criteria))
+                {
+                    cmdText += " Where " + criteria;
+                }
+
+                OleDbCommand cmd = new OleDbCommand(string.Format(cmdText, tableName));
+                cmd.Connection = this.Connection;
+
+                OleDbDataAdapter adpt = new OleDbDataAdapter(cmd);
+                onReadProgress(30);
+
+                DataSet ds = new DataSet();
+                onReadProgress(50);
+
+                //Fill up dataset 
+                adpt.Fill(ds, tableName);
+                onReadProgress(100);
+
+                if (ds.Tables.Count == 1)
+                {
+                    return ds.Tables[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ReadTableDirect Error: {ex.Message}");
+                // Don't show MessageBox to prevent UI spam during batch operations
                 return null;
             }
         }
@@ -456,32 +535,272 @@ namespace Check_carasi_DF_ContextClearing
             this.filepath = string.Empty;
         }
 
-        // CONNECTION POOLING: Static method to cleanup all pooled connections
-        public static void CleanupConnectionPool()
+        // CONNECTION POOLING: Auto cleanup idle connections
+        private static void CleanupIdleConnections(object state)
         {
             lock (PoolLock)
             {
-                foreach (var kvp in ConnectionPool)
+                var now = DateTime.Now;
+                var expiredConnections = LastUsedTime
+                    .Where(kvp => now - kvp.Value > IDLE_TIMEOUT)
+                    .Select(kvp => kvp.Key)
+                    .ToList();
+
+                foreach (var connectionString in expiredConnections)
                 {
-                    try
+                    if (ConnectionPool.TryRemove(connectionString, out var connection))
                     {
-                        if (kvp.Value != null)
+                        try
                         {
-                            if (kvp.Value.State == ConnectionState.Open)
-                                kvp.Value.Close();
-                            kvp.Value.Dispose();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            connection.Dispose();
                         }
+                        catch { /* Ignore cleanup errors */ }
                     }
-                    catch { /* Ignore cleanup errors */ }
+                    LastUsedTime.TryRemove(connectionString, out _);
                 }
-                ConnectionPool.Clear();
+
+                if (expiredConnections.Count > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Cleaned up {expiredConnections.Count} idle connections");
+                }
             }
         }
 
-        // CONNECTION POOLING: Get pool statistics for monitoring
+        /// <summary>
+        /// FINAL OPTIMIZATION: Add comprehensive connection pool management methods
+        /// </summary>
+        public static void CleanupConnectionPool()
+        {
+            try
+            {
+                CleanupIdleConnections(null);
+                System.Diagnostics.Debug.WriteLine("Connection pool cleanup completed");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Connection pool cleanup failed: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// MONITORING: Get detailed pool statistics
+        /// </summary>
+        public static string GetPoolStatistics()
+        {
+            var totalConnections = ConnectionPool.Count;
+            var activeConnections = ConnectionPool.Count(kvp => kvp.Value.State == ConnectionState.Open);
+            var now = DateTime.Now;
+            var idleConnections = LastUsedTime.Count(kvp => now - kvp.Value > TimeSpan.FromMinutes(5));
+            
+            return $"Total: {totalConnections}, Active: {activeConnections}, Idle: {idleConnections}";
+        }
+        
+        /// <summary>
+        /// UTILITY: Get connection pool size for monitoring
+        /// </summary>
         public static int GetPoolSize()
         {
-            return ConnectionPool.Count;
+            return ConnectionPool?.Count ?? 0;
+        }
+
+        /// <summary>
+        /// CRITICAL FIX: Ensure connection is valid and recreate if necessary
+        /// Prevents crash when connection is corrupted from previous operations
+        /// </summary>
+        private bool EnsureConnectionValid()
+        {
+            try
+            {
+                // Check if connection exists and is in a valid state
+                if (this.con == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Connection is null, recreating...");
+                    return RecreateConnection();
+                }
+
+                // Check if connection is disposed or broken
+                try
+                {
+                    // Try to access connection state to test if it's valid
+                    var state = this.con.State;
+                    
+                    // If connection is broken, recreate it
+                    if (state == ConnectionState.Broken)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Connection is broken, recreating...");
+                        return RecreateConnection();
+                    }
+                    
+                    return true;
+                }
+                catch (ObjectDisposedException)
+                {
+                    System.Diagnostics.Debug.WriteLine("Connection is disposed, recreating...");
+                    return RecreateConnection();
+                }
+                catch (InvalidOperationException)
+                {
+                    System.Diagnostics.Debug.WriteLine("Connection is invalid, recreating...");
+                    return RecreateConnection();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error validating connection: {ex.Message}");
+                return RecreateConnection();
+            }
+        }
+
+        /// <summary>
+        /// CRITICAL FIX: Recreate connection from scratch with enhanced error reporting
+        /// </summary>
+        private bool RecreateConnection()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"=== RECREATING CONNECTION ===");
+                System.Diagnostics.Debug.WriteLine($"File path: {this.filepath}");
+                System.Diagnostics.Debug.WriteLine($"File exists: {(!string.IsNullOrEmpty(this.filepath) ? File.Exists(this.filepath).ToString() : "N/A")}");
+
+                // Dispose old connection safely
+                if (this.con != null)
+                {
+                    try
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Disposing old connection (state: {this.con.State})");
+                        if (this.con.State == ConnectionState.Open)
+                            this.con.Close();
+                        this.con.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error disposing old connection: {ex.Message}");
+                    }
+                }
+
+                // Validate file access
+                if (string.IsNullOrEmpty(this.filepath))
+                {
+                    System.Diagnostics.Debug.WriteLine("ERROR: File path is null or empty");
+                    return false;
+                }
+
+                if (!File.Exists(this.filepath))
+                {
+                    System.Diagnostics.Debug.WriteLine($"ERROR: File does not exist: {this.filepath}");
+                    return false;
+                }
+
+                // Check file access permissions
+                try
+                {
+                    using (var fs = File.Open(this.filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        // File is accessible
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"ERROR: Cannot access file: {ex.Message}");
+                    return false;
+                }
+
+                // Create new connection
+                string connectionString = this.ConnectionString;
+                System.Diagnostics.Debug.WriteLine($"Connection string: {connectionString}");
+                
+                this.con = new OleDbConnection(connectionString);
+                
+                // Test the connection
+                try
+                {
+                    this.con.Open();
+                    System.Diagnostics.Debug.WriteLine("Connection opened successfully");
+                    this.con.Close();
+                    System.Diagnostics.Debug.WriteLine("Connection recreated and tested successfully");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"ERROR: Cannot open connection: {ex.Message}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ERROR: Exception in RecreateConnection: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// CRITICAL FIX: Force cleanup of entire connection pool to prevent corruption
+        /// Call this before batch search operations
+        /// IMPROVED: Preserve individual instance connections
+        /// </summary>
+        public static void ForceCleanupAllConnections()
+        {
+            lock (PoolLock)
+            {
+                try
+                {
+                    System.Diagnostics.Debug.WriteLine($"Force cleanup: Disposing {ConnectionPool.Count} pooled connections");
+                    
+                    // Dispose pooled connections only (not individual instance connections)
+                    var connectionsToDispose = new List<OleDbConnection>();
+                    foreach (var connection in ConnectionPool.Values)
+                    {
+                        if (connection != null)
+                            connectionsToDispose.Add(connection);
+                    }
+                    
+                    // Clear pools first
+                    ConnectionPool.Clear();
+                    LastUsedTime.Clear();
+                    
+                    // Then dispose connections
+                    foreach (var connection in connectionsToDispose)
+                    {
+                        try
+                        {
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            connection.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error disposing pooled connection: {ex.Message}");
+                        }
+                    }
+                    
+                    // Force garbage collection
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    
+                    System.Diagnostics.Debug.WriteLine("Force cleanup completed - individual instances preserved");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error in force cleanup: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// DEBUG: Get pool status for troubleshooting (already exists above)
+        /// </summary>
+        // Removed duplicate GetPoolSize method
+
+        /// <summary>
+        /// CRITICAL FIX: Public wrapper for connection validation to prevent external connection loops
+        /// Use this before batch operations to validate connection once
+        /// </summary>
+        public bool ValidateConnection()
+        {
+            return EnsureConnectionValid();
         }
     }
 }

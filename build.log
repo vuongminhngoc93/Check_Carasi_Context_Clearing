@@ -1,0 +1,966 @@
+Build started 9/19/2025 1:32:31 AM.
+Logging verbosity is set to: Detailed.Process = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe"
+MSBuild executable path = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe"
+Command line arguments = ""C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" Check_carasi_DF_ContextClearing.sln /p:Configuration=Debug /flp:logfile=build.log"
+Current directory = "D:\5_Automation\Check_carasi_DF_ContextClearing"
+MSBuild version = "16.11.6+a918ceb31"
+Project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" on node 1 (default targets).
+Building with tools version "Current".
+Target "ValidateSolutionConfiguration" in file "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln.metaproj" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (entry point):
+Task "Error" skipped, due to false condition; (('$(CurrentSolutionConfigurationContents)' == '') and ('$(SkipInvalidConfigurations)' != 'true')) was evaluated as (('<SolutionConfiguration>
+  <ProjectConfiguration Project="{69952C06-8BF7-4094-B7D2-0155088E105C}" AbsolutePath="D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+</SolutionConfiguration>' == '') and ('' != 'true')).
+Task "Warning" skipped, due to false condition; (('$(CurrentSolutionConfigurationContents)' == '') and ('$(SkipInvalidConfigurations)' == 'true')) was evaluated as (('<SolutionConfiguration>
+  <ProjectConfiguration Project="{69952C06-8BF7-4094-B7D2-0155088E105C}" AbsolutePath="D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+</SolutionConfiguration>' == '') and ('' == 'true')).
+Using "Message" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "Message"
+  Building solution configuration "Debug|Any CPU".
+Done executing task "Message".
+Done building target "ValidateSolutionConfiguration" in project "Check_carasi_DF_ContextClearing.sln".
+Target "ValidateToolsVersions" in file "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln.metaproj" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (entry point):
+Task "Error" skipped, due to false condition; ('$(MSBuildToolsVersion)' == '2.0' and ('$(ProjectToolsVersion)' != '2.0' and '$(ProjectToolsVersion)' != '')) was evaluated as ('Current' == '2.0' and ('' != '2.0' and '' != '')).
+Done building target "ValidateToolsVersions" in project "Check_carasi_DF_ContextClearing.sln".
+Target "ValidateProjects" in file "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln.metaproj" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (entry point):
+Done building target "ValidateProjects" in project "Check_carasi_DF_ContextClearing.sln".
+Target "Build" in file "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln.metaproj" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (entry point):
+Using "MSBuild" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "MSBuild"
+  Global Properties:
+    BuildingSolutionFile=true
+    CurrentSolutionConfigurationContents=<SolutionConfiguration>
+    <ProjectConfiguration Project="{69952C06-8BF7-4094-B7D2-0155088E105C}" AbsolutePath="D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+  </SolutionConfiguration>
+    SolutionDir=D:\5_Automation\Check_carasi_DF_ContextClearing\
+    SolutionExt=.sln
+    SolutionFileName=Check_carasi_DF_ContextClearing.sln
+    SolutionName=Check_carasi_DF_ContextClearing
+    SolutionPath=D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln
+  Additional Properties for project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj":
+    Configuration=Debug
+    Platform=AnyCPU
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Trying to import C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\$(MSBuildToolsVersion)\Microsoft.Common.props using extensions path C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild
+Property reassignment: $(MSBuildProjectExtensionsPath)="D:\5_Automation\Check_carasi_DF_ContextClearing\obj\" (previous value: "obj\") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Microsoft.Common.props (57,5)
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Trying to import C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\$(MSBuildToolsVersion)\Imports\Microsoft.Common.props\ImportBefore\* using extensions path C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+The "Configuration" property is a global property, and cannot be modified.
+The "Platform" property is a global property, and cannot be modified.
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+The "Configuration" property is a global property, and cannot be modified.
+The "Platform" property is a global property, and cannot be modified.
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Property reassignment: $(DefineCommonItemSchemas)="false" (previous value: "true") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.Managed.DesignTime.targets (12,5)
+Property reassignment: $(DefineCommonCapabilities)="false" (previous value: "true") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.Managed.DesignTime.targets (13,5)
+Property reassignment: $(DefineCommonReferenceSchemas)="false" (previous value: "true") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.Managed.DesignTime.targets (14,5)
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Trying to import C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\$(MSBuildToolsVersion)\Microsoft.Common.targets\ImportBefore\* using extensions path C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+The "Platform" property is a global property, and cannot be modified.
+The "Configuration" property is a global property, and cannot be modified.
+Property reassignment: $(_DebugSymbolsProduced)="true" (previous value: "false") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (176,5)
+Property reassignment: $(_DocumentationFileProduced)="false" (previous value: "true") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (186,5)
+The "SolutionName" property is a global property, and cannot be modified.
+The "SolutionFileName" property is a global property, and cannot be modified.
+The "SolutionPath" property is a global property, and cannot be modified.
+The "SolutionDir" property is a global property, and cannot be modified.
+The "SolutionExt" property is a global property, and cannot be modified.
+Property reassignment: $(_DeploymentUrl)="\\bosch.com\dfsRB\DfsVN\LOC\Hc\RBVH\20_EEU\01_Internal\90_Trainings\06_Automation_Tools\VUN81HC\STLA_SwShAdapter\" (previous value: "") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (464,5)
+Property reassignment: $(_DeploymentUrl)="\\bosch.com\dfsRB\DfsVN\LOC\Hc\RBVH\20_EEU\01_Internal\90_Trainings\06_Automation_Tools\VUN81HC\STLA_SwShAdapter\Check_carasi_DF_ContextClearing.application" (previous value: "\\bosch.com\dfsRB\DfsVN\LOC\Hc\RBVH\20_EEU\01_Internal\90_Trainings\06_Automation_Tools\VUN81HC\STLA_SwShAdapter\") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (466,5)
+Property reassignment: $(ProcessorArchitecture)="msil" (previous value: "AnyCPU") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (505,5)
+Property reassignment: $(DelaySign)="" (previous value: "false") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (558,5)
+Property reassignment: $(_SGenGenerateSerializationAssembliesConfig)="Auto" (previous value: "") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (3612,5)
+Property reassignment: $(_SGenGenerateSerializationAssembliesConfig)="Off" (previous value: "Auto") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets (3613,5)
+Property reassignment: $(_CodeAnalysisTreatWarningsAsErrors)="false" (previous value: "") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\v16.0\CodeAnalysis\Microsoft.CodeAnalysis.targets (125,5)
+Property reassignment: $(PrepareForRunDependsOn)="
+      CopyFilesToOutputDirectory
+    ;RunCodeAnalysis" (previous value: "
+      CopyFilesToOutputDirectory
+    ") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\v16.0\CodeAnalysis\Microsoft.CodeAnalysis.targets (167,9)
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Property reassignment: $(ResolveReferencesDependsOn)="
+      
+      BeforeResolveReferences;
+      AssignProjectConfiguration;
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      ResolveNativeReferences;
+      ResolveAssemblyReferences;
+      GenerateBindingRedirects;
+      ResolveComReferences;
+      AfterResolveReferences
+    ;
+      ImplicitlyExpandDesignTimeFacades
+    " (previous value: "
+      BeforeResolveReferences;
+      AssignProjectConfiguration;
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      ResolveNativeReferences;
+      ResolveAssemblyReferences;
+      GenerateBindingRedirects;
+      ResolveComReferences;
+      AfterResolveReferences
+    ") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.NETFramework.CurrentVersion.targets (75,5)
+Property reassignment: $(PrepareResourceNamesDependsOn)="
+                    AssignWinFXEmbeddedResource;
+                    
+      AssignTargetPaths;
+      SplitResourcesByCulture;
+      CreateManifestResourceNames;
+      CreateCustomManifestResourceNames
+    
+      " (previous value: "
+      AssignTargetPaths;
+      SplitResourcesByCulture;
+      CreateManifestResourceNames;
+      CreateCustomManifestResourceNames
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets (97,7)
+Property reassignment: $(PrepareResourcesDependsOn)="
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+      " (previous value: "
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets (108,7)
+Property reassignment: $(CompileDependsOn)="
+        
+      ResolveReferences;
+      ResolveKeySource;
+      SetWin32ManifestProperties;
+      FindReferenceAssembliesForReferences;
+      _GenerateCompileInputs;
+      BeforeCompile;
+      _TimeStampBeforeCompile;
+      _GenerateCompileDependencyCache;
+      CoreCompile;
+      _TimeStampAfterCompile;
+      AfterCompile;
+    ;
+        _AfterCompileWinFXInternal
+    " (previous value: "
+      ResolveReferences;
+      ResolveKeySource;
+      SetWin32ManifestProperties;
+      FindReferenceAssembliesForReferences;
+      _GenerateCompileInputs;
+      BeforeCompile;
+      _TimeStampBeforeCompile;
+      _GenerateCompileDependencyCache;
+      CoreCompile;
+      _TimeStampAfterCompile;
+      AfterCompile;
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets (184,5)
+Property reassignment: $(PublishBuildDependsOn)="
+            BuildOnlySettings;
+            PrepareForBuild;
+            ResolveReferences;
+            PrepareResources;
+            ResolveKeySource;
+            PrepareResourcesForSatelliteAssemblies;
+            GenerateSerializationAssemblies;
+            CreateSatelliteAssemblies;
+        " (previous value: "
+      BuildOnlySettings;
+      PrepareForBuild;
+      ResolveReferences;
+      PrepareResources;
+      ResolveKeySource;
+      GenerateSerializationAssemblies;
+      CreateSatelliteAssemblies;
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets (813,9)
+Property reassignment: $(BuildDependsOn)="
+      EntityDeploy;
+      
+      BeforeBuild;
+      CoreBuild;
+      AfterBuild
+    
+    " (previous value: "
+      BeforeBuild;
+      CoreBuild;
+      AfterBuild
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.Data.Entity.targets (35,5)
+Property reassignment: $(CleanDependsOn)="
+      
+      BeforeClean;
+      UnmanagedUnregistration;
+      CoreClean;
+      CleanReferencedProjects;
+      CleanPublishFolder;
+      AfterClean
+    ;
+      EntityClean;
+    " (previous value: "
+      BeforeClean;
+      UnmanagedUnregistration;
+      CoreClean;
+      CleanReferencedProjects;
+      CleanPublishFolder;
+      AfterClean
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.Data.Entity.targets (42,5)
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Property reassignment: $(PrepareResourcesDependsOn)="
+      XamlMarkupCompilePass1;
+      XamlMarkupCompilePass2;
+      
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+       
+    " (previous value: "
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+      ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.Xaml.targets (35,5)
+Property reassignment: $(PrepareResourcesDependsOn)="
+      ValidationExtension;
+      ExpressionBuildExtension;
+      
+      XamlMarkupCompilePass1;
+      XamlMarkupCompilePass2;
+      
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+       
+    
+    " (previous value: "
+      XamlMarkupCompilePass1;
+      XamlMarkupCompilePass2;
+      
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+       
+    ") at C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WorkflowBuildExtensions.targets (16,5)
+Property reassignment: $(ResolveReferencesDependsOn)="
+      
+      
+      BeforeResolveReferences;
+      AssignProjectConfiguration;
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      ResolveNativeReferences;
+      ResolveAssemblyReferences;
+      GenerateBindingRedirects;
+      ResolveComReferences;
+      AfterResolveReferences
+    ;
+      ImplicitlyExpandDesignTimeFacades
+    ;
+      ResolveTestReferences
+    " (previous value: "
+      
+      BeforeResolveReferences;
+      AssignProjectConfiguration;
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      ResolveNativeReferences;
+      ResolveAssemblyReferences;
+      GenerateBindingRedirects;
+      ResolveComReferences;
+      AfterResolveReferences
+    ;
+      ImplicitlyExpandDesignTimeFacades
+    ") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\v16.0\TeamTest\Microsoft.TeamTest.targets (4,5)
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Trying to import C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\$(MSBuildToolsVersion)\Microsoft.Common.targets\ImportAfter\* using extensions path C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Trying to import C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Sdks\Microsoft.Docker.Sdk\build\Microsoft.Docker.targets using extensions path C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild
+Property reassignment: $(ProjectLockFile)="obj\project.assets.json" (previous value: "D:\5_Automation\Check_carasi_DF_ContextClearing\obj\project.assets.json") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\NuGet\16.0\Microsoft.NuGet.targets (74,5)
+Property reassignment: $(ResolveAssemblyReferencesDependsOn)="
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      GetFrameworkPaths;
+      GetReferenceAssemblyPaths;
+      PrepareForBuild;
+      ResolveSDKReferences;
+      ExpandSDKReferences;
+    ;ResolveNuGetPackageAssets" (previous value: "
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      GetFrameworkPaths;
+      GetReferenceAssemblyPaths;
+      PrepareForBuild;
+      ResolveSDKReferences;
+      ExpandSDKReferences;
+    ") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\NuGet\16.0\Microsoft.NuGet.targets (185,5)
+Property reassignment: $(PrepareResourcesDependsOn)="ResolveNuGetPackageAssets;
+      ValidationExtension;
+      ExpressionBuildExtension;
+      
+      XamlMarkupCompilePass1;
+      XamlMarkupCompilePass2;
+      
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+       
+    
+    " (previous value: "
+      ValidationExtension;
+      ExpressionBuildExtension;
+      
+      XamlMarkupCompilePass1;
+      XamlMarkupCompilePass2;
+      
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                
+      ;
+      PrepareResourceNames;
+      ResGen;
+      CompileLicxFiles
+    
+       
+    
+    ") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\NuGet\16.0\Microsoft.NuGet.targets (186,5)
+Property reassignment: $(_HandlePackageFileConflictsAfter)="ResolveNuGetPackageAssets;ResolveNuGetPackageAssetsNonAOT" (previous value: "ResolveNuGetPackageAssets") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\NuGet\16.0\Microsoft.NuGet.targets (267,5)
+Property reassignment: $(FakesCommandLineArguments)=" /Properties:";PlatformTarget=AnyCPU" /msbuildpath:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe"" (previous value: " /Properties:";PlatformTarget=AnyCPU"") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\v16.0\Fakes\Microsoft.QualityTools.Testing.Fakes.targets (21,5)
+Property reassignment: $(ResolveAssemblyReferencesDependsOn)="
+      
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      GetFrameworkPaths;
+      GetReferenceAssemblyPaths;
+      PrepareForBuild;
+      ResolveSDKReferences;
+      ExpandSDKReferences;
+    ;ResolveNuGetPackageAssets;
+      FakesGenerateBeforeBuild;
+    " (previous value: "
+      ResolveProjectReferences;
+      FindInvalidProjectReferences;
+      GetFrameworkPaths;
+      GetReferenceAssemblyPaths;
+      PrepareForBuild;
+      ResolveSDKReferences;
+      ExpandSDKReferences;
+    ;ResolveNuGetPackageAssets") at C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\v16.0\Fakes\Microsoft.QualityTools.Testing.Fakes.targets (72,5)
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Search paths being used for $(MSBuildExtensionsPath) are C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild;$(MSBuildProgramFiles32)\MSBuild
+Overriding target "ResolveFrameworkReferences" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.Managed.DesignTime.targets" with target "ResolveFrameworkReferences" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets".
+Overriding target "GetFrameworkPaths" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" with target "GetFrameworkPaths" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.NETFramework.CurrentVersion.targets".
+Overriding target "SatelliteDllsProjectOutputGroup" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" with target "SatelliteDllsProjectOutputGroup" from project "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets".
+Overriding target "GenerateCompiledExpressionsTempFile" in project "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WorkflowBuildExtensions.targets" with target "GenerateCompiledExpressionsTempFile" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.WorkflowBuildExtensions.targets".
+Overriding target "CollectPackageReferences" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\Managed\Microsoft.Managed.DesignTime.targets" with target "CollectPackageReferences" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets".
+The target "ClCompile" listed in an AfterTargets attribute at "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VisualStudio\v16.0\CodeAnalysis\Microsoft.CodeAnalysis.targets (446,11)" does not exist in the project, and will be ignored.
+Project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (1) is building "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (2) on node 1 (default targets).
+Building with tools version "Current".
+Project file contains ToolsVersion="15.0". This toolset may be unknown or missing, in which case you may be able to resolve this by installing the appropriate version of MSBuild, or the build may have been forced to a particular ToolsVersion for policy reasons. Treating the project as if it had ToolsVersion="Current". For more information, please see http://go.microsoft.com/fwlink/?LinkId=293424.
+Target "EntityDeploy" skipped, due to false condition; ('@(EntityDeploy)' != '') was evaluated as ('' != '').
+Target "EnableIntermediateOutputPathMismatchWarning" skipped, due to false condition; ('$(RestoreProjectStyle)' == 'PackageReference') was evaluated as ('' == 'PackageReference').
+Target "_CheckForInvalidConfigurationAndPlatform" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "EntityDeploy" depends on it):
+Task "Error" skipped, due to false condition; ( '$(_InvalidConfigurationError)' == 'true' ) was evaluated as ( '' == 'true' ).
+Task "Warning" skipped, due to false condition; ( '$(_InvalidConfigurationWarning)' == 'true' ) was evaluated as ( '' == 'true' ).
+Using "Message" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "Message"
+  Configuration=Debug
+Done executing task "Message".
+Task "Message"
+  Platform=AnyCPU
+Done executing task "Message".
+Task "Error" skipped, due to false condition; ('$(OutDir)' != '' and !HasTrailingSlash('$(OutDir)')) was evaluated as ('bin\Debug\' != '' and !HasTrailingSlash('bin\Debug\')).
+Task "Error" skipped, due to false condition; ('$(IntermediateOutputPath)' != '' and !HasTrailingSlash('$(IntermediateOutputPath)')) was evaluated as ('obj\Debug\' != '' and !HasTrailingSlash('obj\Debug\')).
+Task "Error" skipped, due to false condition; ('$(BaseIntermediateOutputPath)' != '' and !HasTrailingSlash('$(BaseIntermediateOutputPath)')) was evaluated as ('obj\' != '' and !HasTrailingSlash('obj\')).
+Task "Error" skipped, due to false condition; ( '$(_InitialMSBuildProjectExtensionsPath)' != '' And '$(MSBuildProjectExtensionsPath)' != '$(_InitialMSBuildProjectExtensionsPath)' ) was evaluated as ( 'D:\5_Automation\Check_carasi_DF_ContextClearing\obj\' != '' And 'D:\5_Automation\Check_carasi_DF_ContextClearing\obj\' != 'D:\5_Automation\Check_carasi_DF_ContextClearing\obj\' ).
+Task "Warning" skipped, due to false condition; ( '$(EnableBaseIntermediateOutputPathMismatchWarning)' == 'true' And '$(_InitialBaseIntermediateOutputPath)' != '$(BaseIntermediateOutputPath)' And '$(BaseIntermediateOutputPath)' != '$(MSBuildProjectExtensionsPath)' ) was evaluated as ( '' == 'true' And 'obj\' != 'obj\' And 'obj\' != 'D:\5_Automation\Check_carasi_DF_ContextClearing\obj\' ).
+Done building target "_CheckForInvalidConfigurationAndPlatform" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_WaitForServiceFabricApplicationCleanupBeforeBuild" skipped, due to false condition; ('$(IsServiceFabricServiceProject)' == 'true') was evaluated as ('' == 'true').
+Target "BeforeBuild" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "Build" depends on it):
+Done building target "BeforeBuild" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "BuildOnlySettings" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreBuild" depends on it):
+Done building target "BuildOnlySettings" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GetFrameworkPaths" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.NETFramework.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareForBuild" depends on it):
+Done building target "GetFrameworkPaths" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GetWinFXPath" skipped, due to false condition; (('@(Page)' != '' or '@(ApplicationDefinition)' != '' or '@(Resource)' != '') and ('$(GetWinFXNativePath)' != '' or '$(GetWinFXWoWPath)' != '' )) was evaluated as (('' != '' or '' != '' or '' != '') and ('' != '' or '' != '' )).
+Target "GetFrameworkPaths" skipped. Previously built successfully.
+Target "GetReferenceAssemblyPaths" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareForBuild" depends on it):
+Using "GetReferenceAssemblyPaths" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "GetReferenceAssemblyPaths"
+Done executing task "GetReferenceAssemblyPaths".
+Done building target "GetReferenceAssemblyPaths" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AssignLinkMetadata" skipped, due to false condition; ( '$(SynthesizeLinkMetadata)' == 'true' ) was evaluated as ( '' == 'true' ).
+Target "PrepareForBuild" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreBuild" depends on it):
+Using "FindAppConfigFile" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "FindAppConfigFile"
+  Found "App.config".
+Done executing task "FindAppConfigFile".
+Using "MakeDir" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "MakeDir"
+Done executing task "MakeDir".
+Done building target "PrepareForBuild" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "PreBuildEvent" skipped, due to false condition; ('$(PreBuildEvent)'!='') was evaluated as (''!='').
+Target "BeforeResolveReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Done building target "BeforeResolveReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AssignProjectConfiguration" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Using "AssignProjectConfiguration" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "AssignProjectConfiguration"
+Done executing task "AssignProjectConfiguration".
+Done building target "AssignProjectConfiguration" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AssignProjectConfiguration" skipped. Previously built successfully.
+Target "_SplitProjectReferencesByFileExistence" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareProjectReferences" depends on it):
+Task "ResolveNonMSBuildProjectOutput" skipped, due to false condition; ('$(BuildingInsideVisualStudio)'=='true' and '@(ProjectReferenceWithConfiguration)'!='') was evaluated as (''=='true' and ''!='').
+Done building target "_SplitProjectReferencesByFileExistence" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_AddOutputPathToGlobalPropertiesToRemove" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "_GetProjectReferenceTargetFrameworkProperties" depends on it):
+Done building target "_AddOutputPathToGlobalPropertiesToRemove" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_GetProjectReferenceTargetFrameworkProperties" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareProjectReferences" depends on it):
+Using "MSBuild" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "MSBuild"
+Done executing task "MSBuild".
+Task "GetReferenceNearestTargetFrameworkTask" skipped, due to false condition; ('@(_ProjectReferenceTargetFrameworkPossibilities->Count())' != '0' and '$(ReferringTargetFrameworkForProjectReferences)' != ''
+                                                        And '$(GetReferenceNearestTargetFrameworkTaskSupportsTargetPlatformParameter)' == 'true') was evaluated as ('0' != '0' and '.NETFramework,Version=v4.7.2' != ''
+                                                        And 'true' == 'true').
+Task "GetReferenceNearestTargetFrameworkTask" skipped, due to false condition; ('@(_ProjectReferenceTargetFrameworkPossibilities->Count())' != '0' and '$(ReferringTargetFrameworkForProjectReferences)' != ''
+                                                        And '$(GetReferenceNearestTargetFrameworkTaskSupportsTargetPlatformParameter)' != 'true') was evaluated as ('0' != '0' and '.NETFramework,Version=v4.7.2' != ''
+                                                        And 'true' != 'true').
+Done building target "_GetProjectReferenceTargetFrameworkProperties" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "PrepareProjectReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveProjectReferences" depends on it):
+Done building target "PrepareProjectReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveProjectReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Task "MSBuild" skipped, due to false condition; ('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and ('$(BuildingInsideVisualStudio)' == 'true' or '$(BuildProjectReferences)' != 'true') and '$(VisualStudioVersion)' != '10.0' and '@(_MSBuildProjectReferenceExistent)' != '') was evaluated as ('' == 'true' and '' != '' and ('' == 'true' or 'true' != 'true') and '16.0' != '10.0' and '' != '').
+Task "MSBuild" skipped, due to false condition; ('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '$(BuildingInsideVisualStudio)' != 'true' and '$(BuildProjectReferences)' == 'true' and '@(_MSBuildProjectReferenceExistent)' != '') was evaluated as ('' == 'true' and '' != '' and '' != 'true' and 'true' == 'true' and '' != '').
+Task "MSBuild" skipped, due to false condition; ('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '$(BuildingProject)' == 'true' and '@(_MSBuildProjectReferenceExistent)' != '') was evaluated as ('' == 'true' and '' != '' and 'true' == 'true' and '' != '').
+Task "Warning" skipped, due to false condition; ('@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceNonexistent)' != '') was evaluated as ('' != '' and '' != '').
+Done building target "ResolveProjectReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "FindInvalidProjectReferences" skipped, due to false condition; ('$(FindInvalidProjectReferences)' == 'true') was evaluated as ('' == 'true').
+Target "ResolveNativeReferences" skipped, due to false condition; ('@(NativeReference)'!='') was evaluated as (''!='').
+Target "ResolveProjectReferences" skipped. Previously built successfully.
+Target "FindInvalidProjectReferences" skipped, due to false condition; ('$(FindInvalidProjectReferences)' == 'true') was evaluated as ('' == 'true').
+Target "GetFrameworkPaths" skipped. Previously built successfully.
+Target "GetReferenceAssemblyPaths" skipped. Previously built successfully.
+Target "PrepareForBuild" skipped. Previously built successfully.
+Target "GetInstalledSDKLocations" skipped, due to false condition; ('@(SDKReference)' != '') was evaluated as ('' != '').
+Target "ResolveSDKReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveAssemblyReferences" depends on it):
+Task "ResolveSDKReference" skipped, due to false condition; ('@(SDKReference)'!='') was evaluated as (''!='').
+Done building target "ResolveSDKReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveSDKReferences" skipped. Previously built successfully.
+Target "ExpandSDKReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveAssemblyReferences" depends on it):
+Task "GetSDKReferenceFiles" skipped, due to false condition; ('@(ResolvedSDKReference)'!='') was evaluated as (''!='').
+Done building target "ExpandSDKReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveNuGetPackageAssets" skipped, due to false condition; ('$(ResolveNuGetPackages)' == 'true' and exists('$(ProjectLockFile)')) was evaluated as ('true' == 'true' and exists('obj\project.assets.json')).
+Target "FakesGenerateBeforeBuild" skipped, due to false condition; (@(Fakes) != '' AND $(BuildingProject) AND $(FakesUseV2Generation) != 'true') was evaluated as ( != '' AND true AND  != 'true').
+Target "ImplicitlyExpandNETStandardFacades" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\Microsoft.NET.Build.Extensions.NETFramework.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveAssemblyReferences" depends on it):
+Task "GetDependsOnNETStandard" skipped, due to false condition; ('$(_RunGetDependsOnNETStandard)' == 'true') was evaluated as ('' == 'true').
+Task "NETBuildExtensionsError" skipped, due to false condition; ('$(DependsOnNETStandard)' == 'true' AND '$(NETStandardInbox)' != 'true' AND '$(_UsingOldSDK)' == 'true') was evaluated as ('' == 'true' AND 'true' != 'true' AND '' == 'true').
+Task "AddFacadesToReferences" skipped, due to false condition; ('@(_NETStandardLibraryNETFrameworkLib)' != '') was evaluated as ('' != '').
+Done building target "ImplicitlyExpandNETStandardFacades" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GetFrameworkPaths" skipped. Previously built successfully.
+Target "GetReferenceAssemblyPaths" skipped. Previously built successfully.
+Target "_HandlePackageFileConflicts" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\Microsoft.NET.Build.Extensions.ConflictResolution.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveAssemblyReferences" depends on it):
+Using "ResolvePackageFileConflicts" task from assembly "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\\tools\net472\Microsoft.NET.Build.Extensions.Tasks.dll".
+Task "ResolvePackageFileConflicts"
+Done executing task "ResolvePackageFileConflicts".
+Done building target "_HandlePackageFileConflicts" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveAssemblyReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Using "ResolveAssemblyReference" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "ResolveAssemblyReference"
+  TargetFrameworkMoniker:
+      .NETFramework,Version=v4.7.2
+  TargetFrameworkMonikerDisplayName:
+      .NET Framework 4.7.2
+  TargetedRuntimeVersion:
+      v4.0.30319
+  Assemblies:
+      System
+      System.Configuration
+      System.Web.Extensions
+      System.Xml.Linq
+      System.Data.DataSetExtensions
+      Microsoft.CSharp
+      System.Data
+      System.Deployment
+      System.Drawing
+      System.Net.Http
+      System.Windows.Forms
+      System.Xml
+      System.Core
+  AssemblyFiles:
+      C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll
+  CandidateAssemblyFiles:
+  TargetFrameworkDirectories:
+      C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Facades\
+  InstalledAssemblyTables:
+  IgnoreInstalledAssemblyTable:
+      False
+  SearchPaths:
+      {CandidateAssemblyFiles}
+      {HintPathFromItem}
+      {TargetFrameworkDirectory}
+      {AssemblyFoldersFromConfig:C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\AssemblyFolders.config,v4.7.2}
+      {Registry:Software\Microsoft\.NETFramework,v4.7.2,AssemblyFoldersEx}
+      {AssemblyFolders}
+      {GAC}
+      {RawFileName}
+      bin\Debug\
+  AllowedAssemblyExtensions:
+      .winmd
+      .dll
+      .exe
+  AllowedRelatedFileExtensions:
+      .pdb
+      .xml
+      .pri
+      .dll.config
+      .exe.config
+  AppConfigFile:
+      App.config
+  AutoUnify:
+      True
+  CopyLocalDependenciesWhenParentReferenceInGac:
+      True
+  FindDependencies:
+      True
+  TargetProcessorArchitecture:
+      msil
+  StateFile:
+      obj\Debug\Check_carasi_DF_ContextClearing.csproj.AssemblyReference.cache
+  InstalledAssemblySubsetTables:
+  IgnoreInstalledAssemblySubsetTable:
+      False
+  TargetFrameworkSubsets:
+  FullTargetFrameworkSubsetNames:
+      Full
+  ProfileName:
+      
+  FullFrameworkFolders:
+      C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\
+  LatestTargetFrameworkDirectories:
+  ProfileTablesLocation:
+  Primary reference "mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll".
+      Reference found at search path location "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll".
+      This reference is not "CopyLocal" because it's in a Frameworks directory.
+  Primary reference "System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Configuration.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Configuration.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Extensions.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Extensions.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.Linq.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.Linq.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Data.DataSetExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.DataSetExtensions.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.DataSetExtensions.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Deployment, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Deployment.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Deployment.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Drawing.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Drawing.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Net.Http.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Net.Http.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Windows.Forms.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Windows.Forms.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+  Primary reference "System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+      Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Core.dll".
+      Reference found at search path location "{TargetFrameworkDirectory}".
+          For SearchPath "{TargetFrameworkDirectory}".
+          Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Core.winmd", but it didn't exist.
+      This reference is not "CopyLocal" because it's a prerequisite file.
+Done executing task "ResolveAssemblyReference".
+Done building target "ResolveAssemblyReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GenerateFakes" skipped, due to false condition; ($(BuildingProject) AND $(FakesUseV2Generation) == 'true') was evaluated as (true AND  == 'true').
+Target "ResolveAssemblyReferences" skipped. Previously built successfully.
+Target "_RemoveZipFileSuggestedRedirect" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\Microsoft.NET.Build.Extensions.NETFramework.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "GenerateBindingRedirects" depends on it):
+Done building target "_RemoveZipFileSuggestedRedirect" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GenerateBindingRedirects" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Building target "GenerateBindingRedirects" completely.
+Output file "obj\Debug\Check_carasi_DF_ContextClearing.exe.config" does not exist.
+Using "GenerateBindingRedirects" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "GenerateBindingRedirects"
+  No suggested binding redirects from ResolveAssemblyReferences.
+Done executing task "GenerateBindingRedirects".
+Done building target "GenerateBindingRedirects" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GenerateBindingRedirectsUpdateAppConfig" skipped, due to false condition; ('$(AutoGenerateBindingRedirects)' == 'true' and '$(GenerateBindingRedirectsOutputType)' == 'true' and Exists('$(_GenerateBindingRedirectsIntermediateAppConfig)')) was evaluated as ('true' == 'true' and 'true' == 'true' and Exists('obj\Debug\Check_carasi_DF_ContextClearing.exe.config')).
+Target "PrepareForBuild" skipped. Previously built successfully.
+Target "ResolveKeySource" skipped, due to false condition; ($(SignManifests) == 'true' or $(SignAssembly) == 'true') was evaluated as (false == 'true' or false == 'true').
+Target "ResolveAssemblyReferences" skipped. Previously built successfully.
+Target "ResolveComReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Task "MakeDir"
+Done executing task "MakeDir".
+Using "ResolveComReference" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "ResolveComReference"
+  Using cache file at "obj\Debug\Check_carasi_DF_ContextClearing.csproj.ResolveComReference.cache".
+  Resolving COM reference for item "Microsoft.Office.Core" with a wrapper "primary".
+  Determining dependencies of the COM reference "Microsoft.Office.Core".
+  Resolving COM reference for item "stdole" with a wrapper "primary".
+  Determining dependencies of the COM reference "stdole".
+  Resolved COM reference for item "stdole": "C:\WINDOWS\assembly\GAC\stdole\7.0.3300.0__b03f5f7f11d50a3a\stdole.dll".
+  Resolved COM reference for item "Microsoft.Office.Core": "C:\WINDOWS\assembly\GAC_MSIL\Office\15.0.0.0__71e9bce111e9429c\Office.dll".
+  Resolving COM reference for item "Microsoft.Office.Interop.Excel" with a wrapper "primary".
+  Determining dependencies of the COM reference "Microsoft.Office.Interop.Excel".
+  Resolving COM reference for item "VBIDE" with a wrapper "primary".
+  Determining dependencies of the COM reference "VBIDE".
+  Resolved COM reference for item "VBIDE": "C:\WINDOWS\assembly\GAC_MSIL\Microsoft.Vbe.Interop\15.0.0.0__71e9bce111e9429c\Microsoft.Vbe.Interop.dll".
+  Resolved COM reference for item "Microsoft.Office.Interop.Excel": "C:\WINDOWS\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll".
+  Resolving COM reference for item "Microsoft.Office.Interop.Outlook" with a wrapper "primary".
+  Determining dependencies of the COM reference "Microsoft.Office.Interop.Outlook".
+  Resolved COM reference for item "Microsoft.Office.Interop.Outlook": "C:\WINDOWS\assembly\GAC_MSIL\Microsoft.Office.Interop.Outlook\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Outlook.dll".
+  Resolving COM reference for item "ADOX" with a wrapper "tlbimp".
+  Determining dependencies of the COM reference "ADOX".
+  Resolved COM reference for item "ADOX": "obj\Debug\Interop.ADOX.dll".
+Done executing task "ResolveComReference".
+Done building target "ResolveComReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AfterResolveReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Done building target "AfterResolveReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GetReferenceAssemblyPaths" skipped. Previously built successfully.
+Target "ImplicitlyExpandDesignTimeFacades" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.NETFramework.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResolveReferences" depends on it):
+Done building target "ImplicitlyExpandDesignTimeFacades" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveTestReferences" skipped, due to false condition; ('@(Shadow)'!='') was evaluated as (''!='').
+Target "ResolveReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreBuild" depends on it):
+Done building target "ResolveReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveNuGetPackageAssets" skipped, due to false condition; ('$(ResolveNuGetPackages)' == 'true' and exists('$(ProjectLockFile)')) was evaluated as ('true' == 'true' and exists('obj\project.assets.json')).
+Target "ValidationExtension" in file "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WorkflowBuildExtensions.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResources" depends on it):
+Task "WorkflowBuildMessageTask" skipped, due to false condition; ('$(SkipWorkflowValidation)'!='' and '$(SkipWorkflowValidation)'!='true' and '$(SkipWorkflowValidation)'!='false') was evaluated as (''!='' and ''!='true' and ''!='false').
+Done building target "ValidationExtension" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ExpressionBuildExtension" in file "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WorkflowBuildExtensions.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResources" depends on it):
+Task "WorkflowBuildMessageTask" skipped, due to false condition; ('$(DisableWorkflowCompiledExpressions)'!='' and '$(DisableWorkflowCompiledExpressions)'!='true' and '$(DisableWorkflowCompiledExpressions)'!='false') was evaluated as (''!='' and ''!='true' and ''!='false').
+Done building target "ExpressionBuildExtension" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "XamlMarkupCompilePass1" skipped, due to false condition; ('@(XamlPage)' != '' or '@(XamlAppDef)' != '') was evaluated as ('' != '' or '' != '').
+Target "XamlMarkupCompileReadGeneratedFileList" skipped, due to false condition; ('@(XamlPage)' != '' or '@(XamlAppDef)' != '') was evaluated as ('' != '' or '' != '').
+Target "XamlMarkupCompileAddFilesGenerated" skipped, due to false condition; ('@(XamlPage)' != '' or '@(XamlAppDef)' != '') was evaluated as ('' != '' or '' != '').
+Target "XamlMarkupCompilePass2" skipped, due to false condition; ('$(XamlRequiresCompilationPass2)' == 'true' ) was evaluated as ('false' == 'true' ).
+Target "XamlMarkupCompileReadPass2Flag" skipped, due to false condition; ('@(XamlPage)' != '' or '@(XamlAppDef)' != '') was evaluated as ('' != '' or '' != '').
+Target "XamlMarkupCompileAddExtensionFilesGenerated" skipped, due to false condition; ('@(XamlPage)' != '' or '@(XamlAppDef)' != '') was evaluated as ('' != '' or '' != '').
+Target "AddDeferredValidationErrorsFileToFileWrites" skipped, due to false condition; (Exists('$(DeferredValidationErrorsFileName)')) was evaluated as (Exists('obj\Debug\\AC2C1ABA-CCF6-44D4-8127-588FD4D0A860-DeferredValidationErrors.xml')).
+Target "ReportValidationBuildExtensionErrors" skipped, due to false condition; ('$(SkipWorkflowValidation)' != 'true' and ('@(XamlPage)' != '' or '@(XamlAppDef)' != '')) was evaluated as ('' != 'true' and ('' != '' or '' != '')).
+Target "MarkupCompilePass1" skipped, due to false condition; ('@(Page)' != '' or '@(ApplicationDefinition)' != '' ) was evaluated as ('' != '' or '' != '' ).
+Target "AfterMarkupCompilePass1" in file "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResources" depends on it):
+Done building target "AfterMarkupCompilePass1" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "MarkupCompilePass2ForMainAssembly" skipped, due to false condition; ('$(_RequireMCPass2ForMainAssembly)' == 'true' ) was evaluated as ('false' == 'true' ).
+Target "FileClassification" in file "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.WinFx.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResources" depends on it):
+Task "FileClassifier" skipped, due to false condition; ('@(GeneratedBaml)' != '' or '@(Resource)' != '' or '@(Font)' != '') was evaluated as ('' != '' or '' != '' or '' != '').
+Task "Message" skipped, due to false condition; ('$(MSBuildTargetsVerbose)'=='true') was evaluated as (''=='true').
+Task "Message" skipped, due to false condition; ('$(MSBuildTargetsVerbose)'=='true') was evaluated as (''=='true').
+Done building target "FileClassification" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "MainResourcesGeneration" skipped, due to false condition; ('@(MainEmbeddedFiles)' != '') was evaluated as ('' != '').
+Target "AssignWinFXEmbeddedResource" skipped, due to false condition; ('@(WinFXEmbeddedResource)' != '') was evaluated as ('' != '').
+Target "CopyAdditionalFiles" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.Managed.Core.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "AssignTargetPaths" depends on it):
+Done building target "CopyAdditionalFiles" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AssignTargetPaths" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResourceNames" depends on it):
+Using "AssignTargetPath" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "AssignTargetPath"
+Done executing task "AssignTargetPath".
+Task "AssignTargetPath"
+Done executing task "AssignTargetPath".
+Task "AssignTargetPath"
+Done executing task "AssignTargetPath".
+Task "AssignTargetPath"
+Done executing task "AssignTargetPath".
+Task "AssignTargetPath" skipped, due to false condition; ('@(_DeploymentBaseManifestWithTargetPath)'=='' and '%(None.Extension)'=='.manifest') was evaluated as (''=='' and '.pfx'=='.manifest').
+Task "AssignTargetPath" skipped, due to false condition; ('@(_DeploymentBaseManifestWithTargetPath)'=='' and '%(None.Extension)'=='.manifest') was evaluated as (''=='' and '.settings'=='.manifest').
+Task "AssignTargetPath" skipped, due to false condition; ('@(_DeploymentBaseManifestWithTargetPath)'=='' and '%(None.Extension)'=='.manifest') was evaluated as (''=='' and '.config'=='.manifest').
+Done building target "AssignTargetPaths" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AssignTargetPaths" skipped. Previously built successfully.
+Target "SplitResourcesByCulture" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResourceNames" depends on it):
+Task "Warning" skipped, due to false condition; ('@(ResxWithNoCulture)'!='') was evaluated as (''!='').
+Task "Warning" skipped, due to false condition; ('@(ResxWithCulture)'!='') was evaluated as (''!='').
+Task "Warning" skipped, due to false condition; ('@(NonResxWithCulture)'!='') was evaluated as (''!='').
+Task "Warning" skipped, due to false condition; ('@(NonResxWithNoCulture)'!='') was evaluated as (''!='').
+Using "AssignCulture" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "AssignCulture"
+  Culture of "" was assigned to file "Form1.resx".
+  Culture of "" was assigned to file "Form2.resx".
+  Culture of "" was assigned to file "View\PopUp_ProjectInfo.resx".
+  Culture of "" was assigned to file "Properties\Resources.resx".
+  Culture of "" was assigned to file "View\UC_Carasi.resx".
+  Culture of "" was assigned to file "View\UC_ContextClearing.resx".
+  Culture of "" was assigned to file "View\UC_dataflow.resx".
+Done executing task "AssignCulture".
+Task "AssignCulture"
+  Culture of "" was assigned to file "Resources\template_dataflow.xlsx".
+Done executing task "AssignCulture".
+Done building target "SplitResourcesByCulture" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "CreateManifestResourceNames" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.CSharp.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResourceNames" depends on it):
+Using "CreateCSharpManifestResourceName" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "CreateCSharpManifestResourceName"
+  Root namespace is 'Check_carasi_DF_ContextClearing'.
+  Resource file 'Form1.resx' depends on 'Form1.cs'.
+  Resource file 'Form1.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.Form1'.
+  Resource file 'Form2.resx' depends on 'Form2.cs'.
+  Resource file 'Form2.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.Form2'.
+  Resource file 'View\PopUp_ProjectInfo.resx' depends on 'PopUp_ProjectInfo.cs'.
+  Resource file 'View\PopUp_ProjectInfo.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.PopUp_ProjectInfo'.
+  Resource file 'Properties\Resources.resx' doesn't depend on any other file.
+  Resource file 'Properties\Resources.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.Properties.Resources'.
+  Resource file 'View\UC_Carasi.resx' depends on 'UC_Carasi.cs'.
+  Resource file 'View\UC_Carasi.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.UC_Carasi'.
+  Resource file 'View\UC_ContextClearing.resx' depends on 'UC_ContextClearing.cs'.
+  Resource file 'View\UC_ContextClearing.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.UC_ContextClearing'.
+  Resource file 'View\UC_dataflow.resx' depends on 'UC_dataflow.cs'.
+  Resource file 'View\UC_dataflow.resx' gets manifest resource name 'Check_carasi_DF_ContextClearing.UC_dataflow'.
+Done executing task "CreateCSharpManifestResourceName".
+Task "CreateCSharpManifestResourceName"
+  Root namespace is 'Check_carasi_DF_ContextClearing'.
+  Resource file 'Resources\template_dataflow.xlsx' doesn't depend on any other file.
+  Resource file 'Resources\template_dataflow.xlsx' gets manifest resource name 'Check_carasi_DF_ContextClearing.Resources.template_dataflow.xlsx'.
+Done executing task "CreateCSharpManifestResourceName".
+Task "CreateCSharpManifestResourceName" skipped, due to false condition; ('%(EmbeddedResource.ManifestResourceName)' == '' and '%(EmbeddedResource.WithCulture)' == 'true' and '%(EmbeddedResource.Type)' == 'Non-Resx') was evaluated as ('' == '' and 'false' == 'true' and 'Resx' == 'Non-Resx').
+Task "CreateCSharpManifestResourceName" skipped, due to false condition; ('%(EmbeddedResource.ManifestResourceName)' == '' and '%(EmbeddedResource.WithCulture)' == 'true' and '%(EmbeddedResource.Type)' == 'Non-Resx') was evaluated as ('' == '' and 'false' == 'true' and 'Non-Resx' == 'Non-Resx').
+Done building target "CreateManifestResourceNames" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "CreateCustomManifestResourceNames" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResourceNames" depends on it):
+Done building target "CreateCustomManifestResourceNames" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "PrepareResourceNames" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResources" depends on it):
+Done building target "PrepareResourceNames" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveAssemblyReferences" skipped. Previously built successfully.
+Target "SplitResourcesByCulture" skipped. Previously built successfully.
+Target "BeforeResGen" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResGen" depends on it):
+Done building target "BeforeResGen" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveReferences" skipped. Previously built successfully.
+Target "FindReferenceAssembliesForReferences" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreResGen" depends on it):
+Done building target "FindReferenceAssembliesForReferences" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AppendGeneratedFakesAssemblyReferences" skipped, due to false condition; ($(FakesUseV2Generation) == 'true' AND Exists('$(FakesOutputPath)')) was evaluated as ( == 'true' AND Exists('D:\5_Automation\Check_carasi_DF_ContextClearing\FakesAssemblies')).
+Target "CoreResGen" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResGen" depends on it):
+Using "GenerateResource" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "GenerateResource"
+  No resources are out of date with respect to their source files. Skipping resource generation.
+Done executing task "GenerateResource".
+Task "GenerateResource" skipped, due to false condition; ('%(EmbeddedResource.Type)' == 'Resx' and '%(EmbeddedResource.GenerateResource)' != 'false' and '$(GenerateResourceMSBuildRuntime)' != 'CLR2') was evaluated as ('Non-Resx' == 'Resx' and '' != 'false' and 'CurrentRuntime' != 'CLR2').
+Task "GenerateResource" skipped, due to false condition; ('%(EmbeddedResource.Type)' == 'Resx' and '%(EmbeddedResource.GenerateResource)' != 'false' and '$(GenerateResourceMSBuildRuntime)' == 'CLR2') was evaluated as ('Resx' == 'Resx' and '' != 'false' and 'CurrentRuntime' == 'CLR2').
+Task "GenerateResource" skipped, due to false condition; ('%(EmbeddedResource.Type)' == 'Resx' and '%(EmbeddedResource.GenerateResource)' != 'false' and '$(GenerateResourceMSBuildRuntime)' == 'CLR2') was evaluated as ('Non-Resx' == 'Resx' and '' != 'false' and 'CurrentRuntime' == 'CLR2').
+Done building target "CoreResGen" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "AfterResGen" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "ResGen" depends on it):
+Done building target "AfterResGen" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResGen" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PrepareResources" depends on it):
+Done building target "ResGen" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "CompileLicxFiles" skipped, due to false condition; ('@(_LicxFile)'!='') was evaluated as (''!='').
+Target "PrepareResources" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreBuild" depends on it):
+Done building target "PrepareResources" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ResolveKeySource" skipped, due to false condition; ($(SignManifests) == 'true' or $(SignAssembly) == 'true') was evaluated as (false == 'true' or false == 'true').
+Target "ResolveReferences" skipped. Previously built successfully.
+Target "ResolveKeySource" skipped, due to false condition; ($(SignManifests) == 'true' or $(SignAssembly) == 'true') was evaluated as (false == 'true' or false == 'true').
+Target "ResolveComReferences" skipped. Previously built successfully.
+Target "ResolveNativeReferences" skipped, due to false condition; ('@(NativeReference)'!='') was evaluated as (''!='').
+Target "_SetExternalWin32ManifestProperties" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "SetWin32ManifestProperties" depends on it):
+Done building target "_SetExternalWin32ManifestProperties" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_SetEmbeddedWin32ManifestProperties" skipped, due to false condition; ('$(GenerateClickOnceManifests)'!='true' and '@(NativeReference)'=='' and '@(ResolvedIsolatedComModules)'=='') was evaluated as ('true'!='true' and ''=='' and ''=='').
+Target "SetWin32ManifestProperties" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "Compile" depends on it):
+Done building target "SetWin32ManifestProperties" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "FindReferenceAssembliesForReferences" skipped. Previously built successfully.
+Target "_GenerateCompileInputs" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "Compile" depends on it):
+Task "Warning" skipped, due to false condition; ('@(ManifestResourceWithNoCulture)'!='' and '%(ManifestResourceWithNoCulture.EmittedForCompatibilityOnly)'=='') was evaluated as ('obj\Debug\Check_carasi_DF_ContextClearing.Form1.resources;obj\Debug\Check_carasi_DF_ContextClearing.Form2.resources;obj\Debug\Check_carasi_DF_ContextClearing.PopUp_ProjectInfo.resources;...'!='' and 'true'=='').
+Task "Warning" skipped, due to false condition; ('@(ManifestNonResxWithNoCultureOnDisk)'!='' and '%(ManifestNonResxWithNoCultureOnDisk.EmittedForCompatibilityOnly)'=='') was evaluated as ('Resources\template_dataflow.xlsx'!='' and 'true'=='').
+Done building target "_GenerateCompileInputs" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "PrepareForBuild" skipped. Previously built successfully.
+Target "GenerateMSBuildEditorConfigFileShouldRun" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.Managed.Core.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "GenerateMSBuildEditorConfigFile" depends on it):
+Done building target "GenerateMSBuildEditorConfigFileShouldRun" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GenerateMSBuildEditorConfigFileCore" skipped, due to false condition; ('$(_GeneratedEditorConfigShouldRun)' == 'true') was evaluated as ('' == 'true').
+Target "GenerateMSBuildEditorConfigFile" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.Managed.Core.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "BeforeCompile" depends on it):
+Done building target "GenerateMSBuildEditorConfigFile" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "PrepareForBuild" skipped. Previously built successfully.
+Target "GetReferenceAssemblyPaths" skipped. Previously built successfully.
+Target "_SetTargetFrameworkMonikerAttribute" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.CSharp.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "GenerateTargetFrameworkMonikerAttribute" depends on it):
+Done building target "_SetTargetFrameworkMonikerAttribute" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GenerateTargetFrameworkMonikerAttribute" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "BeforeCompile" depends on it):
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+Input files: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.targets
+Output files: obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+Done building target "GenerateTargetFrameworkMonikerAttribute" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "GenerateAdditionalSources" skipped, due to false condition; ('@(AssemblyAttributes)' != '' and '$(GenerateAdditionalSources)' == 'true') was evaluated as ('' != '' and '' == 'true').
+Target "BeforeCompile" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "Compile" depends on it):
+Done building target "BeforeCompile" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_TimeStampBeforeCompile" skipped, due to false condition; ('$(RunPostBuildEvent)'=='OnOutputUpdated' or ('$(RegisterForComInterop)'=='true' and '$(OutputType)'=='library')) was evaluated as (''=='OnOutputUpdated' or (''=='true' and 'WinExe'=='library')).
+Target "ResolveAssemblyReferences" skipped. Previously built successfully.
+Target "_GenerateCompileDependencyCache" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "Compile" depends on it):
+Using "Hash" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "Hash"
+Done executing task "Hash".
+Using "WriteLinesToFile" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "WriteLinesToFile"
+  Skipping write to file "obj\Debug\Check_carasi_DF_ContextClearing.csproj.CoreCompileInputs.cache" because content would not change.
+Done executing task "WriteLinesToFile".
+Done building target "_GenerateCompileDependencyCache" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_ComputeNonExistentFileProperty" skipped, due to false condition; (('$(BuildingInsideVisualStudio)' == 'true') and ('$(BuildingOutOfProcess)' != 'true') and (('$(BuildingProject)' == 'false') or ('$(UseHostCompilerIfAvailable)' == 'true'))) was evaluated as (('' == 'true') and ('' != 'true') and (('true' == 'false') or ('true' == 'true'))).
+Target "ResolveCodeAnalysisRuleSet" skipped, due to false condition; ('$(CodeAnalysisRuleSet)' != '') was evaluated as ('' != '').
+Target "ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies" skipped, due to false condition; ('@(ReferencePathWithRefAssemblies)' == '') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Configuration.dll;...' == '').
+Target "_BeforeVBCSCoreCompile" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.Managed.Core.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreCompile" depends on it):
+Done building target "_BeforeVBCSCoreCompile" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies" skipped, due to false condition; ('@(ReferencePathWithRefAssemblies)' == '') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Configuration.dll;...' == '').
+Target "_ComputeSkipAnalyzers" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.Managed.Core.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreCompile" depends on it):
+Done building target "_ComputeSkipAnalyzers" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_SetPathMapFromSourceRoots" skipped, due to false condition; ('$(DeterministicSourcePaths)' == 'true') was evaluated as ('' == 'true').
+Target "CreateCompilerGeneratedFilesOutputPath" skipped, due to false condition; ('$(EmitCompilerGeneratedFiles)' == 'true' and !('$(DesignTimeBuild)' == 'true' OR '$(BuildingProject)' != 'true')) was evaluated as ('false' == 'true' and !('' == 'true' OR 'true' != 'true')).
+Target "PreXsdCodeGen" in file "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.ServiceModel.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreCompile" depends on it):
+Using "CallTarget" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "CallTarget"
+Target "CleanXsdCodeGen" in file "C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\Microsoft.ServiceModel.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "PreXsdCodeGen" depends on it):
+Using "Delete" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "Delete"
+Done executing task "Delete".
+Done building target "CleanXsdCodeGen" in project "Check_carasi_DF_ContextClearing.csproj".
+Done executing task "CallTarget".
+Done building target "PreXsdCodeGen" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "XsdCodeGen" skipped, due to false condition; ( '$(XsdCodeGenPreCondition)' == 'True' ) was evaluated as ( 'False' == 'True' ).
+Target "CoreCompile" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.CSharp.Core.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "Compile" depends on it):
+Building target "CoreCompile" completely.
+Input file "View\UC_ContextClearing.cs" is newer than output file "obj\Debug\Check_carasi_DF_ContextClearing.exe".
+Using "Csc" task from assembly "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll".
+Task "Csc"
+  C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Roslyn\csc.exe /noconfig /unsafe+ /nowarn:1701,1702 /fullpaths /nostdlib+ /platform:AnyCPU /errorreport:prompt /warn:4 /define:DEBUG;TRACE /highentropyva+ /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Configuration.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Deployment.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Drawing.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Net.Http.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Extensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Windows.Forms.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.Linq.dll" /link:C:\WINDOWS\assembly\GAC_MSIL\Office\15.0.0.0__71e9bce111e9429c\Office.dll /link:C:\WINDOWS\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll /link:C:\WINDOWS\assembly\GAC_MSIL\Microsoft.Office.Interop.Outlook\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Outlook.dll /link:C:\WINDOWS\assembly\GAC\stdole\7.0.3300.0__b03f5f7f11d50a3a\stdole.dll /link:C:\WINDOWS\assembly\GAC_MSIL\Microsoft.Vbe.Interop\15.0.0.0__71e9bce111e9429c\Microsoft.Vbe.Interop.dll /link:D:\5_Automation\Check_carasi_DF_ContextClearing\obj\Debug\Interop.ADOX.dll /debug+ /debug:full /filealign:512 /nowin32manifest /optimize- /out:obj\Debug\Check_carasi_DF_ContextClearing.exe /subsystemversion:6.00 /resource:obj\Debug\Check_carasi_DF_ContextClearing.Form1.resources /resource:obj\Debug\Check_carasi_DF_ContextClearing.Form2.resources /resource:obj\Debug\Check_carasi_DF_ContextClearing.PopUp_ProjectInfo.resources /resource:obj\Debug\Check_carasi_DF_ContextClearing.Properties.Resources.resources /resource:obj\Debug\Check_carasi_DF_ContextClearing.UC_Carasi.resources /resource:obj\Debug\Check_carasi_DF_ContextClearing.UC_ContextClearing.resources /resource:obj\Debug\Check_carasi_DF_ContextClearing.UC_dataflow.resources /resource:Resources\template_dataflow.xlsx,Check_carasi_DF_ContextClearing.Resources.template_dataflow.xlsx /target:winexe /utf8output /win32icon:3192622.ico /deterministic- /langversion:7.3 Library\A2L_Check.cs Library\Excel_Parser.cs Library\PerformanceLogger.cs Library\VariableSearchCoordinator.cs Form1.cs Form1.Designer.cs Form2.cs Form2.Designer.cs Library\Lib_OLEDB_Excel.cs Library\MM_Check.cs View\PopUp_ProjectInfo.cs View\PopUp_ProjectInfo.Designer.cs Program.cs Properties\AssemblyInfo.cs Library\Review_IM_change.cs View\UC_Carasi.cs View\UC_Carasi.Designer.cs View\UC_ContextClearing.cs View\UC_ContextClearing.Designer.cs View\UC_dataflow.cs View\UC_dataflow.Designer.cs Properties\Resources.Designer.cs Properties\Settings.Designer.cs "obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs"
+  Microsoft (R) Visual C# Compiler version 3.11.0-4.22108.8 (d9bef045)
+  Copyright (C) Microsoft Corporation. All rights reserved.
+D:\5_Automation\Check_carasi_DF_ContextClearing\View\UC_ContextClearing.Designer.cs(15,33): error CS0111: Type 'UC_ContextClearing' already defines a member called 'Dispose' with the same parameter types [D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj]
+  CompilerServer: server - server processed compilation - 4b90f665-62ca-4df7-8076-bd3d90e36e06
+Done executing task "Csc" -- FAILED.
+Done building target "CoreCompile" in project "Check_carasi_DF_ContextClearing.csproj" -- FAILED.
+Target "_CheckForCompileOutputs" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "_CleanGetCurrentAndPriorFileWrites" depends on it):
+Done building target "_CheckForCompileOutputs" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_SGenCheckForOutputs" skipped, due to false condition; ('$(_SGenGenerateSerializationAssembliesConfig)' == 'On' or ('@(WebReferenceUrl)'!='' and '$(_SGenGenerateSerializationAssembliesConfig)' == 'Auto')) was evaluated as ('Off' == 'On' or (''!='' and 'Off' == 'Auto')).
+Target "_CleanGetCurrentAndPriorFileWrites" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "_CleanRecordFileWrites" depends on it):
+Using "ReadLinesFromFile" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "ReadLinesFromFile"
+Done executing task "ReadLinesFromFile".
+Using "ConvertToAbsolutePath" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "ConvertToAbsolutePath"
+Done executing task "ConvertToAbsolutePath".
+Using "FindUnderPath" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "FindUnderPath"
+  Comparison path is "D:\5_Automation\Check_carasi_DF_ContextClearing".
+Done executing task "FindUnderPath".
+Task "FindUnderPath"
+  Comparison path is "bin\Debug\".
+Done executing task "FindUnderPath".
+Task "FindUnderPath"
+  Comparison path is "obj\Debug\".
+Done executing task "FindUnderPath".
+Using "RemoveDuplicates" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+Task "RemoveDuplicates"
+Done executing task "RemoveDuplicates".
+Done building target "_CleanGetCurrentAndPriorFileWrites" in project "Check_carasi_DF_ContextClearing.csproj".
+Target "_CleanRecordFileWrites" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (target "CoreBuild" depends on it):
+Task "RemoveDuplicates"
+Done executing task "RemoveDuplicates".
+Task "MakeDir"
+Done executing task "MakeDir".
+Task "WriteLinesToFile"
+Done executing task "WriteLinesToFile".
+Done building target "_CleanRecordFileWrites" in project "Check_carasi_DF_ContextClearing.csproj".
+Done Building Project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (default targets) -- FAILED.
+
+Done executing task "MSBuild" -- FAILED.
+Done building target "Build" in project "Check_carasi_DF_ContextClearing.sln" -- FAILED.
+Done Building Project "D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (default targets) -- FAILED.
+
+
+Build FAILED.
+
+"D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.sln" (default target) (1) ->
+"D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj" (default target) (2) ->
+(CoreCompile target) -> 
+  D:\5_Automation\Check_carasi_DF_ContextClearing\View\UC_ContextClearing.Designer.cs(15,33): error CS0111: Type 'UC_ContextClearing' already defines a member called 'Dispose' with the same parameter types [D:\5_Automation\Check_carasi_DF_ContextClearing\Check_carasi_DF_ContextClearing.csproj]
+
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.72

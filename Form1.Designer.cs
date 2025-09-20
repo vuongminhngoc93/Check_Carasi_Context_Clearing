@@ -1,5 +1,4 @@
-﻿
-namespace Check_carasi_DF_ContextClearing
+﻿namespace Check_carasi_DF_ContextClearing
 {
     partial class Form1
     {
@@ -31,15 +30,6 @@ namespace Check_carasi_DF_ContextClearing
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            
-            // Enable GPU acceleration and modern rendering
-            this.SetStyle(System.Windows.Forms.ControlStyles.AllPaintingInWmPaint | 
-                         System.Windows.Forms.ControlStyles.UserPaint | 
-                         System.Windows.Forms.ControlStyles.DoubleBuffer | 
-                         System.Windows.Forms.ControlStyles.ResizeRedraw | 
-                         System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, true);
-            this.UpdateStyles();
-            
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -71,6 +61,7 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripLabelCache = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelPool = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelMemory = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.lb_link2Folder = new System.Windows.Forms.Label();
             this.tb_Link2Folder = new System.Windows.Forms.TextBox();
             this.btn_Link2Folder = new System.Windows.Forms.Button();
@@ -79,6 +70,7 @@ namespace Check_carasi_DF_ContextClearing
             this.btn_Run = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.uC_ContextClearing1 = new Check_carasi_DF_ContextClearing.UC_ContextClearing();
             this.lb_version = new System.Windows.Forms.Label();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +80,7 @@ namespace Check_carasi_DF_ContextClearing
             this.contextClearingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_toolStrip_Review = new System.Windows.Forms.ToolStripMenuItem();
             this.dDRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.propertyHighlightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton_Tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,7 +95,6 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripDropDownButton_File = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.uC_ContextClearing1 = new Check_carasi_DF_ContextClearing.UC_ContextClearing();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -151,13 +143,14 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripSeparator5,
             this.toolStripDropDownButton4,
             this.toolStripProgressBar1,
+            this.toolStripButtonStop,
             this.toolStripLabelTabCount,
             this.toolStripLabelCache,
             this.toolStripLabelPool,
             this.toolStripLabelMemory});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(830, 30);
+            this.toolStrip1.Size = new System.Drawing.Size(665, 30);
             this.toolStrip1.TabIndex = 18;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -366,54 +359,53 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 27);
             // 
-            // toolStripLabelTabCount - Modern Design
+            // toolStripLabelTabCount
             // 
+            this.toolStripLabelTabCount.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripLabelTabCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStripLabelTabCount.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
             this.toolStripLabelTabCount.Name = "toolStripLabelTabCount";
-            this.toolStripLabelTabCount.Size = new System.Drawing.Size(80, 27);
+            this.toolStripLabelTabCount.Size = new System.Drawing.Size(74, 27);
             this.toolStripLabelTabCount.Text = "📑 Tabs: 0/60";
             this.toolStripLabelTabCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripLabelTabCount.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
-            this.toolStripLabelTabCount.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
-            this.toolStripLabelTabCount.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // toolStripLabelCache - Modern Design
+            // toolStripLabelCache
             // 
+            this.toolStripLabelCache.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripLabelCache.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStripLabelCache.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
             this.toolStripLabelCache.Name = "toolStripLabelCache";
-            this.toolStripLabelCache.Size = new System.Drawing.Size(70, 27);
+            this.toolStripLabelCache.Size = new System.Drawing.Size(84, 27);
             this.toolStripLabelCache.Text = "⚡ Cache: 0/50";
             this.toolStripLabelCache.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripLabelCache.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
-            this.toolStripLabelCache.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
-            this.toolStripLabelCache.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // toolStripLabelPool - Modern Design
+            // toolStripLabelPool
             // 
+            this.toolStripLabelPool.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripLabelPool.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStripLabelPool.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
             this.toolStripLabelPool.Name = "toolStripLabelPool";
-            this.toolStripLabelPool.Size = new System.Drawing.Size(60, 27);
+            this.toolStripLabelPool.Size = new System.Drawing.Size(75, 27);
             this.toolStripLabelPool.Text = "🔗 Pool: 0/10";
             this.toolStripLabelPool.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripLabelPool.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
-            this.toolStripLabelPool.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
-            this.toolStripLabelPool.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // toolStripLabelMemory - Modern Design
+            // toolStripLabelMemory
             // 
+            this.toolStripLabelMemory.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripLabelMemory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStripLabelMemory.Margin = new System.Windows.Forms.Padding(5, 1, 10, 2);
             this.toolStripLabelMemory.Name = "toolStripLabelMemory";
-            this.toolStripLabelMemory.Size = new System.Drawing.Size(100, 27);
+            this.toolStripLabelMemory.Size = new System.Drawing.Size(89, 27);
             this.toolStripLabelMemory.Text = "💾 Memory: OK";
             this.toolStripLabelMemory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripLabelMemory.Margin = new System.Windows.Forms.Padding(5, 1, 10, 2);
-            this.toolStripLabelMemory.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
-            this.toolStripLabelMemory.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             // 
-            // lb_link2Folder - Modern Material Design
+            // lb_link2Folder
             // 
             this.lb_link2Folder.AutoSize = true;
-            this.lb_link2Folder.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lb_link2Folder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.lb_link2Folder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_link2Folder.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_link2Folder.ForeColor = System.Drawing.Color.FromArgb(33, 150, 243);
-            this.lb_link2Folder.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
+            this.lb_link2Folder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
             this.lb_link2Folder.Location = new System.Drawing.Point(3, 30);
             this.lb_link2Folder.Name = "lb_link2Folder";
             this.lb_link2Folder.Size = new System.Drawing.Size(94, 30);
@@ -421,31 +413,31 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_link2Folder.Text = "📁 Folders";
             this.lb_link2Folder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tb_Link2Folder - Modern Input Design
+            // tb_Link2Folder
             // 
             this.tb_Link2Folder.AcceptsReturn = true;
             this.tb_Link2Folder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
+            this.tb_Link2Folder.BackColor = System.Drawing.Color.White;
+            this.tb_Link2Folder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_Link2Folder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_Link2Folder.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_Link2Folder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb_Link2Folder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.tb_Link2Folder.Location = new System.Drawing.Point(103, 33);
             this.tb_Link2Folder.Name = "tb_Link2Folder";
             this.tb_Link2Folder.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_Link2Folder.Size = new System.Drawing.Size(359, 22);
+            this.tb_Link2Folder.Size = new System.Drawing.Size(359, 25);
             this.tb_Link2Folder.TabIndex = 19;
-            this.tb_Link2Folder.BackColor = System.Drawing.Color.White;
-            this.tb_Link2Folder.ForeColor = System.Drawing.Color.FromArgb(66, 66, 66);
             // 
-            // btn_Link2Folder - Modern Button Design
+            // btn_Link2Folder
             // 
+            this.btn_Link2Folder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
             this.btn_Link2Folder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_Link2Folder.FlatAppearance.BorderSize = 0;
+            this.btn_Link2Folder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(142)))), ((int)(((byte)(60)))));
+            this.btn_Link2Folder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(187)))), ((int)(((byte)(106)))));
+            this.btn_Link2Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Link2Folder.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Link2Folder.ForeColor = System.Drawing.Color.White;
-            this.btn_Link2Folder.BackColor = System.Drawing.Color.FromArgb(76, 175, 80);
-            this.btn_Link2Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Link2Folder.FlatAppearance.BorderSize = 0;
-            this.btn_Link2Folder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(102, 187, 106);
-            this.btn_Link2Folder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(56, 142, 60);
             this.btn_Link2Folder.Location = new System.Drawing.Point(468, 33);
             this.btn_Link2Folder.Name = "btn_Link2Folder";
             this.btn_Link2Folder.Size = new System.Drawing.Size(94, 24);
@@ -456,14 +448,13 @@ namespace Check_carasi_DF_ContextClearing
             this.btn_Link2Folder.UseVisualStyleBackColor = false;
             this.btn_Link2Folder.Click += new System.EventHandler(this.btn_Link2Folder_Click);
             // 
-            // lb_NameOfInterface - Modern Label Design
+            // lb_NameOfInterface
             // 
             this.lb_NameOfInterface.AutoSize = true;
-            this.lb_NameOfInterface.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lb_NameOfInterface.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.lb_NameOfInterface.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_NameOfInterface.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_NameOfInterface.ForeColor = System.Drawing.Color.FromArgb(255, 152, 0);
-            this.lb_NameOfInterface.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
+            this.lb_NameOfInterface.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.lb_NameOfInterface.Location = new System.Drawing.Point(568, 30);
             this.lb_NameOfInterface.Name = "lb_NameOfInterface";
             this.lb_NameOfInterface.Size = new System.Drawing.Size(94, 30);
@@ -471,32 +462,32 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_NameOfInterface.Text = "🎯 Var Name";
             this.lb_NameOfInterface.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tb_Interface2search - Modern Search Input
+            // tb_Interface2search
             // 
             this.tb_Interface2search.AcceptsReturn = true;
             this.tb_Interface2search.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
+            this.tb_Interface2search.BackColor = System.Drawing.Color.White;
+            this.tb_Interface2search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_Interface2search.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_Interface2search.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_Interface2search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb_Interface2search.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.tb_Interface2search.Location = new System.Drawing.Point(668, 33);
             this.tb_Interface2search.Name = "tb_Interface2search";
             this.tb_Interface2search.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_Interface2search.Size = new System.Drawing.Size(359, 22);
+            this.tb_Interface2search.Size = new System.Drawing.Size(359, 25);
             this.tb_Interface2search.TabIndex = 22;
-            this.tb_Interface2search.BackColor = System.Drawing.Color.White;
-            this.tb_Interface2search.ForeColor = System.Drawing.Color.FromArgb(66, 66, 66);
             this.tb_Interface2search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Interface2search_KeyPress);
             // 
-            // btn_Run - Modern Search Button
+            // btn_Run
             // 
+            this.btn_Run.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
             this.btn_Run.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_Run.FlatAppearance.BorderSize = 0;
+            this.btn_Run.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(101)))), ((int)(((byte)(192)))));
+            this.btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(165)))), ((int)(((byte)(245)))));
+            this.btn_Run.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Run.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Run.ForeColor = System.Drawing.Color.White;
-            this.btn_Run.BackColor = System.Drawing.Color.FromArgb(33, 150, 243);
-            this.btn_Run.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Run.FlatAppearance.BorderSize = 0;
-            this.btn_Run.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(66, 165, 245);
-            this.btn_Run.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(21, 101, 192);
             this.btn_Run.Location = new System.Drawing.Point(1033, 33);
             this.btn_Run.Name = "btn_Run";
             this.btn_Run.Size = new System.Drawing.Size(94, 24);
@@ -506,31 +497,42 @@ namespace Check_carasi_DF_ContextClearing
             this.btn_Run.UseVisualStyleBackColor = false;
             this.btn_Run.Click += new System.EventHandler(this.btn_Run_Click);
             // 
-            // tabControl1 - Modern Tab Design
+            // tabControl1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.tabControl1, 6);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tabControl1.Location = new System.Drawing.Point(3, 63);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1124, 743);
             this.tabControl1.TabIndex = 24;
-            // PERFORMANCE OPTIMIZED: Use normal tab rendering instead of custom drawing
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Normal;
-            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Normal;
-            // REMOVED: DrawMode = OwnerDrawFixed (was causing performance issues)
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.uC_ContextClearing1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1116, 717);
+            this.tabPage1.Size = new System.Drawing.Size(1116, 715);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // uC_ContextClearing1
+            // 
+            this.uC_ContextClearing1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uC_ContextClearing1.Link2Folder = "";
+            this.uC_ContextClearing1.Location = new System.Drawing.Point(0, 0);
+            this.uC_ContextClearing1.Name = "uC_ContextClearing1";
+            this.uC_ContextClearing1.NameOfnewCarasi = "";
+            this.uC_ContextClearing1.NameOfnewDataflow = "";
+            this.uC_ContextClearing1.NameOfoldCarasi = "";
+            this.uC_ContextClearing1.NameOfoldDataflow = "";
+            this.uC_ContextClearing1.Size = new System.Drawing.Size(1116, 715);
+            this.uC_ContextClearing1.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.uC_ContextClearing1, "Click Tools >> \"Macro Module Link\"  OR \"F4\" to choose MM Searching Feature");
             // 
             // lb_version
             // 
@@ -600,12 +602,24 @@ namespace Check_carasi_DF_ContextClearing
             this.dDRequestToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.dDRequestToolStripMenuItem.Text = "DD Request";
             // 
+            // propertyHighlightingToolStripMenuItem
+            // 
+            this.propertyHighlightingToolStripMenuItem.CheckOnClick = true;
+            this.propertyHighlightingToolStripMenuItem.Checked = true;
+            this.propertyHighlightingToolStripMenuItem.Name = "propertyHighlightingToolStripMenuItem";
+            this.propertyHighlightingToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.propertyHighlightingToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.propertyHighlightingToolStripMenuItem.Text = "Property Highlighting";
+            this.propertyHighlightingToolStripMenuItem.ToolTipText = "Toggle property difference highlighting for Old vs New comparison";
+            this.propertyHighlightingToolStripMenuItem.Click += new System.EventHandler(this.propertyHighlightingToolStripMenuItem_Click);
+            // 
             // toolStripDropDownButton_Tools
             // 
             this.toolStripDropDownButton_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.contextClearingToolStripMenuItem,
             this.btn_toolStrip_Review,
-            this.dDRequestToolStripMenuItem});
+            this.dDRequestToolStripMenuItem,
+            this.propertyHighlightingToolStripMenuItem});
             this.toolStripDropDownButton_Tools.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton_Tools.Image")));
             this.toolStripDropDownButton_Tools.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton_Tools.Name = "toolStripDropDownButton_Tools";
@@ -698,33 +712,33 @@ namespace Check_carasi_DF_ContextClearing
             this.toolStripDropDownButton_File.Size = new System.Drawing.Size(54, 27);
             this.toolStripDropDownButton_File.Text = "File";
             // 
-            // uC_ContextClearing1
+            // toolStripButtonStop
             // 
-            this.uC_ContextClearing1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uC_ContextClearing1.Link2Folder = "";
-            this.uC_ContextClearing1.Location = new System.Drawing.Point(0, 0);
-            this.uC_ContextClearing1.Name = "uC_ContextClearing1";
-            this.uC_ContextClearing1.NameOfnewCarasi = "";
-            this.uC_ContextClearing1.NameOfnewDataflow = "";
-            this.uC_ContextClearing1.NameOfoldCarasi = "";
-            this.uC_ContextClearing1.NameOfoldDataflow = "";
-            this.uC_ContextClearing1.Size = new System.Drawing.Size(1116, 717);
-            this.uC_ContextClearing1.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.uC_ContextClearing1, "Click Tools >> \"Macro Module Link\"  OR \"F4\" to choose MM Searching Feature");
+            this.toolStripButtonStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.toolStripButtonStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
+            this.toolStripButtonStop.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripButtonStop.ForeColor = System.Drawing.Color.White;
+            this.toolStripButtonStop.Image = null;
+            this.toolStripButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonStop.Name = "toolStripButtonStop";
+            this.toolStripButtonStop.Size = new System.Drawing.Size(80, 27);
+            this.toolStripButtonStop.Text = "⏹ Stop";
+            this.toolStripButtonStop.Visible = false;
+            this.toolStripButtonStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
+            //
+            // Form1
             // 
-            // Form1 - Modern Application Design
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1130, 809);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
-            this.Text = "🚀 Carasi DF Context Clearing Tool - Option 6 Hybrid Optimized";
-            this.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
             this.MinimumSize = new System.Drawing.Size(1000, 600);
+            this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "🚀 Carasi DF Context Clearing Tool - Option 6 Hybrid Optimized";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -755,6 +769,7 @@ namespace Check_carasi_DF_ContextClearing
         private System.Windows.Forms.ToolStripMenuItem contextClearingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btn_toolStrip_Review;
         private System.Windows.Forms.ToolStripMenuItem dDRequestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem propertyHighlightingToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton_Tools;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
@@ -793,6 +808,7 @@ namespace Check_carasi_DF_ContextClearing
         private System.Windows.Forms.ToolStripLabel toolStripLabelCache;
         private System.Windows.Forms.ToolStripLabel toolStripLabelPool;
         private System.Windows.Forms.ToolStripLabel toolStripLabelMemory;
+        private System.Windows.Forms.ToolStripButton toolStripButtonStop;
         private System.Windows.Forms.ToolStripMenuItem estimationCheckToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchListInterfacesToolStripMenuItem;

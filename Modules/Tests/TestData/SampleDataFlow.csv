@@ -1,0 +1,11 @@
+Status,Description,RTE Direction,Mapping Type,Pseudo Code,System Constant,FC Name,Producer,Consumers
+Active,Engine temperature dataflow,Input,Direct,IF ENG_Temp_Valid THEN Read_ENG_Temp() ENDIF,K_ENG_TEMP_CONST,FC_ENG_Temp_Process,ENGINE_MGT,DIAG_MGT;HMI_CTRL
+Active,Battery voltage dataflow,Input,Direct,IF BAT_Volt_Valid THEN Read_BAT_Volt() ENDIF,K_BAT_VOLT_CONST,FC_BAT_Volt_Process,BATTERY_MGT,DIAG_MGT;GATEWAY
+Active,Motor speed dataflow,Output,Indirect,IF Calculation_Ready THEN Write_MOT_Speed(value) ENDIF,K_MOT_SPEED_CONST,FC_MOT_Speed_Process,MOTOR_CTRL,HMI_CTRL;DATA_LOG
+Active,Brake pedal dataflow,Input,Calculated,Process_BRAKE_Pedal(input, output),K_BRAKE_CONST,FC_BRAKE_Process,BRAKE_CTRL,SAFETY_MGT;DIAG_MGT
+Inactive,Steering wheel dataflow,Bidirectional,Table,Process_STEER_Angle(input, output),K_STEER_CONST,FC_STEER_Process,STEER_CTRL,HMI_CTRL;SAFETY_MGT
+Active,HVAC blower dataflow,Output,Formula,IF Comfort_Mode THEN Write_HVAC_Speed(value) ENDIF,K_HVAC_CONST,FC_HVAC_Process,HVAC_CTRL,HMI_CTRL
+Development,Door lock dataflow,Input,Direct,IF Security_Active THEN Read_DOOR_Status() ENDIF,K_DOOR_CONST,FC_DOOR_Process,SECURITY_MGT,HMI_CTRL;DIAG_MGT
+Testing,Charging current dataflow,Output,Calculated,Process_CHARGE_Current(input, output),K_CHARGE_CONST,FC_CHARGE_Process,CHARGE_CTRL,BATTERY_MGT;SAFETY_MGT
+Active,Inverter temperature dataflow,Input,Direct,IF INV_Temp_Valid THEN Read_INV_Temp() ENDIF,K_INV_TEMP_CONST,FC_INV_Temp_Process,INVERTER_MGT,DIAG_MGT;SAFETY_MGT
+Deprecated,Suspension dataflow,Bidirectional,Indirect,Process_SUSP_Damping(input, output),K_SUSP_CONST,FC_SUSP_Process,SUSP_CTRL,HMI_CTRL

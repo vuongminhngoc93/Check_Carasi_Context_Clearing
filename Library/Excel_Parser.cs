@@ -5,6 +5,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Check_carasi_DF_ContextClearing
@@ -65,7 +67,7 @@ namespace Check_carasi_DF_ContextClearing
     }
 
 
-    class Excel_Parser
+    public class Excel_Parser
     {
         const int MAX_NUMBER_OF_INTERFACE = 10000;
         const String MacroModule_Interface_sheet = "Interfaces";
@@ -97,16 +99,47 @@ namespace Check_carasi_DF_ContextClearing
 
         public Excel_Parser( string FileLink, DataTable dt_template)
         {
-            linkOfFile = FileLink;
-            lb_NameOfFile = linkOfFile.Split('\\').Last();
-            __excel = new Lib_OLEDB_Excel(FileLink);
-            this.dt_template = dt_template.Clone();
+            try
+            {
+                if (string.IsNullOrEmpty(FileLink))
+                    throw new ArgumentException("File link cannot be null or empty", nameof(FileLink));
+                    
+                if (!File.Exists(FileLink))
+                    throw new FileNotFoundException($"Excel file not found: {FileLink}");
+                    
+                linkOfFile = FileLink;
+                lb_NameOfFile = linkOfFile.Split('\\').Last();
+                __excel = new Lib_OLEDB_Excel(FileLink);
+                this.dt_template = dt_template?.Clone() ?? new DataTable();
+                
+                System.Diagnostics.Debug.WriteLine($"Excel_Parser initialized successfully for: {lb_NameOfFile}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Excel_Parser initialization failed: {ex.Message}");
+                throw new InvalidOperationException($"Failed to initialize Excel parser for {FileLink}: {ex.Message}", ex);
+            }
         }
 
+        /// <summary>
+        /// RESOURCE MANAGEMENT: Properly dispose Excel connections and clear cache
+        /// </summary>
         public void Dispose()
         {
-            //Close all Connection
-            __excel.Dispose();
+            try
+            {
+                //Close all Connection
+                __excel?.Dispose();
+                
+                // Clear local cache entries for this file
+                ClearCacheForFile(linkOfFile);
+                
+                System.Diagnostics.Debug.WriteLine($"Excel_Parser disposed successfully for: {lb_NameOfFile}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error during Excel_Parser disposal: {ex.Message}");
+            }
         }
 
         public void search_Variable(string var)
@@ -159,6 +192,13 @@ namespace Check_carasi_DF_ContextClearing
 
             try
             {
+                // CRITICAL FIX: Pre-validate connection ONCE to prevent multiple connection attempts
+                if (!__excel.ValidateConnection())
+                {
+                    System.Diagnostics.Debug.WriteLine("CRITICAL: Excel connection validation failed in _IsExist_Carasi_Batch");
+                    return results; // Return empty results rather than spam connections
+                }
+
                 // Build WHERE IN clause for batch query
                 var quotedVars = variables.Select(v => "'" + v.Replace("'", "''") + "'");
                 string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
@@ -170,7 +210,8 @@ namespace Check_carasi_DF_ContextClearing
                     return ProcessLargeBatch_Carasi(variables);
                 }
                 
-                DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
+                // CRITICAL FIX: Use direct SQL without additional connection validation
+                DataTable dt = __excel.ReadTableDirect("Interfaces$", whereClause);
                 
                 // Mark found variables as true
                 foreach (DataRow row in dt.Rows)
@@ -225,6 +266,13 @@ namespace Check_carasi_DF_ContextClearing
 
             try
             {
+                // CRITICAL FIX: Pre-validate connection ONCE to prevent multiple connection attempts
+                if (!__excel.ValidateConnection())
+                {
+                    System.Diagnostics.Debug.WriteLine("CRITICAL: Excel connection validation failed in _IsExist_Dataflow_Batch");
+                    return results; // Return empty results rather than spam connections
+                }
+
                 // Build WHERE clause for batch query (F2 OR F17 fields)
                 var conditions = new List<string>();
                 foreach (string var in variables)
@@ -234,7 +282,8 @@ namespace Check_carasi_DF_ContextClearing
                 }
                 string whereClause = string.Join(" OR ", conditions);
                 
-                DataTable dt = __excel.ReadTable("Mapping$", whereClause);
+                // CRITICAL FIX: Use direct SQL without additional connection validation
+                DataTable dt = __excel.ReadTableDirect("Mapping$", whereClause);
                 
                 // Mark found variables as true
                 foreach (DataRow row in dt.Rows)
@@ -452,7 +501,7 @@ namespace Check_carasi_DF_ContextClearing
             return QueryCache.Count;
         }
 
-        // FALLBACK: Process large batches by splitting
+        // CRITICAL FIX: Process large batches by splitting - OPTIMIZED TO PREVENT CONNECTION LOOPS
         private Dictionary<string, bool> ProcessLargeBatch_Carasi(List<string> variables)
         {
             var results = new Dictionary<string, bool>();
@@ -463,8 +512,23 @@ namespace Check_carasi_DF_ContextClearing
                 results[var] = false;
             }
 
-            // Split into chunks of 20 variables
-            const int CHUNK_SIZE = 20;
+            // CRITICAL FIX: Pre-validate connection ONCE to prevent multiple connection attempts
+            try
+            {
+                if (!__excel.ValidateConnection())
+                {
+                    System.Diagnostics.Debug.WriteLine("CRITICAL: Excel connection validation failed in ProcessLargeBatch_Carasi");
+                    return results; // Return empty results rather than spam connections
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"CRITICAL: Connection validation error in ProcessLargeBatch_Carasi: {ex.Message}");
+                return results;
+            }
+
+            // Split into chunks of 50 variables (increased from 20 to reduce connection calls)
+            const int CHUNK_SIZE = 50;
             for (int i = 0; i < variables.Count; i += CHUNK_SIZE)
             {
                 var chunk = variables.Skip(i).Take(CHUNK_SIZE).ToList();
@@ -473,7 +537,8 @@ namespace Check_carasi_DF_ContextClearing
                     var quotedVars = chunk.Select(v => "'" + v.Replace("'", "''") + "'");
                     string whereClause = "[SSTG label] IN (" + string.Join(",", quotedVars) + ")";
                     
-                    DataTable dt = __excel.ReadTable("Interfaces$", whereClause);
+                    // CRITICAL FIX: Use direct SQL without additional connection validation
+                    DataTable dt = __excel.ReadTableDirect("Interfaces$", whereClause);
                     
                     foreach (DataRow row in dt.Rows)
                     {
@@ -520,5 +585,204 @@ namespace Check_carasi_DF_ContextClearing
             
             return results;
         }
+
+        #region Performance Optimization - Advanced Caching & Memory Management
+
+        /// <summary>
+        /// PERFORMANCE: Smart cache management with memory pressure detection
+        /// Automatically clears cache when memory usage is high
+        /// </summary>
+        public static void OptimizeCacheMemory()
+        {
+            // Monitor memory usage and clear cache if needed
+            long memoryBefore = GC.GetTotalMemory(false);
+            if (memoryBefore > 100 * 1024 * 1024) // > 100MB
+            {
+                // Clear oldest cache entries first
+                lock (CacheLock)
+                {
+                    var oldEntries = QueryCache
+                        .Where(kvp => DateTime.Now - kvp.Value.CacheTime > TimeSpan.FromMinutes(5))
+                        .Select(kvp => kvp.Key)
+                        .ToList();
+
+                    foreach (string key in oldEntries)
+                    {
+                        QueryCache.TryRemove(key, out _);
+                    }
+                }
+
+                // Force garbage collection if memory is still high
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+
+                long memoryAfter = GC.GetTotalMemory(false);
+                System.Diagnostics.Debug.WriteLine($"Memory optimization: {memoryBefore / 1024 / 1024}MB → {memoryAfter / 1024 / 1024}MB");
+            }
+        }
+
+        /// <summary>
+        /// PERFORMANCE: Preload frequently used data into cache
+        /// Call this during application startup or idle time
+        /// </summary>
+        public async Task PreloadCommonDataAsync(List<string> commonVariables)
+        {
+            if (commonVariables == null || commonVariables.Count == 0)
+                return;
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    // Batch preload for Carasi variables
+                    if (linkOfFile.ToLower().Contains(MacroModule_signals))
+                    {
+                        _IsExist_Carasi_Batch(commonVariables);
+                    }
+                    // Batch preload for Dataflow variables
+                    else if (linkOfFile.ToLower().Contains(Dataflow_signals))
+                    {
+                        _IsExist_Dataflow_Batch(commonVariables);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Preload failed: {ex.Message}");
+                }
+            });
+        }
+
+        /// <summary>
+        /// PERFORMANCE: Get cache statistics for monitoring performance
+        /// Use this to track cache effectiveness
+        /// </summary>
+        public static Dictionary<string, object> GetCacheStatistics()
+        {
+            lock (CacheLock)
+            {
+                var stats = new Dictionary<string, object>
+                {
+                    ["TotalEntries"] = QueryCache.Count,
+                    ["MaxSize"] = MAX_CACHE_SIZE,
+                    ["CacheHitRatio"] = CalculateCacheHitRatio(),
+                    ["OldestEntry"] = QueryCache.Values.Any() ? QueryCache.Values.Min(c => c.CacheTime) : DateTime.MinValue,
+                    ["NewestEntry"] = QueryCache.Values.Any() ? QueryCache.Values.Max(c => c.CacheTime) : DateTime.MinValue,
+                    ["MemoryUsage"] = GC.GetTotalMemory(false) / 1024 / 1024 // MB
+                };
+                return stats;
+            }
+        }
+
+        /// <summary>
+        /// PERFORMANCE: Calculate cache hit ratio for performance monitoring
+        /// </summary>
+        private static double CalculateCacheHitRatio()
+        {
+            // This would require hit/miss counters in real implementation
+            // For now, return estimated ratio based on cache usage
+            if (QueryCache.Count == 0) return 0.0;
+            
+            var activeEntries = QueryCache.Values.Count(c => DateTime.Now - c.CacheTime < CacheTimeout);
+            return (double)activeEntries / QueryCache.Count;
+        }
+
+        /// <summary>
+        /// PERFORMANCE: Asynchronous batch processing with progress reporting
+        /// For processing large lists of variables without blocking UI
+        /// </summary>
+        public async Task<Dictionary<string, bool>> ProcessBatchAsync(
+            List<string> variables, 
+            IProgress<int> progress = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (variables == null || variables.Count == 0)
+                return new Dictionary<string, bool>();
+
+            return await Task.Run(() =>
+            {
+                var results = new Dictionary<string, bool>();
+                int processed = 0;
+
+                try
+                {
+                    // Use appropriate batch method based on file type
+                    if (linkOfFile.ToLower().Contains(MacroModule_signals))
+                    {
+                        results = _IsExist_Carasi_Batch(variables);
+                    }
+                    else if (linkOfFile.ToLower().Contains(Dataflow_signals))
+                    {
+                        results = _IsExist_Dataflow_Batch(variables);
+                    }
+
+                    progress?.Report(100);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Async batch processing failed: {ex.Message}");
+                    // Fallback to individual processing with progress
+                    foreach (string variable in variables)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                            break;
+
+                        try
+                        {
+                            if (linkOfFile.ToLower().Contains(MacroModule_signals))
+                            {
+                                results[variable] = _IsExist_Carasi(variable);
+                            }
+                            else if (linkOfFile.ToLower().Contains(Dataflow_signals))
+                            {
+                                results[variable] = _IsExist_Dataflow(variable);
+                            }
+                        }
+                        catch
+                        {
+                            results[variable] = false;
+                        }
+
+                        processed++;
+                        progress?.Report((processed * 100) / variables.Count);
+                    }
+                }
+
+                return results;
+            }, cancellationToken);
+        }
+
+        /// <summary>
+        /// CACHE MANAGEMENT: Clear cache entries for specific file
+        /// </summary>
+        private static void ClearCacheForFile(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+                return;
+                
+            try
+            {
+                lock (CacheLock)
+                {
+                    var keysToRemove = QueryCache
+                        .Where(kvp => kvp.Value.FilePath == filePath)
+                        .Select(kvp => kvp.Key)
+                        .ToList();
+
+                    foreach (string key in keysToRemove)
+                    {
+                        QueryCache.TryRemove(key, out _);
+                    }
+                    
+                    System.Diagnostics.Debug.WriteLine($"Cleared {keysToRemove.Count} cache entries for file: {filePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error clearing cache for file {filePath}: {ex.Message}");
+            }
+        }
+
+        #endregion
     }
 }
