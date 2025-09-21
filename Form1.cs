@@ -141,7 +141,7 @@ namespace Check_carasi_DF_ContextClearing
         /// </summary>
         private void SetupModernTabRendering()
         {
-            // Enable custom drawing for tabs
+            // Enable simple color highlighting for selected tab
             tabControl1.DrawItem += TabControl1_DrawItem;
             
             // Setup tab selection optimization
@@ -159,7 +159,7 @@ namespace Check_carasi_DF_ContextClearing
         }
         
         /// <summary>
-        /// Custom tab drawing with modern Material Design style
+        /// Simple tab highlighting - just color difference for selected tab
         /// </summary>
         private void TabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -169,88 +169,37 @@ namespace Check_carasi_DF_ContextClearing
             
             bool isSelected = (e.Index == tabControl.SelectedIndex);
             
-            // Define VIBRANT colors for better contrast - VERY VISIBLE distinction
+            // Simple color scheme - just highlight selected tab
             System.Drawing.Color backColor = isSelected ? 
-                System.Drawing.Color.FromArgb(0, 120, 215) :     // Microsoft Blue for selected - BRIGHT
-                System.Drawing.Color.FromArgb(245, 245, 245);    // Light gray for unselected
+                System.Drawing.Color.FromArgb(0, 120, 215) :     // Blue for selected
+                System.Drawing.Color.FromArgb(240, 240, 240);    // Light gray for unselected
             System.Drawing.Color textColor = isSelected ? 
-                System.Drawing.Color.White :                     // WHITE text on blue for maximum contrast
-                System.Drawing.Color.FromArgb(60, 60, 60);       // Dark gray text for unselected
+                System.Drawing.Color.White :                     // White text on blue
+                System.Drawing.Color.Black;                      // Black text on gray
             
-            // Create BRIGHT gradient brush for selected tab
-            if (isSelected)
+            // Fill background
+            using (var brush = new System.Drawing.SolidBrush(backColor))
             {
-                using (var brush = new LinearGradientBrush(
-                    tabRect, 
-                    System.Drawing.Color.FromArgb(0, 120, 215),    // Bright Blue
-                    System.Drawing.Color.FromArgb(0, 100, 180),    // Darker Blue gradient
-                    LinearGradientMode.Vertical))
-                {
-                    e.Graphics.FillRectangle(brush, tabRect);
-                }
-                
-                // Add THICK border for selected tab - VERY visible
-                using (var pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0, 80, 150), 4))
-                {
-                    Rectangle borderRect = new Rectangle(tabRect.X, tabRect.Y, tabRect.Width - 1, tabRect.Height - 1);
-                    e.Graphics.DrawRectangle(pen, borderRect);
-                }
-            }
-            else
-            {
-                using (var brush = new System.Drawing.SolidBrush(backColor))
-                {
-                    e.Graphics.FillRectangle(brush, tabRect);
-                }
+                e.Graphics.FillRectangle(brush, tabRect);
             }
             
-            // Draw tab text with modern font - BOLD and LARGE for selected tabs
+            // Draw text
             using (var brush = new System.Drawing.SolidBrush(textColor))
             {
-                // Use BOLD font for selected tab, regular for others - increased size for visibility
-                System.Drawing.FontStyle fontStyle = isSelected ? 
-                    System.Drawing.FontStyle.Bold : 
-                    System.Drawing.FontStyle.Regular;
+                StringFormat format = new StringFormat();
+                format.Alignment = StringAlignment.Center;
+                format.LineAlignment = StringAlignment.Center;
                 
-                // LARGER font size for better visibility and distinction
-                float fontSize = isSelected ? 11F : 9F;
-                
-                using (var font = new System.Drawing.Font("Segoe UI", fontSize, fontStyle))
-                {
-                    var textRect = new Rectangle(tabRect.X + 8, tabRect.Y + 4, 
-                                               tabRect.Width - 16, tabRect.Height - 8);
-                    
-                    // Better text alignment and formatting
-                    StringFormat format = new StringFormat();
-                    format.Alignment = StringAlignment.Center;
-                    format.LineAlignment = StringAlignment.Center;
-                    format.Trimming = StringTrimming.EllipsisCharacter;
-                    
-                    // Draw text with shadow effect for selected tab
-                    if (isSelected)
-                    {
-                        // Draw shadow slightly offset
-                        using (var shadowBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(100, 0, 0, 0)))
-                        {
-                            var shadowRect = new Rectangle(textRect.X + 1, textRect.Y + 1, textRect.Width, textRect.Height);
-                            e.Graphics.DrawString(tabPage.Text, font, shadowBrush, shadowRect, format);
-                        }
-                    }
-                    
-                    e.Graphics.DrawString(tabPage.Text, font, brush, textRect, format);
-                }
+                e.Graphics.DrawString(tabPage.Text, tabControl.Font, brush, tabRect, format);
             }
             
-            // Draw subtle border for unselected tabs
-            if (!isSelected)
+            // Simple border
+            using (var pen = new System.Drawing.Pen(System.Drawing.Color.DarkGray))
             {
-                using (var pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, 200, 200)))
-                {
-                    e.Graphics.DrawRectangle(pen, tabRect);
-                }
+                e.Graphics.DrawRectangle(pen, tabRect);
             }
         }
-
+        
         public string VersionLabel
         {
             get

@@ -57,11 +57,11 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabelTabCount = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelCache = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelPool = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelMemory = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.lb_link2Folder = new System.Windows.Forms.Label();
             this.tb_Link2Folder = new System.Windows.Forms.TextBox();
             this.btn_Link2Folder = new System.Windows.Forms.Button();
@@ -359,6 +359,18 @@
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 27);
             // 
+            // toolStripButtonStop
+            // 
+            this.toolStripButtonStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.toolStripButtonStop.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripButtonStop.ForeColor = System.Drawing.Color.White;
+            this.toolStripButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonStop.Name = "toolStripButtonStop";
+            this.toolStripButtonStop.Size = new System.Drawing.Size(53, 27);
+            this.toolStripButtonStop.Text = "⏹ Stop";
+            this.toolStripButtonStop.Visible = false;
+            this.toolStripButtonStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
+            // 
             // toolStripLabelTabCount
             // 
             this.toolStripLabelTabCount.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -395,7 +407,7 @@
             this.toolStripLabelMemory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.toolStripLabelMemory.Margin = new System.Windows.Forms.Padding(5, 1, 10, 2);
             this.toolStripLabelMemory.Name = "toolStripLabelMemory";
-            this.toolStripLabelMemory.Size = new System.Drawing.Size(89, 27);
+            this.toolStripLabelMemory.Size = new System.Drawing.Size(89, 15);
             this.toolStripLabelMemory.Text = "💾 Memory: OK";
             this.toolStripLabelMemory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -503,7 +515,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(3, 63);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -513,9 +525,9 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.uC_ContextClearing1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1116, 715);
+            this.tabPage1.Size = new System.Drawing.Size(1116, 717);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -523,14 +535,17 @@
             // uC_ContextClearing1
             // 
             this.uC_ContextClearing1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uC_ContextClearing1.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uC_ContextClearing1.IsHighlightingEnabled = true;
             this.uC_ContextClearing1.Link2Folder = "";
             this.uC_ContextClearing1.Location = new System.Drawing.Point(0, 0);
+            this.uC_ContextClearing1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.uC_ContextClearing1.Name = "uC_ContextClearing1";
             this.uC_ContextClearing1.NameOfnewCarasi = "";
             this.uC_ContextClearing1.NameOfnewDataflow = "";
             this.uC_ContextClearing1.NameOfoldCarasi = "";
             this.uC_ContextClearing1.NameOfoldDataflow = "";
-            this.uC_ContextClearing1.Size = new System.Drawing.Size(1116, 715);
+            this.uC_ContextClearing1.Size = new System.Drawing.Size(1116, 717);
             this.uC_ContextClearing1.TabIndex = 0;
             this.toolTip1.SetToolTip(this.uC_ContextClearing1, "Click Tools >> \"Macro Module Link\"  OR \"F4\" to choose MM Searching Feature");
             // 
@@ -584,14 +599,14 @@
             // 
             this.contextClearingToolStripMenuItem.Name = "contextClearingToolStripMenuItem";
             this.contextClearingToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.contextClearingToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.contextClearingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.contextClearingToolStripMenuItem.Text = "Context Clearing";
             // 
             // btn_toolStrip_Review
             // 
             this.btn_toolStrip_Review.Name = "btn_toolStrip_Review";
             this.btn_toolStrip_Review.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.btn_toolStrip_Review.Size = new System.Drawing.Size(182, 22);
+            this.btn_toolStrip_Review.Size = new System.Drawing.Size(232, 22);
             this.btn_toolStrip_Review.Text = "Reviewing";
             this.btn_toolStrip_Review.Click += new System.EventHandler(this.btn_toolStrip_MacroModule_Click);
             // 
@@ -599,16 +614,17 @@
             // 
             this.dDRequestToolStripMenuItem.Name = "dDRequestToolStripMenuItem";
             this.dDRequestToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.dDRequestToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.dDRequestToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.dDRequestToolStripMenuItem.Text = "DD Request";
             // 
             // propertyHighlightingToolStripMenuItem
             // 
-            this.propertyHighlightingToolStripMenuItem.CheckOnClick = true;
             this.propertyHighlightingToolStripMenuItem.Checked = true;
+            this.propertyHighlightingToolStripMenuItem.CheckOnClick = true;
+            this.propertyHighlightingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.propertyHighlightingToolStripMenuItem.Name = "propertyHighlightingToolStripMenuItem";
             this.propertyHighlightingToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.propertyHighlightingToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.propertyHighlightingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.propertyHighlightingToolStripMenuItem.Text = "Property Highlighting";
             this.propertyHighlightingToolStripMenuItem.ToolTipText = "Toggle property difference highlighting for Old vs New comparison";
             this.propertyHighlightingToolStripMenuItem.Click += new System.EventHandler(this.propertyHighlightingToolStripMenuItem_Click);
@@ -712,20 +728,6 @@
             this.toolStripDropDownButton_File.Size = new System.Drawing.Size(54, 27);
             this.toolStripDropDownButton_File.Text = "File";
             // 
-            // toolStripButtonStop
-            // 
-            this.toolStripButtonStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
-            this.toolStripButtonStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
-            this.toolStripButtonStop.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripButtonStop.ForeColor = System.Drawing.Color.White;
-            this.toolStripButtonStop.Image = null;
-            this.toolStripButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonStop.Name = "toolStripButtonStop";
-            this.toolStripButtonStop.Size = new System.Drawing.Size(80, 27);
-            this.toolStripButtonStop.Text = "⏹ Stop";
-            this.toolStripButtonStop.Visible = false;
-            this.toolStripButtonStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
-            //
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
