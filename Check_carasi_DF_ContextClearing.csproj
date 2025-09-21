@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\A2L_Check.cs" />
+    <Compile Include="Library\A2LParser.cs" />
+    <Compile Include="Library\A2LParserManager.cs" />
     <Compile Include="Library\Excel_Parser.cs" />
     <Compile Include="Library\ExcelParserManager.cs" />
     <Compile Include="Library\PerformanceLogger.cs" />
@@ -116,6 +118,7 @@
       <DependentUpon>PopUp_ProjectInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="TestA2L.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Library\Review_IM_change.cs" />
     <Compile Include="View\UC_Carasi.cs">

@@ -24,6 +24,10 @@ namespace Check_carasi_DF_ContextClearing
         private string nameOfnewDataflow = string.Empty;
         private string nameOfoldDataflow = string.Empty;
         private string link2Folder = string.Empty;
+        
+        // A2L INTEGRATION: A2L file path for unified search
+        private string a2lFilePath = string.Empty;
+        public string A2LFilePath { get => a2lFilePath; set => a2lFilePath = value; }
 
         public string NameOfnewCarasi { get => nameOfnewCarasi; set => nameOfnewCarasi = value; }
         public string NameOfoldCarasi { get => nameOfoldCarasi; set => nameOfoldCarasi = value; }
@@ -75,6 +79,13 @@ namespace Check_carasi_DF_ContextClearing
                     System.Diagnostics.Debug.WriteLine($"WARMUP: Cached OldDataflow parser for {variables?.Count ?? 0} variables");
                 }
                 
+                // A2L WARMUP: Pre-warm A2LParserManager cache
+                if (!string.IsNullOrEmpty(a2lFilePath) && File.Exists(a2lFilePath))
+                {
+                    var a2lParser = A2LParserManager.GetParser(a2lFilePath);
+                    System.Diagnostics.Debug.WriteLine($"WARMUP: Cached A2L parser for {variables?.Count ?? 0} variables");
+                }
+                
                 await Task.Delay(10); // Small delay to prevent blocking
             }
             catch (Exception ex)
@@ -85,10 +96,11 @@ namespace Check_carasi_DF_ContextClearing
 
         public void ResetBatchSearchResources()
         {
-            // PERFORMANCE: Clear caches but keep ExcelParserManager intact
+            // PERFORMANCE: Clear caches but keep managers intact
             System.Diagnostics.Debug.WriteLine("PERFORMANCE: Resetting batch search resources");
             
-            // Let ExcelParserManager handle its own cleanup
+            // CLEANUP: Let managers handle their own cleanup
+            A2LParserManager.CleanupStaleCache(); // Clean up A2L cache
             System.GC.Collect(); // Suggest garbage collection for memory optimization
         }
 
@@ -165,6 +177,7 @@ namespace Check_carasi_DF_ContextClearing
                 OldCarasi = SearchInFile(variable, nameOfoldCarasi),
                 NewDataflow = SearchInFile(variable, nameOfnewDataflow),
                 OldDataflow = SearchInFile(variable, nameOfoldDataflow),
+                A2L = SearchInA2L(variable, a2lFilePath), // UNIFIED SEARCH: Include A2L results
                 SearchTime = DateTime.Now
             };
             
@@ -195,6 +208,36 @@ namespace Check_carasi_DF_ContextClearing
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"SEARCH ERROR in {filePath}: {ex.Message}");
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// A2L SEARCH: Search in A2L file using A2LParserManager
+        /// </summary>
+        private object SearchInA2L(string variable, string filePath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                    return null;
+                    
+                // PERFORMANCE: Use cached parser from A2LParserManager
+                var searchResult = A2LParserManager.FindVariable(filePath, variable);
+                
+                return new
+                {
+                    Found = searchResult.Found,
+                    FoundInMeasurements = searchResult.FoundInMeasurements,
+                    FoundInCharacteristics = searchResult.FoundInCharacteristics,
+                    Summary = searchResult.GetSummary(),
+                    MeasurementName = searchResult.Measurement?.Name,
+                    CharacteristicName = searchResult.Characteristic?.Name
+                };
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"A2L SEARCH ERROR in {filePath}: {ex.Message}");
                 return null;
             }
         }
@@ -520,6 +563,139 @@ namespace Check_carasi_DF_ContextClearing
             }
 
             return __hint;
+        }
+
+        /// <summary>
+        /// A2L BATCH SEARCH: Batch search multiple variables in A2L file
+        /// Returns comprehensive A2L results for all variables
+        /// </summary>
+        public async Task<Dictionary<string, object>> BatchSearchA2LVariablesAsync(
+            List<string> variables, 
+            IProgress<int> progress = null)
+        {
+            var results = new Dictionary<string, object>();
+            
+            if (variables == null || !variables.Any() || string.IsNullOrEmpty(a2lFilePath))
+                return results;
+                
+            try
+            {
+                // PERFORMANCE: Use A2LParserManager for batch search
+                progress?.Report(10);
+                
+                var a2lResults = A2LParserManager.BatchSearchVariables(a2lFilePath, variables);
+                
+                // Convert A2LSearchResult to display format
+                foreach (var variable in variables)
+                {
+                    if (a2lResults.TryGetValue(variable, out A2LSearchResult searchResult))
+                    {
+                        results[variable] = new
+                        {
+                            Variable = variable,
+                            Found = searchResult.Found,
+                            FoundInMeasurements = searchResult.FoundInMeasurements,
+                            FoundInCharacteristics = searchResult.FoundInCharacteristics,
+                            Summary = searchResult.GetSummary(),
+                            MeasurementName = searchResult.Measurement?.Name,
+                            CharacteristicName = searchResult.Characteristic?.Name,
+                            SearchTime = DateTime.Now
+                        };
+                    }
+                    else
+                    {
+                        results[variable] = new
+                        {
+                            Variable = variable,
+                            Found = false,
+                            Summary = "Not Found in A2L!",
+                            SearchTime = DateTime.Now
+                        };
+                    }
+                }
+                
+                progress?.Report(100);
+                System.Diagnostics.Debug.WriteLine($"A2L BATCH SEARCH: Searched {variables.Count} variables in A2L");
+                return results;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"A2L BATCH SEARCH ERROR: {ex.Message}");
+                return results;
+            }
+        }
+        
+        /// <summary>
+        /// UNIFIED SEARCH DEMO: Demonstrate unified Excel + A2L search capabilities
+        /// This method shows how to search across all data sources simultaneously
+        /// </summary>
+        public async Task<object> UnifiedSearchDemoAsync(string variable)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"UNIFIED SEARCH: Starting comprehensive search for '{variable}'");
+                
+                // EXCEL SEARCH: Search across all 4 Excel files
+                var excelResults = await SearchVariableAcrossFilesAsync(variable);
+                
+                // A2L SEARCH: Search in A2L file if available
+                object a2lResult = null;
+                if (!string.IsNullOrEmpty(a2lFilePath))
+                {
+                    a2lResult = SearchInA2L(variable, a2lFilePath);
+                }
+                
+                // UNIFIED RESULT: Combine all search results
+                var unifiedResult = new
+                {
+                    SearchVariable = variable,
+                    SearchTime = DateTime.Now,
+                    ExcelResults = excelResults,
+                    A2LResult = a2lResult,
+                    
+                    // SUMMARY: Quick overview
+                    Summary = new
+                    {
+                        TotalSources = 5, // 4 Excel + 1 A2L
+                        ExcelHits = CountExcelHits(excelResults),
+                        A2LHit = a2lResult != null && ((dynamic)a2lResult).Found,
+                        TotalHits = CountExcelHits(excelResults) + (a2lResult != null && ((dynamic)a2lResult).Found ? 1 : 0)
+                    }
+                };
+                
+                System.Diagnostics.Debug.WriteLine($"UNIFIED SEARCH: Found {unifiedResult.Summary.TotalHits}/{unifiedResult.Summary.TotalSources} matches for '{variable}'");
+                return unifiedResult;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"UNIFIED SEARCH ERROR: {ex.Message}");
+                return new { Error = ex.Message, Variable = variable };
+            }
+        }
+        
+        /// <summary>
+        /// HELPER: Count Excel search hits
+        /// </summary>
+        private int CountExcelHits(object excelResults)
+        {
+            try
+            {
+                if (excelResults == null) return 0;
+                
+                var results = (dynamic)excelResults;
+                int hits = 0;
+                
+                if (results.NewCarasi != null && ((dynamic)results.NewCarasi).Found) hits++;
+                if (results.OldCarasi != null && ((dynamic)results.OldCarasi).Found) hits++;
+                if (results.NewDataflow != null && ((dynamic)results.NewDataflow).Found) hits++;
+                if (results.OldDataflow != null && ((dynamic)results.OldDataflow).Found) hits++;
+                
+                return hits;
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
     }

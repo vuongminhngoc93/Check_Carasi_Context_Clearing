@@ -435,6 +435,29 @@ namespace Check_carasi_DF_ContextClearing
                                 bool a = _a2lCheck.IsExistInA2L(tb_Interface2search.Text, ref result);
                                 UC_doing._setValueA2L(a, result);
                             }
+                            // ENHANCED A2L: Also try unified A2L search with structured results
+                            else if (!string.IsNullOrEmpty(UC_doing.A2LFilePath))
+                            {
+                                try
+                                {
+                                    var a2lResult = A2LParserManager.FindVariable(UC_doing.A2LFilePath, tb_Interface2search.Text);
+                                    if (a2lResult.Found)
+                                    {
+                                        string[] result = a2lResult.GetSummary().Split('\n');
+                                        UC_doing._setValueA2L(true, result);
+                                        System.Diagnostics.Debug.WriteLine($"A2L UNIFIED SEARCH: Found {tb_Interface2search.Text} in A2L");
+                                    }
+                                    else
+                                    {
+                                        UC_doing._setValueA2L(false, new string[] { "Not Found in A2L using enhanced parser!" });
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"A2L UNIFIED SEARCH ERROR: {ex.Message}");
+                                    UC_doing._setValueA2L(false, new string[] { $"A2L Search Error: {ex.Message}" });
+                                }
+                            }
 
                             tabControl1.SelectedTab.Text = tb_Interface2search.Text;
                             
@@ -622,6 +645,24 @@ namespace Check_carasi_DF_ContextClearing
                 _a2lCheck = new A2L_Check();
                 link_A2L = openFileDialog1.FileName;
                 _a2lCheck.Link_Of_A2L = link_A2L;
+                
+                // UNIFIED SEARCH: Set A2L file path in UC_ContextClearing for integrated search
+                // Find current UC_ContextClearing control on form
+                UC_ContextClearing currentUC = null;
+                foreach (Control c in this.Controls)
+                {
+                    if (c is UC_ContextClearing)
+                    {
+                        currentUC = (UC_ContextClearing)c;
+                        break;
+                    }
+                }
+                
+                if (currentUC != null)
+                {
+                    currentUC.A2LFilePath = link_A2L;
+                    System.Diagnostics.Debug.WriteLine($"A2L INTEGRATION: Set A2L file path to {Path.GetFileName(link_A2L)}");
+                }
             }
         }
 

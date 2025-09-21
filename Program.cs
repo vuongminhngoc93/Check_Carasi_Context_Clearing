@@ -59,6 +59,9 @@ namespace Check_carasi_DF_ContextClearing
             {
                 switch (args[i].ToLower())
                 {
+                    case "--test-a2l":
+                        TestA2L.TestA2LParsing();
+                        return;
                     case "-path":
                     case "-p":
                         if (i + 1 < args.Length)
