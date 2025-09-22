@@ -70,7 +70,8 @@ namespace Check_carasi_DF_ContextClearing
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer1.SplitterDistance = 182;
+            this.splitContainer1.Size = new System.Drawing.Size(872, 517);
+            this.splitContainer1.SplitterDistance = 258;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
@@ -86,13 +87,16 @@ namespace Check_carasi_DF_ContextClearing
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.UC_OldCarasi);
-            this.splitContainer2.SplitterDistance = 532;
+            this.splitContainer2.Size = new System.Drawing.Size(872, 258);
+            this.splitContainer2.SplitterDistance = 436;
             this.splitContainer2.TabIndex = 0;
+            // 
             // UC_Newcarasi
             // 
             this.UC_Newcarasi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UC_Newcarasi.Location = new System.Drawing.Point(0, 0);
             this.UC_Newcarasi.Name = "UC_Newcarasi";
+            this.UC_Newcarasi.Size = new System.Drawing.Size(436, 258);
             this.UC_Newcarasi.TabIndex = 8;
             // 
             // UC_OldCarasi
@@ -100,6 +104,7 @@ namespace Check_carasi_DF_ContextClearing
             this.UC_OldCarasi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UC_OldCarasi.Location = new System.Drawing.Point(0, 0);
             this.UC_OldCarasi.Name = "UC_OldCarasi";
+            this.UC_OldCarasi.Size = new System.Drawing.Size(432, 258);
             this.UC_OldCarasi.TabIndex = 9;
             // 
             // splitContainer3
@@ -115,7 +120,8 @@ namespace Check_carasi_DF_ContextClearing
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.UC_OldDF);
-            this.splitContainer3.SplitterDistance = 532;
+            this.splitContainer3.Size = new System.Drawing.Size(872, 259);
+            this.splitContainer3.SplitterDistance = 436;
             this.splitContainer3.TabIndex = 0;
             // 
             // UC_NewDF
@@ -126,6 +132,7 @@ namespace Check_carasi_DF_ContextClearing
             this.UC_NewDF.Link_Of_DF_file = "";
             this.UC_NewDF.Location = new System.Drawing.Point(0, 0);
             this.UC_NewDF.Name = "UC_NewDF";
+            this.UC_NewDF.Size = new System.Drawing.Size(436, 259);
             this.UC_NewDF.TabIndex = 15;
             // 
             // UC_OldDF
@@ -136,6 +143,7 @@ namespace Check_carasi_DF_ContextClearing
             this.UC_OldDF.Link_Of_DF_file = "";
             this.UC_OldDF.Location = new System.Drawing.Point(0, 0);
             this.UC_OldDF.Name = "UC_OldDF";
+            this.UC_OldDF.Size = new System.Drawing.Size(432, 259);
             this.UC_OldDF.TabIndex = 16;
             // 
             // tableLayoutPanel1
@@ -155,6 +163,7 @@ namespace Check_carasi_DF_ContextClearing
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.566434F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.43356F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(878, 572);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // label1
@@ -165,6 +174,7 @@ namespace Check_carasi_DF_ContextClearing
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(144, 49);
             this.label1.TabIndex = 4;
             this.label1.Text = "MM Info:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -175,14 +185,16 @@ namespace Check_carasi_DF_ContextClearing
             this.tb_MM_Infor.Location = new System.Drawing.Point(153, 3);
             this.tb_MM_Infor.Name = "tb_MM_Infor";
             this.tb_MM_Infor.ReadOnly = true;
+            this.tb_MM_Infor.Size = new System.Drawing.Size(467, 43);
             this.tb_MM_Infor.TabIndex = 3;
             this.tb_MM_Infor.Text = "";
             // 
             // tb_A2L_Infor
             // 
             this.tb_A2L_Infor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_A2L_Infor.Location = new System.Drawing.Point(819, 3);
+            this.tb_A2L_Infor.Location = new System.Drawing.Point(626, 3);
             this.tb_A2L_Infor.Name = "tb_A2L_Infor";
+            this.tb_A2L_Infor.Size = new System.Drawing.Size(249, 43);
             this.tb_A2L_Infor.TabIndex = 5;
             this.tb_A2L_Infor.Text = "";
             // 
@@ -192,6 +204,7 @@ namespace Check_carasi_DF_ContextClearing
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "UC_ContextClearing";
+            this.Size = new System.Drawing.Size(878, 572);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

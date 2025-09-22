@@ -257,7 +257,7 @@ namespace Check_carasi_DF_ContextClearing
         
         /// <summary>
         /// LAYOUT: Configure 4-panel layout with proper proportions
-        /// Top/Bottom: 35%/65%, Left/Right: 50%/50%
+        /// Top/Bottom: 40%/60%, Left/Right: 50%/50%
         /// </summary>
         private void SetupPanelLayout()
         {
@@ -274,8 +274,8 @@ namespace Check_carasi_DF_ContextClearing
                 int totalHeight = this.Height - 60; // Account for top info panel
                 int totalWidth = this.Width - 20; // Account for margins
                 
-                // 35% top, 65% bottom
-                int topHeight = (int)(totalHeight * 0.35);
+                // 40% top, 60% bottom
+                int topHeight = (int)(totalHeight * 0.40);
                 
                 // 50% left, 50% right
                 int leftWidth = (int)(totalWidth * 0.50);

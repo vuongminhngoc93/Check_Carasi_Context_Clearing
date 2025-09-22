@@ -147,14 +147,15 @@ namespace Check_carasi_DF_ContextClearing
             this.tableLayoutPanel1.RowCount = 10;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(663, 316);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lb_NameOfFile
@@ -179,7 +180,7 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_status.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_status.Location = new System.Drawing.Point(3, 37);
             this.lb_status.Name = "lb_status";
-            this.lb_status.Size = new System.Drawing.Size(94, 63);
+            this.lb_status.Size = new System.Drawing.Size(94, 105);
             this.lb_status.TabIndex = 10;
             this.lb_status.Text = "Status";
             this.lb_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -192,10 +193,10 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_PSAName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_PSAName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lb_PSAName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_PSAName.Location = new System.Drawing.Point(3, 100);
+            this.lb_PSAName.Location = new System.Drawing.Point(3, 142);
             this.lb_PSAName.Name = "lb_PSAName";
             this.tableLayoutPanel1.SetRowSpan(this.lb_PSAName, 2);
-            this.lb_PSAName.Size = new System.Drawing.Size(94, 54);
+            this.lb_PSAName.Size = new System.Drawing.Size(94, 40);
             this.lb_PSAName.TabIndex = 11;
             this.lb_PSAName.Text = "PSA_Name";
             this.lb_PSAName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -208,10 +209,10 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_BoschName_FCName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_BoschName_FCName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lb_BoschName_FCName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_BoschName_FCName.Location = new System.Drawing.Point(3, 208);
+            this.lb_BoschName_FCName.Location = new System.Drawing.Point(3, 229);
             this.lb_BoschName_FCName.Name = "lb_BoschName_FCName";
             this.tableLayoutPanel1.SetRowSpan(this.lb_BoschName_FCName, 2);
-            this.lb_BoschName_FCName.Size = new System.Drawing.Size(94, 54);
+            this.lb_BoschName_FCName.Size = new System.Drawing.Size(94, 40);
             this.lb_BoschName_FCName.TabIndex = 12;
             this.lb_BoschName_FCName.Text = "Bosch Name";
             this.lb_BoschName_FCName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -223,9 +224,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_unit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_unit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_unit.Location = new System.Drawing.Point(103, 100);
+            this.lb_unit.Location = new System.Drawing.Point(103, 142);
             this.lb_unit.Name = "lb_unit";
-            this.lb_unit.Size = new System.Drawing.Size(106, 27);
+            this.lb_unit.Size = new System.Drawing.Size(106, 20);
             this.lb_unit.TabIndex = 13;
             this.lb_unit.Text = "Unit";
             this.lb_unit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -237,9 +238,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Min.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Min.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Min.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Min.Location = new System.Drawing.Point(215, 100);
+            this.lb_Min.Location = new System.Drawing.Point(215, 142);
             this.lb_Min.Name = "lb_Min";
-            this.lb_Min.Size = new System.Drawing.Size(106, 27);
+            this.lb_Min.Size = new System.Drawing.Size(106, 20);
             this.lb_Min.TabIndex = 14;
             this.lb_Min.Text = "Min";
             this.lb_Min.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -251,9 +252,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Max.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Max.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Max.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Max.Location = new System.Drawing.Point(327, 100);
+            this.lb_Max.Location = new System.Drawing.Point(327, 142);
             this.lb_Max.Name = "lb_Max";
-            this.lb_Max.Size = new System.Drawing.Size(106, 27);
+            this.lb_Max.Size = new System.Drawing.Size(106, 20);
             this.lb_Max.TabIndex = 15;
             this.lb_Max.Text = "Max";
             this.lb_Max.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -265,9 +266,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Resolution.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Resolution.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Resolution.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Resolution.Location = new System.Drawing.Point(439, 100);
+            this.lb_Resolution.Location = new System.Drawing.Point(439, 142);
             this.lb_Resolution.Name = "lb_Resolution";
-            this.lb_Resolution.Size = new System.Drawing.Size(106, 27);
+            this.lb_Resolution.Size = new System.Drawing.Size(106, 20);
             this.lb_Resolution.TabIndex = 16;
             this.lb_Resolution.Text = "Quantisation";
             this.lb_Resolution.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -279,9 +280,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Initialisation.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Initialisation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Initialisation.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Initialisation.Location = new System.Drawing.Point(551, 100);
+            this.lb_Initialisation.Location = new System.Drawing.Point(551, 142);
             this.lb_Initialisation.Name = "lb_Initialisation";
-            this.lb_Initialisation.Size = new System.Drawing.Size(109, 27);
+            this.lb_Initialisation.Size = new System.Drawing.Size(109, 20);
             this.lb_Initialisation.TabIndex = 17;
             this.lb_Initialisation.Text = "Initialisation";
             this.lb_Initialisation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -290,55 +291,55 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_PSAunit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAunit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAunit.Location = new System.Drawing.Point(103, 130);
+            this.tb_PSAunit.Location = new System.Drawing.Point(103, 165);
             this.tb_PSAunit.Multiline = true;
             this.tb_PSAunit.Name = "tb_PSAunit";
             this.tb_PSAunit.ReadOnly = true;
-            this.tb_PSAunit.Size = new System.Drawing.Size(106, 21);
+            this.tb_PSAunit.Size = new System.Drawing.Size(106, 14);
             this.tb_PSAunit.TabIndex = 18;
             // 
             // tb_PSAMin
             // 
             this.tb_PSAMin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAMin.Location = new System.Drawing.Point(215, 130);
+            this.tb_PSAMin.Location = new System.Drawing.Point(215, 165);
             this.tb_PSAMin.Multiline = true;
             this.tb_PSAMin.Name = "tb_PSAMin";
             this.tb_PSAMin.ReadOnly = true;
-            this.tb_PSAMin.Size = new System.Drawing.Size(106, 21);
+            this.tb_PSAMin.Size = new System.Drawing.Size(106, 14);
             this.tb_PSAMin.TabIndex = 19;
             // 
             // tb_PSAMax
             // 
             this.tb_PSAMax.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAMax.Location = new System.Drawing.Point(327, 130);
+            this.tb_PSAMax.Location = new System.Drawing.Point(327, 165);
             this.tb_PSAMax.Multiline = true;
             this.tb_PSAMax.Name = "tb_PSAMax";
             this.tb_PSAMax.ReadOnly = true;
-            this.tb_PSAMax.Size = new System.Drawing.Size(106, 21);
+            this.tb_PSAMax.Size = new System.Drawing.Size(106, 14);
             this.tb_PSAMax.TabIndex = 20;
             // 
             // tb_PSARes
             // 
             this.tb_PSARes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSARes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSARes.Location = new System.Drawing.Point(439, 130);
+            this.tb_PSARes.Location = new System.Drawing.Point(439, 165);
             this.tb_PSARes.Multiline = true;
             this.tb_PSARes.Name = "tb_PSARes";
             this.tb_PSARes.ReadOnly = true;
-            this.tb_PSARes.Size = new System.Drawing.Size(106, 21);
+            this.tb_PSARes.Size = new System.Drawing.Size(106, 14);
             this.tb_PSARes.TabIndex = 21;
             // 
             // tb_PSAInit
             // 
             this.tb_PSAInit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAInit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAInit.Location = new System.Drawing.Point(551, 130);
+            this.tb_PSAInit.Location = new System.Drawing.Point(551, 165);
             this.tb_PSAInit.Multiline = true;
             this.tb_PSAInit.Name = "tb_PSAInit";
             this.tb_PSAInit.ReadOnly = true;
-            this.tb_PSAInit.Size = new System.Drawing.Size(109, 21);
+            this.tb_PSAInit.Size = new System.Drawing.Size(109, 14);
             this.tb_PSAInit.TabIndex = 22;
             // 
             // lb_SW_Type
@@ -348,9 +349,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_SW_Type.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_SW_Type.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_SW_Type.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_SW_Type.Location = new System.Drawing.Point(103, 154);
+            this.lb_SW_Type.Location = new System.Drawing.Point(103, 182);
             this.lb_SW_Type.Name = "lb_SW_Type";
-            this.lb_SW_Type.Size = new System.Drawing.Size(106, 27);
+            this.lb_SW_Type.Size = new System.Drawing.Size(106, 20);
             this.lb_SW_Type.TabIndex = 23;
             this.lb_SW_Type.Text = "Primitivetype";
             this.lb_SW_Type.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -362,9 +363,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Offset.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Offset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Offset.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Offset.Location = new System.Drawing.Point(215, 154);
+            this.lb_Offset.Location = new System.Drawing.Point(215, 182);
             this.lb_Offset.Name = "lb_Offset";
-            this.lb_Offset.Size = new System.Drawing.Size(106, 27);
+            this.lb_Offset.Size = new System.Drawing.Size(106, 20);
             this.lb_Offset.TabIndex = 24;
             this.lb_Offset.Text = "Offset";
             this.lb_Offset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -376,9 +377,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Description.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Description.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Description.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Description.Location = new System.Drawing.Point(327, 154);
+            this.lb_Description.Location = new System.Drawing.Point(327, 182);
             this.lb_Description.Name = "lb_Description";
-            this.lb_Description.Size = new System.Drawing.Size(106, 27);
+            this.lb_Description.Size = new System.Drawing.Size(106, 20);
             this.lb_Description.TabIndex = 25;
             this.lb_Description.Text = "Description";
             this.lb_Description.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -390,9 +391,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RTEDirection.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RTEDirection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RTEDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RTEDirection.Location = new System.Drawing.Point(439, 154);
+            this.lb_RTEDirection.Location = new System.Drawing.Point(439, 182);
             this.lb_RTEDirection.Name = "lb_RTEDirection";
-            this.lb_RTEDirection.Size = new System.Drawing.Size(106, 27);
+            this.lb_RTEDirection.Size = new System.Drawing.Size(106, 20);
             this.lb_RTEDirection.TabIndex = 26;
             this.lb_RTEDirection.Text = "Rte Direction";
             this.lb_RTEDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -404,9 +405,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Conversion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Conversion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Conversion.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Conversion.Location = new System.Drawing.Point(551, 154);
+            this.lb_Conversion.Location = new System.Drawing.Point(551, 182);
             this.lb_Conversion.Name = "lb_Conversion";
-            this.lb_Conversion.Size = new System.Drawing.Size(109, 27);
+            this.lb_Conversion.Size = new System.Drawing.Size(109, 20);
             this.lb_Conversion.TabIndex = 27;
             this.lb_Conversion.Text = "Conversion";
             this.lb_Conversion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -415,7 +416,7 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_PSAType.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAType.Location = new System.Drawing.Point(103, 184);
+            this.tb_PSAType.Location = new System.Drawing.Point(103, 205);
             this.tb_PSAType.Multiline = true;
             this.tb_PSAType.Name = "tb_PSAType";
             this.tb_PSAType.ReadOnly = true;
@@ -426,7 +427,7 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_PSAOffset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAOffset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAOffset.Location = new System.Drawing.Point(215, 184);
+            this.tb_PSAOffset.Location = new System.Drawing.Point(215, 205);
             this.tb_PSAOffset.Multiline = true;
             this.tb_PSAOffset.Name = "tb_PSAOffset";
             this.tb_PSAOffset.ReadOnly = true;
@@ -437,7 +438,7 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_PSAConversion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_PSAConversion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_PSAConversion.Location = new System.Drawing.Point(327, 184);
+            this.tb_PSAConversion.Location = new System.Drawing.Point(327, 205);
             this.tb_PSAConversion.Multiline = true;
             this.tb_PSAConversion.Name = "tb_PSAConversion";
             this.tb_PSAConversion.ReadOnly = true;
@@ -448,7 +449,7 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_RTE_direction.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_RTE_direction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_RTE_direction.Location = new System.Drawing.Point(439, 184);
+            this.tb_RTE_direction.Location = new System.Drawing.Point(439, 205);
             this.tb_RTE_direction.Multiline = true;
             this.tb_RTE_direction.Name = "tb_RTE_direction";
             this.tb_RTE_direction.ReadOnly = true;
@@ -459,7 +460,7 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_Description.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_Description.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_Description.Location = new System.Drawing.Point(551, 184);
+            this.tb_Description.Location = new System.Drawing.Point(551, 205);
             this.tb_Description.Multiline = true;
             this.tb_Description.Name = "tb_Description";
             this.tb_Description.ReadOnly = true;
@@ -473,9 +474,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_Min.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_Min.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_Min.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_Min.Location = new System.Drawing.Point(215, 208);
+            this.lb_RB_Min.Location = new System.Drawing.Point(215, 229);
             this.lb_RB_Min.Name = "lb_RB_Min";
-            this.lb_RB_Min.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_Min.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_Min.TabIndex = 34;
             this.lb_RB_Min.Text = "RB Min";
             this.lb_RB_Min.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -487,9 +488,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_unit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_unit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_unit.Location = new System.Drawing.Point(103, 208);
+            this.lb_RB_unit.Location = new System.Drawing.Point(103, 229);
             this.lb_RB_unit.Name = "lb_RB_unit";
-            this.lb_RB_unit.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_unit.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_unit.TabIndex = 33;
             this.lb_RB_unit.Text = "RB Unit";
             this.lb_RB_unit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -501,9 +502,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_Max.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_Max.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_Max.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_Max.Location = new System.Drawing.Point(327, 208);
+            this.lb_RB_Max.Location = new System.Drawing.Point(327, 229);
             this.lb_RB_Max.Name = "lb_RB_Max";
-            this.lb_RB_Max.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_Max.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_Max.TabIndex = 35;
             this.lb_RB_Max.Text = "RB Max";
             this.lb_RB_Max.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -515,9 +516,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_Quantisation.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_Quantisation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_Quantisation.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_Quantisation.Location = new System.Drawing.Point(439, 208);
+            this.lb_RB_Quantisation.Location = new System.Drawing.Point(439, 229);
             this.lb_RB_Quantisation.Name = "lb_RB_Quantisation";
-            this.lb_RB_Quantisation.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_Quantisation.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_Quantisation.TabIndex = 36;
             this.lb_RB_Quantisation.Text = "RB Resolution";
             this.lb_RB_Quantisation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -529,9 +530,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RBInit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RBInit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RBInit.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RBInit.Location = new System.Drawing.Point(551, 208);
+            this.lb_RBInit.Location = new System.Drawing.Point(551, 229);
             this.lb_RBInit.Name = "lb_RBInit";
-            this.lb_RBInit.Size = new System.Drawing.Size(109, 27);
+            this.lb_RBInit.Size = new System.Drawing.Size(109, 20);
             this.lb_RBInit.TabIndex = 37;
             this.lb_RBInit.Text = "RB Init";
             this.lb_RBInit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -543,9 +544,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_Datatype.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_Datatype.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_Datatype.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_Datatype.Location = new System.Drawing.Point(103, 262);
+            this.lb_RB_Datatype.Location = new System.Drawing.Point(103, 269);
             this.lb_RB_Datatype.Name = "lb_RB_Datatype";
-            this.lb_RB_Datatype.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_Datatype.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_Datatype.TabIndex = 38;
             this.lb_RB_Datatype.Text = "RB Datatype";
             this.lb_RB_Datatype.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -557,9 +558,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_Offset.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_Offset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_Offset.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_Offset.Location = new System.Drawing.Point(215, 262);
+            this.lb_RB_Offset.Location = new System.Drawing.Point(215, 269);
             this.lb_RB_Offset.Name = "lb_RB_Offset";
-            this.lb_RB_Offset.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_Offset.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_Offset.TabIndex = 39;
             this.lb_RB_Offset.Text = "RB Offset";
             this.lb_RB_Offset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -571,9 +572,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_RB_conversion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_RB_conversion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_RB_conversion.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_RB_conversion.Location = new System.Drawing.Point(327, 262);
+            this.lb_RB_conversion.Location = new System.Drawing.Point(327, 269);
             this.lb_RB_conversion.Name = "lb_RB_conversion";
-            this.lb_RB_conversion.Size = new System.Drawing.Size(106, 27);
+            this.lb_RB_conversion.Size = new System.Drawing.Size(106, 20);
             this.lb_RB_conversion.TabIndex = 40;
             this.lb_RB_conversion.Text = " RB formula";
             this.lb_RB_conversion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -585,9 +586,9 @@ namespace Check_carasi_DF_ContextClearing
             this.lb_Pseudo_code.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lb_Pseudo_code.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_Pseudo_code.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Pseudo_code.Location = new System.Drawing.Point(439, 262);
+            this.lb_Pseudo_code.Location = new System.Drawing.Point(439, 269);
             this.lb_Pseudo_code.Name = "lb_Pseudo_code";
-            this.lb_Pseudo_code.Size = new System.Drawing.Size(106, 27);
+            this.lb_Pseudo_code.Size = new System.Drawing.Size(106, 20);
             this.lb_Pseudo_code.TabIndex = 41;
             this.lb_Pseudo_code.Text = "Pseudo-code";
             this.lb_Pseudo_code.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -599,9 +600,9 @@ namespace Check_carasi_DF_ContextClearing
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(551, 262);
+            this.label2.Location = new System.Drawing.Point(551, 269);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 27);
+            this.label2.Size = new System.Drawing.Size(109, 20);
             this.label2.TabIndex = 42;
             this.label2.Text = "Mapping type";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -610,55 +611,55 @@ namespace Check_carasi_DF_ContextClearing
             // 
             this.tb_RB_Unit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_RB_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_RB_Unit.Location = new System.Drawing.Point(103, 238);
+            this.tb_RB_Unit.Location = new System.Drawing.Point(103, 252);
             this.tb_RB_Unit.Multiline = true;
             this.tb_RB_Unit.Name = "tb_RB_Unit";
             this.tb_RB_Unit.ReadOnly = true;
-            this.tb_RB_Unit.Size = new System.Drawing.Size(106, 21);
+            this.tb_RB_Unit.Size = new System.Drawing.Size(106, 14);
             this.tb_RB_Unit.TabIndex = 43;
             // 
             // tb_RB_Min
             // 
             this.tb_RB_Min.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_RB_Min.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_RB_Min.Location = new System.Drawing.Point(215, 238);
+            this.tb_RB_Min.Location = new System.Drawing.Point(215, 252);
             this.tb_RB_Min.Multiline = true;
             this.tb_RB_Min.Name = "tb_RB_Min";
             this.tb_RB_Min.ReadOnly = true;
-            this.tb_RB_Min.Size = new System.Drawing.Size(106, 21);
+            this.tb_RB_Min.Size = new System.Drawing.Size(106, 14);
             this.tb_RB_Min.TabIndex = 44;
             // 
             // tb_RB_Max
             // 
             this.tb_RB_Max.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_RB_Max.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_RB_Max.Location = new System.Drawing.Point(327, 238);
+            this.tb_RB_Max.Location = new System.Drawing.Point(327, 252);
             this.tb_RB_Max.Multiline = true;
             this.tb_RB_Max.Name = "tb_RB_Max";
             this.tb_RB_Max.ReadOnly = true;
-            this.tb_RB_Max.Size = new System.Drawing.Size(106, 21);
+            this.tb_RB_Max.Size = new System.Drawing.Size(106, 14);
             this.tb_RB_Max.TabIndex = 45;
             // 
             // tb_RB_Res
             // 
             this.tb_RB_Res.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_RB_Res.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_RB_Res.Location = new System.Drawing.Point(439, 238);
+            this.tb_RB_Res.Location = new System.Drawing.Point(439, 252);
             this.tb_RB_Res.Multiline = true;
             this.tb_RB_Res.Name = "tb_RB_Res";
             this.tb_RB_Res.ReadOnly = true;
-            this.tb_RB_Res.Size = new System.Drawing.Size(106, 21);
+            this.tb_RB_Res.Size = new System.Drawing.Size(106, 14);
             this.tb_RB_Res.TabIndex = 46;
             // 
             // tb_RB_init
             // 
             this.tb_RB_init.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_RB_init.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_RB_init.Location = new System.Drawing.Point(551, 238);
+            this.tb_RB_init.Location = new System.Drawing.Point(551, 252);
             this.tb_RB_init.Multiline = true;
             this.tb_RB_init.Name = "tb_RB_init";
             this.tb_RB_init.ReadOnly = true;
-            this.tb_RB_init.Size = new System.Drawing.Size(109, 21);
+            this.tb_RB_init.Size = new System.Drawing.Size(109, 14);
             this.tb_RB_init.TabIndex = 47;
             // 
             // tb_RB_type
@@ -723,6 +724,7 @@ namespace Check_carasi_DF_ContextClearing
             this.dataGridView_DF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_DF.Location = new System.Drawing.Point(103, 40);
             this.dataGridView_DF.Name = "dataGridView_DF";
+            this.dataGridView_DF.Size = new System.Drawing.Size(557, 99);
             this.dataGridView_DF.TabIndex = 53;
             this.dataGridView_DF.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_DF_CellClick);
             // 
