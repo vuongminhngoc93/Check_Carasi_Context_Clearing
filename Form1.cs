@@ -183,15 +183,19 @@ namespace Check_carasi_DF_ContextClearing
                 e.Graphics.FillRectangle(brush, tabRect);
             }
             
-            // Draw text
-            using (var brush = new System.Drawing.SolidBrush(textColor))
-            {
-                StringFormat format = new StringFormat();
-                format.Alignment = StringAlignment.Center;
-                format.LineAlignment = StringAlignment.Center;
-                
-                e.Graphics.DrawString(tabPage.Text, tabControl.Font, brush, tabRect, format);
-            }
+            // Draw text using TextRenderer with NoPrefix to prevent underscore mnemonic issues
+            // This fixes text rendering problems with variable names containing underscores like "B2_b1a"
+            TextRenderer.DrawText(
+                e.Graphics,
+                tabPage.Text,
+                tabControl.Font,
+                tabRect,
+                textColor,
+                TextFormatFlags.HorizontalCenter |
+                TextFormatFlags.VerticalCenter |
+                TextFormatFlags.SingleLine |
+                TextFormatFlags.NoPrefix   // CRITICAL: Prevents underscore mnemonic processing
+            );
             
             // Simple border
             using (var pen = new System.Drawing.Pen(System.Drawing.Color.DarkGray))
