@@ -253,8 +253,63 @@ namespace Check_carasi_DF_ContextClearing
             
             // LAYOUT FIX: Set proper panel proportions on initialization
             SetupPanelLayout();
+            
+            // HIGHLIGHTING FIX: Subscribe to cell click events for dynamic highlighting
+            SetupDataflowHighlightingEvents();
         }
         
+        /// <summary>
+        /// HIGHLIGHTING FIX: Setup event handlers for dynamic highlighting when cells are clicked
+        /// </summary>
+        private void SetupDataflowHighlightingEvents()
+        {
+            try
+            {
+                // Subscribe to NewDF cell click events
+                if (UC_NewDF != null)
+                {
+                    UC_NewDF.OnCellClickedForHighlighting += TriggerHighlightingAfterCellClick;
+                    System.Diagnostics.Debug.WriteLine("HIGHLIGHTING SETUP: Subscribed to UC_NewDF cell click events");
+                }
+                
+                // Subscribe to OldDF cell click events  
+                if (UC_OldDF != null)
+                {
+                    UC_OldDF.OnCellClickedForHighlighting += TriggerHighlightingAfterCellClick;
+                    System.Diagnostics.Debug.WriteLine("HIGHLIGHTING SETUP: Subscribed to UC_OldDF cell click events");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"HIGHLIGHTING SETUP ERROR: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// HIGHLIGHTING FIX: Trigger highlighting comparison when user clicks different DataFlow rows
+        /// This ensures color comparison updates when row data changes
+        /// </summary>
+        private void TriggerHighlightingAfterCellClick()
+        {
+            if (IsHighlightingEnabled)
+            {
+                try
+                {
+                    // Clear previous highlighting first
+                    PropertyDifferenceHighlighter.ClearAllHighlighting(this);
+                    
+                    // Apply new highlighting based on current row data
+                    PropertyDifferenceHighlighter.HighlightAllPropertyDifferences(this, false);
+                    
+                    System.Diagnostics.Debug.WriteLine("CELL CLICK HIGHLIGHTING: Successfully applied color comparison");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"CELL CLICK HIGHLIGHTING ERROR: {ex.Message}");
+                }
+            }
+        }
+
         /// <summary>
         /// LAYOUT: Configure 4-panel layout with proper proportions
         /// Top/Bottom: 40%/60%, Left/Right: 50%/50%

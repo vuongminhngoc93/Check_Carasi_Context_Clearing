@@ -6,6 +6,9 @@ namespace Check_carasi_DF_ContextClearing
 {
     public partial class UC_dataflow : UserControl
     {
+        // EVENT: To notify parent UC_ContextClearing when cell is clicked for highlighting
+        public event System.Action OnCellClickedForHighlighting;
+
         public UC_dataflow()
         {
             InitializeComponent();
@@ -167,6 +170,18 @@ namespace Check_carasi_DF_ContextClearing
                 this.tb_RB_Max.Text = dataGridView_DF.Rows[e.RowIndex].Cells[24].Value.ToString();
                 this.tb_RB_offset.Text = dataGridView_DF.Rows[e.RowIndex].Cells[25].Value.ToString();
                 this.tb_RB_init.Text = dataGridView_DF.Rows[e.RowIndex].Cells[28].Value.ToString();
+                
+                // HIGHLIGHT TRIGGER: Notify parent UC_ContextClearing to re-run highlighting
+                // This ensures color comparison happens when user clicks different rows
+                try
+                {
+                    OnCellClickedForHighlighting?.Invoke();
+                    System.Diagnostics.Debug.WriteLine($"CELL CLICK: Triggered highlighting for row {e.RowIndex}");
+                }
+                catch (System.Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"CELL CLICK HIGHLIGHT ERROR: {ex.Message}");
+                }
             }
         }
     }
