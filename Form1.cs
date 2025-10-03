@@ -361,9 +361,10 @@ namespace Check_carasi_DF_ContextClearing
             {
                 if (internalUC.Flag_IsInternal)
                 {
-                    if (tb_Interface2search.Text != "")
+                    string searchVariable = tb_Interface2search.Text.Trim();
+                    if (searchVariable != "")
                     {
-                        internalUC.__checkVariable(tb_Interface2search.Text);
+                        internalUC.__checkVariable(searchVariable);
                         toolStripProgressBar1.Value = 10;
                     }
                     else
@@ -407,12 +408,13 @@ namespace Check_carasi_DF_ContextClearing
                         }
 
                         UC_doing.Link2Folder = link2Folder;
-                        if (tb_Interface2search.Text != "")
+                        string searchVariable = tb_Interface2search.Text.Trim();
+                        if (searchVariable != "")
                         {
                             // PERFORMANCE: Measure variable checking time
                             var checkStartTime = DateTime.Now;
                             
-                            UC_doing.__checkVariable(ref toolStripProgressBar1, tb_Interface2search.Text);
+                            UC_doing.__checkVariable(ref toolStripProgressBar1, searchVariable);
                             
                             var checkEndTime = DateTime.Now;
                             var checkTime = (checkEndTime - checkStartTime).TotalMilliseconds;
@@ -428,7 +430,7 @@ namespace Check_carasi_DF_ContextClearing
                             if(_mmCheck != null && _mmCheck.IsValidLink)
                             {
                                 string[] result = new string[150];
-                                bool a = _mmCheck.IsExistInMM(tb_Interface2search.Text, ref result);
+                                bool a = _mmCheck.IsExistInMM(searchVariable, ref result);
                                 UC_doing._setValueMM(a, result);
                             }
 
@@ -436,7 +438,7 @@ namespace Check_carasi_DF_ContextClearing
                             if (_a2lCheck != null && _a2lCheck.IsValidLink)
                             {
                                 string[] result = new string[150];
-                                bool a = _a2lCheck.IsExistInA2L(tb_Interface2search.Text, ref result);
+                                bool a = _a2lCheck.IsExistInA2L(searchVariable, ref result);
                                 UC_doing._setValueA2L(a, result);
                             }
                             // ENHANCED A2L: Also try unified A2L search with structured results
@@ -444,12 +446,12 @@ namespace Check_carasi_DF_ContextClearing
                             {
                                 try
                                 {
-                                    var a2lResult = A2LParserManager.FindVariable(UC_doing.A2LFilePath, tb_Interface2search.Text);
+                                    var a2lResult = A2LParserManager.FindVariable(UC_doing.A2LFilePath, searchVariable);
                                     if (a2lResult.Found)
                                     {
                                         string[] result = a2lResult.GetSummary().Split('\n');
                                         UC_doing._setValueA2L(true, result);
-                                        System.Diagnostics.Debug.WriteLine($"A2L UNIFIED SEARCH: Found {tb_Interface2search.Text} in A2L");
+                                        System.Diagnostics.Debug.WriteLine($"A2L UNIFIED SEARCH: Found {searchVariable} in A2L");
                                     }
                                     else
                                     {
@@ -463,7 +465,7 @@ namespace Check_carasi_DF_ContextClearing
                                 }
                             }
 
-                            tabControl1.SelectedTab.Text = tb_Interface2search.Text;
+                            tabControl1.SelectedTab.Text = searchVariable;
                             
                             // Hide progress animation and show completion
                             ShowModernProgress(false);
