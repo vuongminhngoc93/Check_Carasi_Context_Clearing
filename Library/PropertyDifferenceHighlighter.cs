@@ -42,6 +42,7 @@ namespace Check_carasi_DF_ContextClearing
         private static readonly Dictionary<string, string> CarasiPropertyMappings = new Dictionary<string, string>
         {
             // REAL Carasi Properties from UC_Carasi.Designer.cs
+            { "lb_Name", "lb_Name" },                           // Name of Interface (Label)
             { "tb_Type", "tb_Type" },                           // Data type
             { "tb_Unit", "tb_Unit" },                           // Unit
             { "tb_Min", "tb_Min" },                             // Minimum value
@@ -130,6 +131,10 @@ namespace Check_carasi_DF_ContextClearing
         {
             try
             {
+                // Check for special cases: ADD (New has data, Old empty) or REMOVE (Old has data, New empty)
+                bool isAddCase = IsAddCase(oldCarasi, newCarasi);
+                bool isRemoveCase = IsRemoveCase(oldCarasi, newCarasi);
+                
                 foreach (var mapping in CarasiPropertyMappings)
                 {
                     string oldControlName = mapping.Key;
@@ -145,8 +150,44 @@ namespace Check_carasi_DF_ContextClearing
                         string oldText = GetControlText(oldControl);
                         string newText = GetControlText(newControl);
 
-                        // ENHANCED COMPARE: Use prefix matching for MM_ and STUB_
-                        var (areEqual, highlightColor, matchType) = CompareValuesWithPrefixMatching(oldText, newText);
+                        Color highlightColor;
+                        string matchType;
+
+                        // ADD case handling: neutral colors for properties, red only for Name of Interface
+                        if (isAddCase)
+                        {
+                            if (oldControlName == "lb_Name") // Name of Interface
+                            {
+                                highlightColor = DifferentColor; // Red for Name of Interface
+                                matchType = "ADD Case - Name Different";
+                            }
+                            else
+                            {
+                                highlightColor = Color.White; // Neutral for all other properties
+                                matchType = "ADD Case - Property Neutral";
+                            }
+                        }
+                        // REMOVE case handling: neutral colors for properties, red only for Name of Interface
+                        else if (isRemoveCase)
+                        {
+                            if (oldControlName == "lb_Name") // Name of Interface
+                            {
+                                highlightColor = DifferentColor; // Red for Name of Interface
+                                matchType = "REMOVE Case - Name Different";
+                            }
+                            else
+                            {
+                                highlightColor = Color.White; // Neutral for all other properties
+                                matchType = "REMOVE Case - Property Neutral";
+                            }
+                        }
+                        else
+                        {
+                            // Normal comparison: Use prefix matching for MM_ and STUB_
+                            var (areEqual, color, type) = CompareValuesWithPrefixMatching(oldText, newText);
+                            highlightColor = color;
+                            matchType = type;
+                        }
                         
                         // Apply color to both controls
                         oldControl.BackColor = highlightColor;
@@ -183,6 +224,10 @@ namespace Check_carasi_DF_ContextClearing
                     System.Diagnostics.Debug.WriteLine("Cannot compare dataflow - no row selected in one or both dataflows");
                     return;
                 }
+
+                // Check for special cases: ADD or REMOVE scenarios in Dataflow
+                bool isDataflowAddCase = IsDataflowAddCase(oldRowData, newRowData);
+                bool isDataflowRemoveCase = IsDataflowRemoveCase(oldRowData, newRowData);
 
                 // Map DataGridView column indices to TextBox properties for comparison
                 var columnMappings = new Dictionary<string, int>
@@ -235,8 +280,24 @@ namespace Check_carasi_DF_ContextClearing
                         string newValue = newRowData.Length > columnIndex ? 
                             newRowData[columnIndex]?.ToString()?.Trim() ?? "" : "";
 
-                        // ENHANCED COMPARE: Use prefix matching for MM_ and STUB_
-                        var (areEqual, highlightColor, matchType) = CompareValuesWithPrefixMatching(oldValue, newValue);
+                        Color highlightColor;
+                        string matchType;
+
+                        // Special case handling for Dataflow ADD/REMOVE scenarios
+                        if (isDataflowAddCase || isDataflowRemoveCase)
+                        {
+                            // For ADD/REMOVE cases, use neutral white color for all properties
+                            // since the main difference is the existence/absence of the row
+                            highlightColor = Color.White; // Neutral for all properties
+                            matchType = isDataflowAddCase ? "DATAFLOW ADD Case - Neutral" : "DATAFLOW REMOVE Case - Neutral";
+                        }
+                        else
+                        {
+                            // Normal comparison: Use prefix matching for MM_ and STUB_
+                            var (areEqual, color, type) = CompareValuesWithPrefixMatching(oldValue, newValue);
+                            highlightColor = color;
+                            matchType = type;
+                        }
                         
                         // Apply color to both controls
                         oldControl.BackColor = highlightColor;
@@ -268,8 +329,23 @@ namespace Check_carasi_DF_ContextClearing
                         string newValue = newRowData.Length > columnIndex ? 
                             newRowData[columnIndex]?.ToString()?.Trim() ?? "" : "";
 
-                        // ENHANCED COMPARE: Use prefix matching for MM_ and STUB_ (Producer/Consumer)
-                        var (areEqual, highlightColor, matchType) = CompareValuesWithPrefixMatching(oldValue, newValue);
+                        Color highlightColor;
+                        string matchType;
+
+                        // Special case handling for Dataflow ADD/REMOVE scenarios
+                        if (isDataflowAddCase || isDataflowRemoveCase)
+                        {
+                            // For ADD/REMOVE cases, use neutral white color for all labels
+                            highlightColor = Color.White; // Neutral for all labels
+                            matchType = isDataflowAddCase ? "DATAFLOW ADD Case - Label Neutral" : "DATAFLOW REMOVE Case - Label Neutral";
+                        }
+                        else
+                        {
+                            // Normal comparison: Use prefix matching for MM_ and STUB_ (Producer/Consumer)
+                            var (areEqual, color, type) = CompareValuesWithPrefixMatching(oldValue, newValue);
+                            highlightColor = color;
+                            matchType = type;
+                        }
                         
                         // Apply color to both label controls
                         oldControl.BackColor = highlightColor;
@@ -572,6 +648,253 @@ namespace Check_carasi_DF_ContextClearing
             
             // No match - different values
             return (false, DifferentColor, "DIFFERENT"); // Red for different
+        }
+
+        #endregion
+
+        #region ADD CASE DETECTION
+
+        /// <summary>
+        /// ADD CASE DETECTION: Check if this is an ADD case (New has data, Old is empty/default)
+        /// Returns true if Old Carasi appears to be empty (ADD scenario)
+        /// </summary>
+        private static bool IsAddCase(UC_Carasi oldCarasi, UC_Carasi newCarasi)
+        {
+            try
+            {
+                // Check key indicators that Old Carasi is empty/default
+                var oldNameControl = FindControlByName(oldCarasi, "lb_Name");
+                if (oldNameControl != null)
+                {
+                    string oldName = GetControlText(oldNameControl);
+                    // If Old name is default text or empty, this might be ADD case
+                    if (string.IsNullOrEmpty(oldName) || 
+                        oldName == "Name of Interface" || 
+                        oldName.Contains("Please check Function name"))
+                    {
+                        System.Diagnostics.Debug.WriteLine("ADD CASE DETECTED: Old Carasi appears empty/default");
+                        return true;
+                    }
+                }
+                
+                // Additional check: if most Old textboxes are empty
+                var keyControls = new[] { "tb_Type", "tb_Unit", "tb_Description" };
+                int emptyCount = 0;
+                foreach (string controlName in keyControls)
+                {
+                    var control = FindControlByName(oldCarasi, controlName);
+                    if (control != null)
+                    {
+                        string text = GetControlText(control);
+                        if (string.IsNullOrEmpty(text) || text.Contains("Please check Function name"))
+                        {
+                            emptyCount++;
+                        }
+                    }
+                }
+                
+                // If most key controls are empty, this is likely ADD case
+                if (emptyCount >= 2)
+                {
+                    System.Diagnostics.Debug.WriteLine($"ADD CASE DETECTED: {emptyCount}/{keyControls.Length} key controls are empty");
+                    return true;
+                }
+                
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ADD CASE DETECTION ERROR: {ex.Message}");
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region REMOVE CASE DETECTION
+
+        /// <summary>
+        /// REMOVE CASE DETECTION: Check if this is a REMOVE case (Old has data, New is empty/default)
+        /// Returns true if New Carasi appears to be empty (REMOVE scenario)
+        /// </summary>
+        private static bool IsRemoveCase(UC_Carasi oldCarasi, UC_Carasi newCarasi)
+        {
+            try
+            {
+                // Check key indicators that New Carasi is empty/default
+                var newNameControl = FindControlByName(newCarasi, "lb_Name");
+                if (newNameControl != null)
+                {
+                    string newName = GetControlText(newNameControl);
+                    // If New name is default text or empty, this might be REMOVE case
+                    if (string.IsNullOrEmpty(newName) || 
+                        newName == "Name of Interface" || 
+                        newName.Contains("Please check Function name"))
+                    {
+                        // Also check that Old has data
+                        var oldNameControl = FindControlByName(oldCarasi, "lb_Name");
+                        if (oldNameControl != null)
+                        {
+                            string oldName = GetControlText(oldNameControl);
+                            if (!string.IsNullOrEmpty(oldName) && 
+                                oldName != "Name of Interface" && 
+                                !oldName.Contains("Please check Function name"))
+                            {
+                                System.Diagnostics.Debug.WriteLine("REMOVE CASE DETECTED: New Carasi empty, Old has data");
+                                return true;
+                            }
+                        }
+                    }
+                }
+                
+                // Additional check: if most New textboxes are empty but Old has data
+                var keyControls = new[] { "tb_Type", "tb_Unit", "tb_Description" };
+                int newEmptyCount = 0;
+                int oldHasDataCount = 0;
+                
+                foreach (string controlName in keyControls)
+                {
+                    // Check New control
+                    var newControl = FindControlByName(newCarasi, controlName);
+                    if (newControl != null)
+                    {
+                        string newText = GetControlText(newControl);
+                        if (string.IsNullOrEmpty(newText) || newText.Contains("Please check Function name"))
+                        {
+                            newEmptyCount++;
+                        }
+                    }
+                    
+                    // Check Old control
+                    var oldControl = FindControlByName(oldCarasi, controlName);
+                    if (oldControl != null)
+                    {
+                        string oldText = GetControlText(oldControl);
+                        if (!string.IsNullOrEmpty(oldText) && !oldText.Contains("Please check Function name"))
+                        {
+                            oldHasDataCount++;
+                        }
+                    }
+                }
+                
+                // If most New controls are empty but Old has data, this is likely REMOVE case
+                if (newEmptyCount >= 2 && oldHasDataCount >= 2)
+                {
+                    System.Diagnostics.Debug.WriteLine($"REMOVE CASE DETECTED: New empty ({newEmptyCount}), Old has data ({oldHasDataCount})");
+                    return true;
+                }
+                
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"REMOVE CASE DETECTION ERROR: {ex.Message}");
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region DATAFLOW ADD/REMOVE CASE DETECTION
+
+        /// <summary>
+        /// DATAFLOW ADD CASE: Check if selected row exists in New but not in Old (or Old row is empty)
+        /// </summary>
+        private static bool IsDataflowAddCase(object[] oldRowData, object[] newRowData)
+        {
+            try
+            {
+                if (oldRowData == null || newRowData == null) return false;
+                
+                // Check if Old row is mostly empty but New has data
+                // Focus on key columns: Description (2), PSA Type (5), RB Type (19)
+                var keyColumns = new[] { 2, 5, 19 }; // Description, PSA Type, RB Type
+                
+                int oldEmptyCount = 0;
+                int newHasDataCount = 0;
+                
+                foreach (int col in keyColumns)
+                {
+                    // Check Old data
+                    string oldValue = oldRowData.Length > col ? 
+                        oldRowData[col]?.ToString()?.Trim() ?? "" : "";
+                    if (string.IsNullOrEmpty(oldValue))
+                    {
+                        oldEmptyCount++;
+                    }
+                    
+                    // Check New data
+                    string newValue = newRowData.Length > col ? 
+                        newRowData[col]?.ToString()?.Trim() ?? "" : "";
+                    if (!string.IsNullOrEmpty(newValue))
+                    {
+                        newHasDataCount++;
+                    }
+                }
+                
+                // ADD case: Old mostly empty, New has data
+                bool isAddCase = oldEmptyCount >= 2 && newHasDataCount >= 2;
+                if (isAddCase)
+                {
+                    System.Diagnostics.Debug.WriteLine($"DATAFLOW ADD CASE: Old empty ({oldEmptyCount}), New has data ({newHasDataCount})");
+                }
+                return isAddCase;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"DATAFLOW ADD CASE DETECTION ERROR: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// DATAFLOW REMOVE CASE: Check if selected row exists in Old but not in New (or New row is empty)
+        /// </summary>
+        private static bool IsDataflowRemoveCase(object[] oldRowData, object[] newRowData)
+        {
+            try
+            {
+                if (oldRowData == null || newRowData == null) return false;
+                
+                // Check if New row is mostly empty but Old has data
+                // Focus on key columns: Description (2), PSA Type (5), RB Type (19)
+                var keyColumns = new[] { 2, 5, 19 }; // Description, PSA Type, RB Type
+                
+                int newEmptyCount = 0;
+                int oldHasDataCount = 0;
+                
+                foreach (int col in keyColumns)
+                {
+                    // Check New data
+                    string newValue = newRowData.Length > col ? 
+                        newRowData[col]?.ToString()?.Trim() ?? "" : "";
+                    if (string.IsNullOrEmpty(newValue))
+                    {
+                        newEmptyCount++;
+                    }
+                    
+                    // Check Old data
+                    string oldValue = oldRowData.Length > col ? 
+                        oldRowData[col]?.ToString()?.Trim() ?? "" : "";
+                    if (!string.IsNullOrEmpty(oldValue))
+                    {
+                        oldHasDataCount++;
+                    }
+                }
+                
+                // REMOVE case: New mostly empty, Old has data
+                bool isRemoveCase = newEmptyCount >= 2 && oldHasDataCount >= 2;
+                if (isRemoveCase)
+                {
+                    System.Diagnostics.Debug.WriteLine($"DATAFLOW REMOVE CASE: New empty ({newEmptyCount}), Old has data ({oldHasDataCount})");
+                }
+                return isRemoveCase;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"DATAFLOW REMOVE CASE DETECTION ERROR: {ex.Message}");
+                return false;
+            }
         }
 
         #endregion
