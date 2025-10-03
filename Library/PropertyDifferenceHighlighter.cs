@@ -17,11 +17,19 @@ namespace Check_carasi_DF_ContextClearing
         
         /// <summary>
         /// Professional color scheme for property highlighting - BOLD COLORS for better visibility
-        /// RED: Different values, GREEN: Same values, WHITE: Default
+        /// RED: Different values, GREEN: Same values, LIGHT GREEN: Prefix match, WHITE: Default
         /// </summary>
         private static readonly Color DifferentColor = Color.FromArgb(255, 200, 200); // Darker red for visibility
         private static readonly Color SameColor = Color.FromArgb(200, 255, 200);      // Darker green for visibility
+        private static readonly Color PrefixMatchColor = Color.FromArgb(220, 255, 220); // Light green for prefix matches
         private static readonly Color DefaultColor = Color.White;                     // Default white
+        
+        /// <summary>
+        /// SPECIAL PREFIXES: MM_ and STUB_ are considered equivalent when comparing
+        /// MM_HEV_J3U_LatAm_P2F2 vs MM_eVCU_CTEPh2022_W1C9 = prefix match (MM_)
+        /// STUB_something vs STUB_otherthing = prefix match (STUB_)
+        /// </summary>
+        private static readonly string[] SpecialPrefixes = { "MM_", "STUB_" };
         
         #endregion
 
@@ -137,10 +145,8 @@ namespace Check_carasi_DF_ContextClearing
                         string oldText = GetControlText(oldControl);
                         string newText = GetControlText(newControl);
 
-                        // Compare values and apply highlighting
-                        bool areEqual = string.Equals(oldText?.Trim(), newText?.Trim(), StringComparison.OrdinalIgnoreCase);
-                        
-                        Color highlightColor = areEqual ? SameColor : DifferentColor;
+                        // ENHANCED COMPARE: Use prefix matching for MM_ and STUB_
+                        var (areEqual, highlightColor, matchType) = CompareValuesWithPrefixMatching(oldText, newText);
                         
                         // Apply color to both controls
                         oldControl.BackColor = highlightColor;
@@ -149,7 +155,7 @@ namespace Check_carasi_DF_ContextClearing
                         // DEBUG: Log highlighting for debugging
                         if (showTooltips)
                         {
-                            System.Diagnostics.Debug.WriteLine($"Carasi {oldControlName}: {(areEqual ? "MATCH" : "DIFFERENT")} - Old:'{oldText}' vs New:'{newText}'");
+                            System.Diagnostics.Debug.WriteLine($"Carasi {oldControlName}: {matchType} - Old:'{oldText}' vs New:'{newText}'");
                         }
                     }
                 }
@@ -229,10 +235,8 @@ namespace Check_carasi_DF_ContextClearing
                         string newValue = newRowData.Length > columnIndex ? 
                             newRowData[columnIndex]?.ToString()?.Trim() ?? "" : "";
 
-                        // Compare actual DataGridView data
-                        bool areEqual = string.Equals(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
-                        
-                        Color highlightColor = areEqual ? SameColor : DifferentColor;
+                        // ENHANCED COMPARE: Use prefix matching for MM_ and STUB_
+                        var (areEqual, highlightColor, matchType) = CompareValuesWithPrefixMatching(oldValue, newValue);
                         
                         // Apply color to both controls
                         oldControl.BackColor = highlightColor;
@@ -241,7 +245,7 @@ namespace Check_carasi_DF_ContextClearing
                         // DEBUG: Log comparison of actual data
                         if (showTooltips)
                         {
-                            System.Diagnostics.Debug.WriteLine($"Dataflow {controlName}: {(areEqual ? "MATCH" : "DIFFERENT")} - Old:'{oldValue}' vs New:'{newValue}'");
+                            System.Diagnostics.Debug.WriteLine($"Dataflow {controlName}: {matchType} - Old:'{oldValue}' vs New:'{newValue}'");
                         }
                     }
                 }
@@ -264,10 +268,8 @@ namespace Check_carasi_DF_ContextClearing
                         string newValue = newRowData.Length > columnIndex ? 
                             newRowData[columnIndex]?.ToString()?.Trim() ?? "" : "";
 
-                        // Compare actual DataGridView data
-                        bool areEqual = string.Equals(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
-                        
-                        Color highlightColor = areEqual ? SameColor : DifferentColor;
+                        // ENHANCED COMPARE: Use prefix matching for MM_ and STUB_ (Producer/Consumer)
+                        var (areEqual, highlightColor, matchType) = CompareValuesWithPrefixMatching(oldValue, newValue);
                         
                         // Apply color to both label controls
                         oldControl.BackColor = highlightColor;
@@ -276,7 +278,7 @@ namespace Check_carasi_DF_ContextClearing
                         // DEBUG: Log comparison of label data
                         if (showTooltips)
                         {
-                            System.Diagnostics.Debug.WriteLine($"Dataflow Label {controlName}: {(areEqual ? "MATCH" : "DIFFERENT")} - Old:'{oldValue}' vs New:'{newValue}'");
+                            System.Diagnostics.Debug.WriteLine($"Dataflow Label {controlName}: {matchType} - Old:'{oldValue}' vs New:'{newValue}'");
                         }
                     }
                 }
@@ -529,6 +531,47 @@ namespace Check_carasi_DF_ContextClearing
             {
                 System.Diagnostics.Debug.WriteLine($"Error clearing UserControl highlighting: {ex.Message}");
             }
+        }
+
+        #endregion
+
+        #region SPECIAL COMPARE
+
+        /// <summary>
+        /// SPECIAL COMPARE: Enhanced comparison with MM_ and STUB_ prefix matching
+        /// Returns comparison result, appropriate color, and match type for highlighting
+        /// MM_HEV_J3U_LatAm_P2F2 vs MM_eVCU_CTEPh2022_W1C9 = prefix match (light green)
+        /// STUB_something vs STUB_otherthing = prefix match (light green)
+        /// Exact match = same (dark green), different = red
+        /// </summary>
+        private static (bool areEqual, Color highlightColor, string matchType) CompareValuesWithPrefixMatching(string oldValue, string newValue)
+        {
+            // Handle null/empty cases
+            string oldTrimmed = oldValue?.Trim() ?? "";
+            string newTrimmed = newValue?.Trim() ?? "";
+            
+            // Exact match - highest priority
+            if (string.Equals(oldTrimmed, newTrimmed, StringComparison.OrdinalIgnoreCase))
+            {
+                return (true, SameColor, "EXACT_MATCH"); // Dark green for exact match
+            }
+            
+            // Check for special prefix matching
+            foreach (string prefix in SpecialPrefixes)
+            {
+                bool oldHasPrefix = oldTrimmed.StartsWith(prefix, StringComparison.OrdinalIgnoreCase);
+                bool newHasPrefix = newTrimmed.StartsWith(prefix, StringComparison.OrdinalIgnoreCase);
+                
+                // Both have same prefix = prefix match
+                if (oldHasPrefix && newHasPrefix)
+                {
+                    System.Diagnostics.Debug.WriteLine($"PREFIX MATCH: '{oldTrimmed}' vs '{newTrimmed}' both have '{prefix}'");
+                    return (true, PrefixMatchColor, $"PREFIX_MATCH_{prefix}"); // Light green for prefix match
+                }
+            }
+            
+            // No match - different values
+            return (false, DifferentColor, "DIFFERENT"); // Red for different
         }
 
         #endregion
