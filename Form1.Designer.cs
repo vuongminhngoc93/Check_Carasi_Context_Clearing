@@ -489,6 +489,7 @@
             this.tb_Interface2search.Size = new System.Drawing.Size(359, 25);
             this.tb_Interface2search.TabIndex = 22;
             this.tb_Interface2search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Interface2search_KeyPress);
+            this.tb_Interface2search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_Interface2search_KeyDown);
             // 
             // btn_Run
             // 
@@ -521,6 +522,8 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1124, 743);
             this.tabControl1.TabIndex = 24;
+            this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl1_DrawItem);
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.OnTabSelectionChanged);
             // 
             // tabPage1
             // 

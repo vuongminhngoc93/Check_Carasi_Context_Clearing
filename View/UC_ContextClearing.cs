@@ -638,36 +638,40 @@ namespace Check_carasi_DF_ContextClearing
                 // PERFORMANCE: Use A2LParserManager for batch search
                 progress?.Report(10);
                 
-                var a2lResults = A2LParserManager.BatchSearchVariables(a2lFilePath, variables);
-                
-                // Convert A2LSearchResult to display format
-                foreach (var variable in variables)
+                // FIX WARNING: Add proper async operation to justify async/await
+                await Task.Run(() => 
                 {
-                    if (a2lResults.TryGetValue(variable, out A2LSearchResult searchResult))
+                    var a2lResults = A2LParserManager.BatchSearchVariables(a2lFilePath, variables);
+                    
+                    // Convert A2LSearchResult to display format
+                    foreach (var variable in variables)
                     {
-                        results[variable] = new
+                        if (a2lResults.TryGetValue(variable, out A2LSearchResult searchResult))
                         {
-                            Variable = variable,
-                            Found = searchResult.Found,
-                            FoundInMeasurements = searchResult.FoundInMeasurements,
-                            FoundInCharacteristics = searchResult.FoundInCharacteristics,
-                            Summary = searchResult.GetSummary(),
-                            MeasurementName = searchResult.Measurement?.Name,
-                            CharacteristicName = searchResult.Characteristic?.Name,
-                            SearchTime = DateTime.Now
-                        };
-                    }
-                    else
-                    {
-                        results[variable] = new
+                            results[variable] = new
+                            {
+                                Variable = variable,
+                                Found = searchResult.Found,
+                                FoundInMeasurements = searchResult.FoundInMeasurements,
+                                FoundInCharacteristics = searchResult.FoundInCharacteristics,
+                                Summary = searchResult.GetSummary(),
+                                MeasurementName = searchResult.Measurement?.Name,
+                                CharacteristicName = searchResult.Characteristic?.Name,
+                                SearchTime = DateTime.Now
+                            };
+                        }
+                        else
                         {
-                            Variable = variable,
-                            Found = false,
-                            Summary = "Not Found in A2L!",
-                            SearchTime = DateTime.Now
-                        };
+                            results[variable] = new
+                            {
+                                Variable = variable,
+                                Found = false,
+                                Summary = "Not Found in A2L!",
+                                SearchTime = DateTime.Now
+                            };
+                        }
                     }
-                }
+                });
                 
                 progress?.Report(100);
                 System.Diagnostics.Debug.WriteLine($"A2L BATCH SEARCH: Searched {variables.Count} variables in A2L");

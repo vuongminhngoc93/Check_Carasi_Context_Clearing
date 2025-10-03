@@ -685,7 +685,38 @@ namespace Check_carasi_DF_ContextClearing
         private void tb_Interface2search_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
+            {
+                // SEARCH HISTORY: Add to history when Enter is pressed (single searches only)
+                if (!isBatchOperation && !string.IsNullOrWhiteSpace(tb_Interface2search.Text))
+                {
+                    AddToSearchHistory(tb_Interface2search.Text.Trim());
+                    SaveSearchHistory();
+                }
+                
                 btn_Run.PerformClick();
+                e.Handled = true; // Prevent beep sound
+            }
+        }
+
+        private void tb_Interface2search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // FALLBACK ENTER HANDLING: Ensure Enter key works even if KeyPress fails
+                if (!string.IsNullOrWhiteSpace(tb_Interface2search.Text))
+                {
+                    // SEARCH HISTORY: Add to history when Enter is pressed (single searches only)
+                    if (!isBatchOperation)
+                    {
+                        AddToSearchHistory(tb_Interface2search.Text.Trim());
+                        SaveSearchHistory();
+                    }
+                    
+                    btn_Run.PerformClick();
+                    e.Handled = true; // Prevent default Enter behavior
+                    e.SuppressKeyPress = true; // Prevent KeyPress event
+                }
+            }
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
@@ -1777,7 +1808,12 @@ namespace Check_carasi_DF_ContextClearing
                     tabName != "tabPage1")
                 {
                     tb_Interface2search.Text = tabName;
-                    System.Diagnostics.Debug.WriteLine($"AUTO-POPULATE: Set search textbox to '{tabName}'");
+                    
+                    // FOCUS FIX: Ensure textbox has focus after auto-populate for Enter key to work
+                    tb_Interface2search.Focus();
+                    tb_Interface2search.SelectAll(); // Select all text for easy editing
+                    
+                    System.Diagnostics.Debug.WriteLine($"AUTO-POPULATE: Set search textbox to '{tabName}' with focus");
                 }
             }
             
