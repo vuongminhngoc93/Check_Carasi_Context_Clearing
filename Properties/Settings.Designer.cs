@@ -34,5 +34,17 @@ namespace Check_carasi_DF_ContextClearing.Properties {
                 this["LinkOfFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SearchHistory {
+            get {
+                return ((string)(this["SearchHistory"]));
+            }
+            set {
+                this["SearchHistory"] = value;
+            }
+        }
     }
 }

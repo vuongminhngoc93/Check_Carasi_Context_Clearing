@@ -62,6 +62,10 @@ namespace Check_carasi_DF_ContextClearing
         private System.Diagnostics.Stopwatch searchStopwatch = new System.Diagnostics.Stopwatch();
         private System.Diagnostics.Stopwatch batchStopwatch = new System.Diagnostics.Stopwatch();
 
+        // SEARCH HISTORY: Track search history for quick re-search (single searches only, not batch)
+        private List<string> searchHistory = new List<string>();
+        private const int MAX_SEARCH_HISTORY = 20; // Keep last 20 searches
+
         UC_dataflow internalUC;
         Form DF_viewer = new Form();
         MM_Check _mmCheck = null;
@@ -92,6 +96,9 @@ namespace Check_carasi_DF_ContextClearing
             
             // Initialize status display
             UpdateTabMemoryStatus();
+            
+            // SEARCH HISTORY: Load search history from settings
+            LoadSearchHistory();
             
             // Setup modern tab rendering
             SetupModernTabRendering();
@@ -466,6 +473,9 @@ namespace Check_carasi_DF_ContextClearing
                             }
 
                             tabControl1.SelectedTab.Text = searchVariable;
+                            
+                            // SEARCH HISTORY: Add successful search to history (single searches only)
+                            AddToSearchHistory(searchVariable);
                             
                             // Hide progress animation and show completion
                             ShowModernProgress(false);
@@ -1115,28 +1125,116 @@ namespace Check_carasi_DF_ContextClearing
             }
         }
 
+        #region Search History Management
+
         /// <summary>
-        /// Performance optimized virtual tab rendering - Only render visible tabs
-        /// This significantly improves performance when dealing with 50+ tabs
+        /// SEARCH HISTORY: Add search term to history (single searches only, exclude batch)
+        /// Maintains unique list with most recent at top
         /// </summary>
-        
-        /// <summary>
-        /// Smart tab switching with animation and performance optimization
-        /// </summary>
-        private void OnTabSelectionChanged(object sender, EventArgs e)
+        private void AddToSearchHistory(string searchTerm)
         {
-            // Update status when tab changes
-            UpdateTabMemoryStatus();
-            
-            // FORCE TAB REDRAW: Ensure active tab highlighting is visible
-            if (tabControl1 != null)
+            try
             {
-                tabControl1.Invalidate();
-                tabControl1.Update();
+                if (string.IsNullOrWhiteSpace(searchTerm) || isBatchOperation) 
+                    return; // Skip batch operations
+                
+                string trimmedTerm = searchTerm.Trim();
+                
+                // Remove if already exists (move to top)
+                searchHistory.RemoveAll(s => s.Equals(trimmedTerm, StringComparison.OrdinalIgnoreCase));
+                
+                // Add to beginning (most recent first)
+                searchHistory.Insert(0, trimmedTerm);
+                
+                // Limit history size
+                if (searchHistory.Count > MAX_SEARCH_HISTORY)
+                {
+                    searchHistory.RemoveRange(MAX_SEARCH_HISTORY, searchHistory.Count - MAX_SEARCH_HISTORY);
+                }
+                
+                // Update textbox autocomplete
+                UpdateSearchTextboxAutocomplete();
+                
+                System.Diagnostics.Debug.WriteLine($"SEARCH HISTORY: Added '{trimmedTerm}', total: {searchHistory.Count}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SEARCH HISTORY ERROR: {ex.Message}");
             }
         }
 
-        // MEMORY CLEANUP: Clean up resources when reaching limits
+        /// <summary>
+        /// UPDATE AUTOCOMPLETE: Update search textbox with autocomplete from history
+        /// Provides dropdown with previous searches for quick selection
+        /// </summary>
+        private void UpdateSearchTextboxAutocomplete()
+        {
+            try
+            {
+                if (tb_Interface2search != null && searchHistory.Count > 0)
+                {
+                    // Create autocomplete source from history
+                    var autoCompleteSource = new AutoCompleteStringCollection();
+                    autoCompleteSource.AddRange(searchHistory.ToArray());
+                    
+                    // Configure autocomplete
+                    tb_Interface2search.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    tb_Interface2search.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb_Interface2search.AutoCompleteCustomSource = autoCompleteSource;
+                    
+                    System.Diagnostics.Debug.WriteLine($"AUTOCOMPLETE: Updated with {searchHistory.Count} history items");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"AUTOCOMPLETE ERROR: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// SAVE HISTORY: Save search history to user settings for persistence
+        /// </summary>
+        private void SaveSearchHistory()
+        {
+            try
+            {
+                if (searchHistory.Count > 0)
+                {
+                    string historyString = string.Join("|", searchHistory);
+                    Settings.Default.SearchHistory = historyString;
+                    Settings.Default.Save();
+                    System.Diagnostics.Debug.WriteLine($"SAVE HISTORY: Saved {searchHistory.Count} items");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SAVE HISTORY ERROR: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// LOAD HISTORY: Load search history from user settings
+        /// </summary>
+        private void LoadSearchHistory()
+        {
+            try
+            {
+                string historyString = Settings.Default.SearchHistory;
+                if (!string.IsNullOrEmpty(historyString))
+                {
+                    searchHistory = historyString.Split('|').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    UpdateSearchTextboxAutocomplete();
+                    System.Diagnostics.Debug.WriteLine($"LOAD HISTORY: Loaded {searchHistory.Count} items");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"LOAD HISTORY ERROR: {ex.Message}");
+            }
+        }
+
+        #endregion
+
         private void CleanupResourcesIfNeeded()
         {
             if (tabControl1.TabPages.Count > 50)
@@ -1653,8 +1751,42 @@ namespace Check_carasi_DF_ContextClearing
         /// </summary>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // SEARCH HISTORY: Save search history to settings
+            SaveSearchHistory();
+            
             // Clean up performance optimizations when form closes
             ClearParserCache();
+        }
+
+        /// <summary>
+        /// Smart tab switching with animation and performance optimization
+        /// Auto-populate search textbox with tab name for easy reference
+        /// </summary>
+        private void OnTabSelectionChanged(object sender, EventArgs e)
+        {
+            // Update status when tab changes
+            UpdateTabMemoryStatus();
+            
+            // AUTO-POPULATE SEARCH: Set search textbox to current tab name for easy reference
+            if (tabControl1.SelectedTab != null && tabControl1.SelectedTab.Text != null)
+            {
+                string tabName = tabControl1.SelectedTab.Text.Trim();
+                // Only populate if tab has meaningful name (not default TabPage names)
+                if (!string.IsNullOrEmpty(tabName) && 
+                    !tabName.StartsWith("TabPage", StringComparison.OrdinalIgnoreCase) && 
+                    tabName != "tabPage1")
+                {
+                    tb_Interface2search.Text = tabName;
+                    System.Diagnostics.Debug.WriteLine($"AUTO-POPULATE: Set search textbox to '{tabName}'");
+                }
+            }
+            
+            // FORCE TAB REDRAW: Ensure active tab highlighting is visible
+            if (tabControl1 != null)
+            {
+                tabControl1.Invalidate();
+                tabControl1.Update();
+            }
         }
     }
     
