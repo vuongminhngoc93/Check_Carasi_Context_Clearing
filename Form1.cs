@@ -1382,6 +1382,8 @@ namespace Check_carasi_DF_ContextClearing
             
             tb_Interface2search.Enter += (s, e) => {
                 tb_Interface2search.BackColor = System.Drawing.Color.FromArgb(248, 248, 248);
+                // AUTO-SELECT: When user clicks into search textbox, select all text for easy editing
+                tb_Interface2search.SelectAll();
             };
             tb_Interface2search.Leave += (s, e) => {
                 tb_Interface2search.BackColor = System.Drawing.Color.White;
@@ -1807,13 +1809,14 @@ namespace Check_carasi_DF_ContextClearing
                     !tabName.StartsWith("TabPage", StringComparison.OrdinalIgnoreCase) && 
                     tabName != "tabPage1")
                 {
+                    // CTRL+TAB FIX: Just populate text, don't change focus to maintain tab navigation
                     tb_Interface2search.Text = tabName;
                     
-                    // FOCUS FIX: Ensure textbox has focus after auto-populate for Enter key to work
-                    tb_Interface2search.Focus();
-                    tb_Interface2search.SelectAll(); // Select all text for easy editing
+                    // DON'T TAKE FOCUS: Remove Focus() and SelectAll() to preserve Ctrl+Tab navigation
+                    // tb_Interface2search.Focus();      // REMOVED: Breaks Ctrl+Tab
+                    // tb_Interface2search.SelectAll();  // REMOVED: Auto-selection not needed
                     
-                    System.Diagnostics.Debug.WriteLine($"AUTO-POPULATE: Set search textbox to '{tabName}' with focus");
+                    System.Diagnostics.Debug.WriteLine($"AUTO-POPULATE: Set search textbox to '{tabName}' (focus preserved for Ctrl+Tab)");
                 }
             }
             
